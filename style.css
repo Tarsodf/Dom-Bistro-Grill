@@ -1,0 +1,341 @@
+/* ===========================
+   RESET E BASE
+=========================== */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background: #F4E9DC; /* Bege do logo */
+}
+
+/* ===========================
+   NAVBAR + HAMBÚRGUER
+=========================== */
+.navbar {
+  width: 100%;
+  background: #4A1F0F; /* Marrom escuro do logo */
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 20px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo img {
+  width: 45px;
+  height: 45px;
+  border-radius: 5px;
+}
+
+.logo span {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.hamburger {
+  display: none;
+  font-size: 26px;
+  cursor: pointer;
+}
+
+/* Menu mobile aberto */
+.menu-open {
+  display: flex !important;
+}
+
+/* Responsividade do menu */
+@media (max-width: 768px) {
+  nav {
+    display: none;
+    flex-direction: column;
+    background: #4A1F0F;
+    width: 100%;
+    padding: 15px 0;
+    text-align: center;
+  }
+
+  nav a {
+    padding: 10px 0;
+    display: block;
+  }
+
+  .hamburger {
+    display: block;
+  }
+}
+
+/* ===========================
+   MENU CENTRALIZADO
+=========================== */
+.menu-centralizado {
+  display: flex;
+  justify-content: center;
+  gap: 25px;
+  flex-wrap: wrap;
+  margin: 50px 0 20px 0;
+}
+
+.menu-centralizado a,
+.menu-centralizado button {
+  text-decoration: none;
+  background: none;
+  border: none;
+  color: #4A1F0F; /* Marrom escuro */
+  font-weight: bold;
+  font-size: 18px;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.menu-centralizado a:hover,
+.menu-centralizado button:hover,
+.menu-centralizado button.active {
+  color: #8A4A2F; /* Marrom médio */
+}
+
+/* ===========================
+   TÍTULO ABAIXO DOS BOTÕES
+=========================== */
+.topo-msg {
+    text-align: center;
+    color: #4A1F0F;
+    margin-top: 10px;
+    margin-bottom: 25px;
+}
+
+.topo-msg h1 {
+    font-size: 32px;
+    margin-bottom: 5px;
+}
+
+.topo-msg p {
+    font-size: 20px;
+    margin: 0;
+}
+
+/* ===========================
+   HERO FULLSCREEN
+=========================== */
+.hero-img {
+  width: 100%;
+  height: 100vh;
+  margin-bottom: 15px;
+  border-radius: 1000px;
+  background-image: url('fotos/imagem principal.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* ===========================
+   BOTÕES
+=========================== */
+.btn-hero,
+.btn-cardapio {
+  padding: 12px 20px;
+  top: 100px;
+  background: #E66A11; /* Laranja chama */
+  color: white;
+  border: none;
+  border-radius: 18px;
+  text-decoration: none;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.btn-hero:hover,
+.btn-cardapio:hover {
+  background: #524942; /* Laranja claro */
+  top: 98px;
+}
+
+/* ===========================
+   CARDÁPIO
+=========================== */
+header img {
+  max-width: 200px;
+  display: block;
+  margin: 0 auto;
+}
+
+.section {
+  display: none;
+  padding: 10px;
+}
+
+.section.active {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  justify-content: center;
+}
+
+/* ===========================
+   CARDS
+=========================== */
+.card {
+  border: 1px solid #8A4A2F; /* marrom médio */
+  padding: 10px;
+  width: 200px;
+  text-align: center;
+  border-radius: 8px;
+  background: white;
+  box-shadow: 0 0 5px rgba(0,0,0,0.15);
+}
+
+.card img {
+  max-width: 100%;
+  border-radius: 5px;
+}
+
+.card button {
+  margin-top: 10px;
+  padding: 8px 12px;
+  background: #4A1F0F; /* marrom escuro */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.card button:hover {
+  background: #8A4A2F;
+}
+
+/* ===========================
+   BOTÃO FLOTANTE DO CARRINHO
+=========================== */
+.floating-cart {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: #E66A11; /* laranja */
+  color: #fff;
+  padding: 10px 15px;
+  border-radius: 50px;
+  cursor: pointer;
+  font-weight: bold;
+  z-index: 9999;
+}
+
+/* ===========================
+   CARRINHO DESLIZANTE
+=========================== */
+#carrinho-box {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  width: 350px;
+  max-height: 90vh;
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 16px 16px 0 0;
+  box-shadow: 0 0 15px rgba(0,0,0,0.2);
+  transform: translateY(100%);
+  transition: 0.3s;
+  overflow-y: auto;
+  z-index: 9999;
+}
+
+#carrinho-box.carrinho-open {
+  transform: translateY(0);
+}
+
+#carrinho-box h2 {
+  text-align: center;
+  margin-bottom: 10px;
+  color: #4A1F0F;
+}
+
+/* Itens */
+#lista {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.carrinho-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #FFF4EB; /* bege com toque laranja */
+  padding: 10px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+
+/* Quantidade */
+.quantidade-box {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.quantidade-box button {
+  background: #E6D2BF;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.quantidade-box button:hover {
+  background: #C5B1A1;
+}
+
+.quantidade-box span {
+  min-width: 20px;
+  text-align: center;
+}
+
+/* Remover item */
+.remover {
+  background: #8A4A2F; 
+  border: none;
+  padding: 5px 10px;
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.remover:hover {
+  background: #4A1F0F;
+}
+
+/* Botões do carrinho */
+.enviar-btn {
+  width: 100%;
+  padding: 12px;
+  background: #25D366; /* Verde WhatsApp */
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  margin-top: 15px;
+  font-size: 16px;
+}
+
+.enviar-btn:hover {
+  background: #1da851;
+}
+
+.fechar-btn {
+  width: 100%;
+  background: #DDD0C4;
+  border: none;
+  padding: 10px;
+  border-radius: 10px;
+  cursor: pointer;
+  margin-bottom: 15px;
+}
+
+.fechar-btn:hover {
+  background: #C4B5A8;
+}

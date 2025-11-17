@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="pt-BR" prefix="og: https://ogp.me/ns#">
+<head>
+<meta charset="UTF-8">
+<title>Dom Bistrô Grill - Cardápio</title>
+<meta name="description" content="Dom Bistrô Grill - Uma verdadeira culinária brasileira em Guimarães, Portugal. Sabores autênticos e tradicionais. Faça seu pedido online!">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://dombistrogrill.com/">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:site_name" content="Dom Bistrô Grill">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Dom Bistrô Grill - Cardápio">
+<meta property="og:description" content="Sabores autênticos da culinária brasileira em Guimarães. Faça seu pedido online e descubra nossos pratos.">
+<meta property="og:url" content="https://dombistrogrill.com/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Dom Bistrô Grill - Cardápio">
+<meta name="twitter:description" content="Sabores autênticos da culinária brasileira em Guimarães. Faça seu pedido online e descubra nossos pratos.">
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+
+<header>
+
+    <!-- título com link corrigido -->
+    <div style="text-align: center; margin-top: 20px;">
+        <a href="Pagina inicial.html" style="text-decoration: none; color: black;">
+            <h1>🍽️ Dom Bistrô Grill 🍽️</h1>
+            </a>
+    </div>
+
+    <!-- Botão mobile -->
+    <div class="hamburger" onclick="toggleMenu()">☰</div>
+
+</header>
+
+<!-- Menu de Abas -->
+<nav class="menu-centralizado" id="menuTabs"></nav>
+
+<!-- Áreas das categorias -->
+<div id="areas"></div>
+
+<!-- Carrinho flutuante -->
+<div class="floating-cart" onclick="abrirCarrinho()">
+    🛒 <span id="contador-itens">0</span> itens
+</div>
+
+<!-- Caixa do Carrinho -->
+<div id="carrinho-box">
+    <button class="fechar-btn" onclick="fecharCarrinho()">Fechar Carrinho</button>
+
+    <h2>Seu Pedido</h2>
+    <ul id="lista"></ul>
+
+    <h3>Total: €<span id="total">0,00</span></h3>
+
+    <label>Seu nome (obrigatório):</label>
+    <input type="text" id="nomeCliente">
+
+    <label>Observações:</label>
+    <textarea id="obs" rows="4"></textarea>
+
+    <button class="enviar-btn" onclick="enviarWhatsApp()">Enviar pelo WhatsApp</button>
+</div>
+
+
+
+<script>
+// ===========================
+// BANCO DE DADOS DO CARDÁPIO
+// ===========================
+const categorias = {
+    executivos: [
+        {nome:'Executivo Clássico Segunda-Feira', preco:9.00, foto:'fotos/Captura1.png'},
+        {nome:'Executivo Dom Bistrô', preco:9.00, foto:'fotos/Captura1.png'},
+        {nome:'Executivo do Chefe', preco:9.00, foto:'fotos/Captura1.png'},
+        {nome:'Executivo Festa Brasileira', preco:9.00, foto:'fotos/Captura1.png'},
+        {nome:'Feijoada', preco:9.00, foto:'fotos/Captura1.png'},
+        {nome:'Jantinha', preco:9.00, foto:'fotos/jantinha.jpg'},
+    ],
+
+    panelinhas: [
+        {nome:"Carne", preco:7.50, foto:'fotos/Captura1.png'},
+        {nome:"Bacon", preco:7.50, foto:'fotos/Captura1.png'},
+        {nome:"Legumes", preco:7.50, foto:'fotos/Captura1.png'},
+        {nome:"Bacon com Linguiça", preco:7.50, foto:'fotos/Captura1.png'},
+    ],
+
+    caldos: [
+        {nome:"Caldo Verde", preco:6.00, foto:'fotos/Captura1.png'},
+        {nome:"Caldo de Feijão", preco:6.00, foto:'fotos/Captura1.png'},
+        {nome:"Caldo de Frango", preco:6.00, foto:'fotos/Captura1.png'},
+        {nome:"Carne com Mandioca", preco:6.00, foto:'fotos/Captura1.png'},
+    ],
+
+    hamburgueres: [
+        {nome:"X-Baguncinha (combo)", preco:10.00, foto:'fotos/xbaguncinha.jpg'},
+        {nome:"X-Carioca (combo)", preco:10.00, foto:'fotos/xcarioca.jpg'},
+        {nome:"X-Mineiro (+ fritas)", preco:9.00, foto:'fotos/xmineiro.jpg'},
+        {nome:"X-Gauchesco (+ fritas)", preco:7.00, foto:'fotos/xgauchesco.jpg'},
+        {nome:"X-Nordestino (+ fritas)", preco:8.00, foto:'fotos/xnordestino.jpg'},
+        {nome:"X-Brasileiro (combo)", preco:11.00, foto:'fotos/xbrasileiro.jpg'},
+        {nome:"X-Dom Cheddar (combo)", preco:13.00, foto:'fotos/Captura1.png'},
+    ],
+
+    espetinhos: [
+        {nome:"Carne", preco:4.50, foto:'fotos/Captura1.png'},
+        {nome:"Frango", preco:3.00, foto:'fotos/Captura1.png'},
+        {nome:"Frango c/ Bacon", preco:4.00, foto:'fotos/Captura1.png'},
+        {nome:"Linguiça", preco:2.50, foto:'fotos/Captura1.png'},
+        {nome:"Queijo Coalho", preco:4.00, foto:'fotos/Captura1.png'},
+        {nome:"Coalho c/ Melaço", preco:4.00, foto:'fotos/Captura1.png'},
+    ],
+
+    petiscos: [
+        {nome:"Batata Frita Pequena", preco:2.00, foto:'fotos/Captura1.png'},
+        {nome:"Batata Frita Média", preco:3.50, foto:'fotos/Captura1.png'},
+        {nome:"Batata Frita Grande", preco:4.50, foto:'fotos/Captura1.png'},
+        {nome:"Batata com Nutella + Ninho", preco:6.00, foto:'fotos/Captura1.png'},
+        {nome:"Anéis de Cebola", preco:3.50, foto:'fotos/Captura1.png'},
+        {nome:"Calabresa Acebolada", preco:6.00, foto:'fotos/Captura1.png'},
+        {nome:"Asas ao Molho Agridoce", preco:5.00, foto:'fotos/Captura1.png'},
+        {nome:"Cuscuz com Ovo e Coalho", preco:5.00, foto:'fotos/Captura1.png'},
+    ],
+
+    doces: [
+        {nome:"Bolo de Cenoura", preco:1.50, foto:'fotos/Captura1.png'},
+        {nome:"Bolo de Chocolate", preco:1.50, foto:'fotos/Captura1.png'},
+        {nome:"Bolo Ninho", preco:1.50, foto:'fotos/Captura1.png'},
+        {nome:"Bolo de Milho", preco:1.50, foto:'fotos/Captura1.png'},
+        {nome:"Brownie", preco:2.50, foto:'fotos/Captura1.png'},
+        {nome:"Brigadeiro", preco:0.50, foto:'fotos/Captura1.png'},
+        {nome:"Pudim", preco:2.00, foto:'fotos/Captura1.png'},
+        {nome:"Bolo de Pote", preco:4.00, foto:'fotos/Captura1.png'},
+        {nome:"Bolo Formigueiro", preco:1.50, foto:'fotos/boloformigueiro.jpg'},
+    ],
+
+    bebidas: [
+        {nome:"Coca-Cola", preco:2.00, foto:'fotos/Captura1.png'},
+        {nome:"Coca Zero", preco:2.00, foto:'fotos/Captura1.png'},
+        {nome:"Ice Tea", preco:2.10, foto:'fotos/Captura1.png'},
+        {nome:"Guaraná Antarctica", preco:2.00, foto:'fotos/Captura1.png'},
+        {nome:"Sumol Laranja", preco:2.10, foto:'fotos/Captura1.png'},
+        {nome:"Sumol Ananás", preco:2.10, foto:'fotos/Captura1.png'},
+        {nome:"Água 0.5L", preco:1.10, foto:'fotos/Captura1.png'},
+        {nome:"Água das Pedras", preco:1.80, foto:'fotos/Captura1.png'},
+        {nome:"Água c/ Limão", preco:1.80, foto:'fotos/Captura1.png'},
+        {nome:"Super Bock", preco:2.00, foto:'fotos/Captura1.png'},
+        {nome:"Seven Up", preco:2.00, foto:'fotos/superbock.jpg'},
+        {nome:"Compal Laranja", preco:2.00, foto:'fotos/Captura1.png'},
+        {nome:"Sumo Natural Laranja", preco:3.50, foto:'fotos/Captura1.png'},
+        {nome:"Sumo Natural Abacaxi", preco:3.50, foto:'fotos/Captura1.png'},
+        {nome:"Creme de Morango", preco:4.00, foto:'fotos/Captura1.png'},
+    ]
+};
+
+
+// ===============================
+// CRIA MENU E CARDS AUTOMATICAMENTE
+// ===============================
+const menuTabs = document.getElementById("menuTabs");
+const areas = document.getElementById("areas");
+
+Object.keys(categorias).forEach((cat, idx) => {
+    menuTabs.innerHTML += `
+        <button onclick="abrirSecao.call(this, '${cat}')" class="${idx===0 ? 'active' : ''}">
+            ${cat.toUpperCase()}
+        </button>
+    `;
+
+    areas.innerHTML += `<div id="${cat}" class="section ${idx===0 ? 'active' : ''}"></div>`;
+});
+
+Object.keys(categorias).forEach(cat => {
+    const div = document.getElementById(cat);
+    categorias[cat].forEach(item => {
+        div.innerHTML += `
+            <div class="card">
+                <img src="${item.foto}" alt="${item.nome}">
+                <h3>${item.nome}</h3>
+                <p><strong>€${item.preco.toFixed(2)}</strong></p>
+                <button onclick="addItem('${item.nome}', ${item.preco})">Adicionar</button>
+            </div>
+        `;
+    });
+});
+
+
+// ==================
+// FUNÇÃO DE ABRIR ABA
+// ==================
+function abrirSecao(cat) {
+    document.querySelectorAll(".section").forEach(s => s.classList.remove("active"));
+    document.getElementById(cat).classList.add("active");
+
+    document.querySelectorAll(".menu-centralizado button").forEach(btn => btn.classList.remove("active"));
+    this.classList.add("active");
+}
+
+
+// =======================
+// ABRIR A ABA POR HASH
+// =======================
+window.onload = () => {
+    const hash = window.location.hash.replace("#","").trim();
+    if (hash && document.getElementById(hash)) {
+        const botao = document.querySelector(`button[onclick*="${hash}"]`);
+        if (botao) abrirSecao.call(botao, hash);
+    }
+};
+
+
+// ================================
+// CARRINHO
+// ================================
+let pedido = JSON.parse(localStorage.getItem("pedido")) || [];
+
+function addItem(nome, preco) {
+    const i = pedido.findIndex(item => item.nome === nome);
+    if (i >= 0) pedido[i].quantidade++;
+    else pedido.push({nome, preco, quantidade: 1});
+    salvarPedido();
+}
+
+function salvarPedido() {
+    localStorage.setItem("pedido", JSON.stringify(pedido));
+    atualizarCarrinho();
+}
+
+function atualizarCarrinho() {
+    const lista = document.getElementById("lista");
+    const contador = document.getElementById("contador-itens");
+    let total = 0;
+
+    lista.innerHTML = pedido.map((p, i) => {
+        total += p.preco * p.quantidade;
+        return `
+            <li class="carrinho-item">
+                <span>${p.nome} — €${p.preco.toFixed(2)}</span>
+
+                <div class="quantidade-box">
+                    <button onclick="alterarQuantidade(${i}, -1)">−</button>
+                    <span>${p.quantidade}</span>
+                    <button onclick="alterarQuantidade(${i}, 1)">+</button>
+                </div>
+
+                <button class="remover" onclick="removerItem(${i})">❌</button>
+            </li>
+        `;
+    }).join("");
+
+    document.getElementById("total").textContent = total.toFixed(2);
+    contador.textContent = pedido.reduce((sum,p)=>sum+p.quantidade,0);
+}
+
+function alterarQuantidade(i, delta){
+    pedido[i].quantidade += delta;
+    if (pedido[i].quantidade <= 0) removerItem(i);
+    salvarPedido();
+}
+
+function removerItem(i){
+    pedido.splice(i,1);
+    salvarPedido();
+}
+
+function abrirCarrinho(){
+    atualizarCarrinho();
+    document.getElementById("carrinho-box").classList.add("carrinho-open");
+}
+
+function fecharCarrinho(){
+    document.getElementById("carrinho-box").classList.remove("carrinho-open");
+}
+
+function enviarWhatsApp(){
+    const nome = document.getElementById("nomeCliente").value;
+    if(!nome.trim()){
+        alert("⚠ Digite seu nome!");
+        return;
+    }
+
+    const obs = document.getElementById("obs").value;
+    const numero = "351930580520";
+
+    let texto = `Pedido Dom Bistrô%0ACliente: ${nome}%0A%0AItens:%0A`;
+
+    pedido.forEach(p=>{
+        texto += `- ${p.nome} x${p.quantidade} (€${(p.preco*p.quantidade).toFixed(2)})%0A`;
+    });
+
+    texto += `%0ATotal: €${pedido.reduce((t,p)=>t+p.preco*p.quantidade,0).toFixed(2)}%0A%0AObservações:%0A${obs}`;
+
+    window.open(`https://wa.me/${numero}?text=${texto}`, '_blank');
+
+    localStorage.removeItem("pedido");
+    pedido = [];
+    atualizarCarrinho();
+}
+
+
+// ========================
+// MENU MOBILE
+// ========================
+function toggleMenu(){
+    document.getElementById("menuTabs").classList.toggle("menu-open");
+}
+</script>
+
+</body>
+</html>

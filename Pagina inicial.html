@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Dom Bistrô Grill - Página Inicial</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+    <!-- Botão Menu Mobile -->
+    <div class="hamburger" onclick="toggleMenu()">☰</div>
+
+    <!-- Menu Centralizado -->
+    <nav id="menu" class="menu-centralizado">
+        <!-- Links serão adicionados dinamicamente via JS -->
+    </nav>
+</header>
+
+<!-- BLOCO DO TÍTULO (AGORA FORA DO HERO) -->
+<div class="topo-msg">
+    <h1>🍽️ Dom Bistrô Grill 🍽️</h1>
+    <p>Faça seu pedido online</p>
+    <a href="Dom Bistro.html" class="btn-cardapio">Ver cardápio</a>
+</div>
+
+<!-- HERO APENAS COM A IMAGEM -->
+<div class="hero-img"></div>
+
+<script>
+
+// Criando links do menu dinamicamente
+const menu = document.getElementById("menu");
+
+categorias.forEach(cat => {
+    const a = document.createElement("a");
+    a.href = `Dom Bistro.html#${cat}`; // link correto
+    a.textContent = cat.toUpperCase();
+
+    a.onclick = () => {
+        // Fecha o menu no mobile ao clicar
+        if (menu.classList.contains("menu-open")) {
+            menu.classList.remove("menu-open");
+        }
+    };
+
+    menu.appendChild(a);
+});
+
+// Abrir/fechar menu mobile
+function toggleMenu() {
+    menu.classList.toggle("menu-open");
+}
+</script>
+
+</body>
+</html>
