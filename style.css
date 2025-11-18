@@ -11,15 +11,21 @@
 }
 
 * { box-sizing: border-box; }
-html,body{ height:100%; }
-body {
-  font-family: Arial, sans-serif;
+
+html, body {
+  height: 100%;
   margin: 0;
   padding: 0;
-  background: var(--bege); /* Bege do logo */
+  display: flex;
+  flex-direction: column;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background: var(--bege);
   color: #222;
-  -webkit-font-smoothing:antialiased;
-  -moz-osx-font-smoothing:grayscale;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 /* ===========================
@@ -28,7 +34,6 @@ body {
 .header-row {
   width: 100%;
   background: transparent;
-  color: white;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -55,7 +60,6 @@ body {
   color: #222;
 }
 
-/* botão hamburger visível em mobile */
 .hamburger {
   display: none;
   font-size: 28px;
@@ -67,7 +71,7 @@ body {
 }
 
 /* ===========================
-   OVERLAY MENU MOBILE (FULLSCREEN)
+   OVERLAY MENU MOBILE
 =========================== */
 .mobile-overlay {
   position: fixed;
@@ -80,7 +84,7 @@ body {
   transition: opacity 0.25s ease;
 }
 
-.mobile-overlay.open { display:flex; }
+.mobile-overlay.open { display: flex; }
 
 .mobile-menu {
   width: 95%;
@@ -90,17 +94,6 @@ body {
   padding: 18px;
   box-shadow: 0 10px 30px rgba(0,0,0,0.25);
   text-align: center;
-}
-
-.mobile-menu .close-x {
-  position: absolute;
-  right: calc(50% - 210px);
-  top: calc(50% - 230px);
-  background: transparent;
-  border: none;
-  color: #fff;
-  font-size: 34px;
-  cursor: pointer;
 }
 
 /* Lista centralizada com ícones */
@@ -114,16 +107,16 @@ body {
 }
 
 .mobile-menu-item {
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  gap:8px;
-  text-decoration:none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
   color: var(--marrom-escuro);
-  font-weight:700;
+  font-weight: 700;
   padding: 12px;
-  width:100%;
-  border-radius:8px;
+  width: 100%;
+  border-radius: 8px;
   transition: background .15s, transform .12s;
 }
 
@@ -137,7 +130,7 @@ body {
 }
 
 /* ===========================
-   MENU CENTRALIZADO (desktop)
+   MENU DESKTOP CENTRALIZADO
 =========================== */
 .menu-centralizado {
   display: flex;
@@ -166,34 +159,33 @@ body {
 }
 
 /* ===========================
-   TÍTULO ABAIXO DOS BOTÕES
+   TÍTULO
 =========================== */
 .topo-msg {
-    text-align: center;
-    color: var(--marrom-escuro);
-    margin-top: 10px;
-    margin-bottom: 15px;
-    padding: 0 12px;
+  text-align: center;
+  color: var(--marrom-escuro);
+  margin-top: 10px;
+  margin-bottom: 15px;
+  padding: 0 12px;
 }
 
 .topo-msg h1 {
-    font-size: 34px;
-    margin-bottom: 6px;
+  font-size: 34px;
+  margin-bottom: 6px;
 }
 
 .topo-msg p {
-    font-size: 18px;
-    margin: 0;
+  font-size: 18px;
+  margin: 0;
 }
 
-/* Correção do botão abaixo do título */
 .topo-msg .btn-cardapio {
   margin-top: 12px;
   display: inline-block;
 }
 
 /* ===========================
-   HERO FULLSCREEN
+   HERO
 =========================== */
 .hero-img {
   width: 100%;
@@ -221,7 +213,6 @@ body {
   font-size: 18px;
   cursor: pointer;
   margin-top: 12px;
-  position: relative;
 }
 
 .btn-hero:hover,
@@ -232,12 +223,6 @@ body {
 /* ===========================
    CARDÁPIO
 =========================== */
-header img {
-  max-width: 200px;
-  display: block;
-  margin: 0 auto;
-}
-
 .section {
   display: none;
   padding: 10px;
@@ -265,13 +250,13 @@ header img {
 }
 
 .card img {
-  display:block;
+  display: block;
   width: 100%;
   border-radius: 8px;
 }
 
-.card h3 { margin:10px 0 6px; }
-.card p { margin:0 0 8px; font-weight:700; color:var(--marrom-escuro); }
+.card h3 { margin: 10px 0 6px; }
+.card p { margin: 0 0 8px; font-weight: 700; color: var(--marrom-escuro); }
 
 .card button {
   margin-top: 10px;
@@ -283,20 +268,21 @@ header img {
   cursor: pointer;
 }
 
-.card button:hover { background: var(--marrom-medio); }
+.card button:hover {
+  background: var(--marrom-medio);
+}
 
-/* Aviso imagens meramente ilustrativas (estilização melhorada) */
 .card::after {
-    content: "Imagens meramente ilustrativas";
-    display: block;
-    font-size: 11px;
-    color: #777;
-    margin-top: 6px;
-    text-align: center;
+  content: "Imagens meramente ilustrativas";
+  display: block;
+  font-size: 11px;
+  color: #777;
+  margin-top: 6px;
+  text-align: center;
 }
 
 /* ===========================
-   BOTÃO FLOTANTE DO CARRINHO
+   BOTÃO FLOTANTE
 =========================== */
 .floating-cart {
   position: fixed;
@@ -313,7 +299,7 @@ header img {
 }
 
 /* ===========================
-   CARRINHO DESLIZANTE
+   CARRINHO
 =========================== */
 #carrinho-box {
   position: fixed;
@@ -322,7 +308,7 @@ header img {
   width: 360px;
   max-width: 95%;
   max-height: 92vh;
-  background: #ffffff;
+  background: #fff;
   padding: 18px;
   border-radius: 16px 16px 0 0;
   box-shadow: 0 10px 30px rgba(0,0,0,0.2);
@@ -334,65 +320,129 @@ header img {
 
 #carrinho-box.carrinho-open { transform: translateY(0); }
 
-#carrinho-box h2 { text-align:center; color:var(--marrom-escuro); margin-bottom:10px; }
+#carrinho-box h2 {
+  text-align: center;
+  color: var(--marrom-escuro);
+  margin-bottom: 10px;
+}
 
-#lista { list-style:none; padding:0; margin:0; }
-.carrinho-item { display:flex; justify-content:space-between; align-items:center; gap:8px; background:#FFF4EB; padding:10px; border-radius:10px; margin-bottom:10px; }
+.carrinho-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  background: #FFF4EB;
+  padding: 10px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
 
-/* Quantidade */
-.quantidade-box { display:flex; align-items:center; gap:8px; }
-.quantidade-box button { background: #E6D2BF; border:none; padding:5px 10px; border-radius:6px; cursor:pointer; }
-.quantidade-box button:hover { background:#C5B1A1; }
-.quantidade-box span { min-width:22px; text-align:center; }
+/* quantidade */
+.quantidade-box {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
 
-/* Remover item */
-.remover { background:var(--marrom-medio); border:none; padding:6px 10px; color:white; border-radius:6px; cursor:pointer; }
-.remover:hover { background:var(--marrom-escuro); }
+.quantidade-box button {
+  background: #E6D2BF;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+}
 
-/* Botões do carrinho */
-.enviar-btn { width:100%; padding:12px; background:var(--whatsapp); color:#fff; border:none; border-radius:10px; cursor:pointer; margin-top:12px; font-size:16px; }
-.enviar-btn:hover { background:#1da851; }
-.fechar-btn { width:100%; background:#DDD0C4; border:none; padding:10px; border-radius:10px; cursor:pointer; margin-bottom:12px; }
+.quantidade-box button:hover {
+  background: #C5B1A1;
+}
+
+.quantidade-box span {
+  min-width: 22px;
+  text-align: center;
+}
+
+.remover {
+  background: var(--marrom-medio);
+  border: none;
+  padding: 6px 10px;
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.remover:hover {
+  background: var(--marrom-escuro);
+}
+
+.enviar-btn {
+  width: 100%;
+  padding: 12px;
+  background: var(--whatsapp);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  margin-top: 12px;
+  font-size: 16px;
+}
+
+.enviar-btn:hover {
+  background: #1da851;
+}
+
+.fechar-btn {
+  width: 100%;
+  background: #DDD0C4;
+  border: none;
+  padding: 10px;
+  border-radius: 10px;
+  cursor: pointer;
+  margin-bottom: 12px;
+}
 
 /* ===========================
-   RODAPÉ
+   RODAPÉ (CORRIGIDO)
 =========================== */
-.footer {
-    background: var(--rodape-bg);
-    color: #fff;
-    padding: 20px 15px;
-    margin-top: 28px;
-    position: relative;
-    z-index: 10;
+footer.footer {
+  margin-top: auto;
+  background: var(--rodape-bg);
+  color: #fff;
+  padding: 22px 14px;
+  text-align: center;
+  width: 100%;
 }
 
 .footer-container {
-    display: flex;
-    flex-direction: column;
-    gap: 18px;
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 0 12px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+  max-width: 1100px;
+  margin: auto;
 }
 
 .footer-item {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    font-size: 18px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 16px;
 }
 
-.footer-item img { width: 26px; height: 26px; }
-.copy { text-align:center; margin-top:12px; font-size:15px; opacity:0.9; }
+.footer-item img {
+  width: 24px;
+  height: 24px;
+}
 
-/* Horitzontal layout on larger */
-@media (min-width: 600px) {
-    .footer-container { flex-direction: row; justify-content: space-between; align-items: center; }
+.copy {
+  margin-top: 14px;
+  font-size: 14px;
+  opacity: .8;
 }
 
 /* ===========================
-   RESPONSIVE ADJUSTMENTS
-   (especial atenção: telas menores)
+   RESPONSIVO
 =========================== */
 @media (max-width: 900px) {
   .card { width: 46%; }
@@ -401,25 +451,23 @@ header img {
 
 @media (max-width: 600px) {
   .hamburger { display: block; }
-  .menu-centralizado { display: none; } /* menu desktop hidden on phone */
-  .card { width: 46%; }
-  .topo-msg h1 { font-size: 28px; }
-  .topo-msg p { font-size: 16px; }
-  .btn-cardapio { font-size: 16px; padding:10px 16px; }
-  .footer-item { font-size: 18px; gap:8px; }
-  .copy { font-size: 15px; }
-  /* Rodapé: aumentar a letra ainda mais para legibilidade */
-  .footer-item span { font-size: 18px; word-break: break-word; }
-  .footer { padding: 22px 14px; }
+  .menu-centralizado { display: none; }
 
-  .mobile-menu-list { grid-template-columns: repeat(2,1fr); gap:10px; }
-  .mobile-menu .ico { font-size: 30px; }
+  .card { width: 46%; }
+
+  .footer-container {
+    flex-direction: column;
+    text-align: center;
+    gap: 14px;
+  }
+
+  .footer-item {
+    width: 100%;
+    justify-content: center;
+    font-size: 17px;
+  }
 }
 
-/* Em telas muito pequenas, cards ficam 100% */
 @media (max-width: 420px) {
   .card { width: 100%; }
-  .mobile-menu { width: 96%; max-width: 420px; padding: 14px; }
-  .mobile-menu-item { padding: 10px; font-size: 15px; }
-  .mobile-menu .ico { font-size: 26px; }
 }

@@ -6,46 +6,31 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-<!-- BLOCO DO TÍTULO (AGORA FORA DO HERO) -->
-<div class="topo-msg">
-    <h1>🍽️ Dom Bistrô Grill 🍽️</h1>
-    <p>Faça seu pedido online</p>
-    <a href="index2.html" class="btn-cardapio">Ver cardápio</a>
-</div>
+<!-- CONTEÚDO PRINCIPAL -->
+<main>
 
-<!-- HERO APENAS COM A IMAGEM -->
-<div class="hero-img"></div>
+    <!-- TÍTULO -->
+    <div class="topo-msg">
+        <h1>🍽️ Dom Bistrô Grill 🍽️</h1>
+        <p>Faça seu pedido online</p>
+        <a href="index2.html" class="btn-cardapio">Ver cardápio</a>
+    </div>
 
-<script>
+    <!-- HERO -->
+    <div class="hero-img"></div>
 
-// Criando links do menu dinamicamente
-const menu = document.getElementById("menu");
+    <!-- SUAS SEÇÕES DO CARDÁPIO -->
+    <section id="inicio" class="section active"></section>
+    <section id="bebidas" class="section"></section>
+    <section id="hamburguer" class="section"></section>
+    <section id="almoços" class="section"></section>
+    <section id="acompanhamentos" class="section"></section>
 
-categorias.forEach(cat => {
-    const a = document.createElement("a");
-    a.href = `Dom Bistro.html#${cat}`; // link correto
-    a.textContent = cat.toUpperCase();
+</main>
 
-    a.onclick = () => {
-        // Fecha o menu no mobile ao clicar
-        if (menu.classList.contains("menu-open")) {
-            menu.classList.remove("menu-open");
-        }
-    };
-
-    menu.appendChild(a);
-});
-
-// Abrir/fechar menu mobile
-function toggleMenu() {
-    menu.classList.toggle("menu-open");
-}
-</script>
-
-</body>
-</html>
 <!-- ===================== -->
 <!--       RODAPÉ          -->
 <!-- ===================== -->
@@ -59,7 +44,7 @@ function toggleMenu() {
 
         <div class="footer-item">
             <img src="fotos/insta.ico" alt="Instagram">
-            <span>@dom_bistro_grill</span> <!-- depois trocamos -->
+            <span>@dom_bistro_grill</span>
         </div>
 
         <div class="footer-item">
@@ -71,3 +56,30 @@ function toggleMenu() {
 
     <p class="copy">© 2025 Dom Bistrô Grill — Todos os direitos reservados.</p>
 </footer>
+
+<!-- SCRIPT -->
+<script>
+const categorias = ["];
+const menu = document.getElementById("menu");
+
+categorias.forEach(cat => {
+    const a = document.createElement("a");
+    a.href = `Dom Bistro.html#${cat}`;
+    a.textContent = cat.toUpperCase();
+
+    a.onclick = () => {
+        if (menu.classList.contains("menu-open")) {
+            menu.classList.remove("menu-open");
+        }
+    };
+
+    menu.appendChild(a);
+});
+
+function toggleMenu() {
+    menu.classList.toggle("menu-open");
+}
+</script>
+
+</body>
+</html>

@@ -18,16 +18,12 @@
 
 <link rel="stylesheet" href="style.css">
 
-<!-- Pequena estilização solicitada (aviso nas imagens) -->
 <style>
-/* Aviso em todas as fotos dos produtos (adicionado conforme solicitado) */
 .card img {
     display: block;
     width: 100%;
     border-radius: 5px;
 }
-
-/* Texto abaixo da imagem indicando que é meramente ilustrativa */
 .card::after {
     content: "Imagens meramente ilustrativas";
     display: block;
@@ -42,36 +38,27 @@
 <body>
 
 <header>
-
-    <!-- título com link corrigido (link somente no título, frase fora do link) -->
     <div style="text-align: center; margin-top: 20px;">
         <a href="index.html" style="text-decoration: none; color: black;">
             <h1>🍽️ Dom Bistrô Grill 🍽️</h1>
         </a>
 
-        <!-- FRASE DE EFEITO ADICIONADA (fora do link) -->
         <p style="margin-top: -10px; font-size: 18px; color: #444;">
             Sabores que lembram o Brasil, preparados com carinho em Guimarães.
         </p>
     </div>
 
-    <!-- Botão mobile -->
     <div class="hamburger" onclick="toggleMenu()">☰</div>
-
 </header>
 
-<!-- Menu de Abas -->
 <nav class="menu-centralizado" id="menuTabs"></nav>
 
-<!-- Áreas das categorias -->
 <div id="areas"></div>
 
-<!-- Carrinho flutuante -->
 <div class="floating-cart" onclick="abrirCarrinho()">
     🛒 <span id="contador-itens">0</span> itens
 </div>
 
-<!-- Caixa do Carrinho -->
 <div id="carrinho-box">
     <button class="fechar-btn" onclick="fecharCarrinho()">Fechar Carrinho</button>
 
@@ -89,13 +76,8 @@
     <button class="enviar-btn" onclick="enviarWhatsApp()">Enviar pelo WhatsApp</button>
 </div>
 
-
-
 <script>
-/* ===========================
-   BANCO DE DADOS DO CARDÁPIO
-   (sem alterações, mantido como você forneceu)
-   =========================== */
+/* TODO O SEU SCRIPT FOI MANTIDO SEM MUDAR NADA */
 const categorias = {
    executivos: [
     {nome: 'Executivo Clássico', preco: 9.00, foto: 'fotos/Captura1.png'},
@@ -105,23 +87,19 @@ const categorias = {
     {nome: 'Feijoada', preco: 9.00, foto: 'fotos/Captura1.png'},
     {nome: 'Jantinha', preco: 9.00, foto: 'fotos/jantinha.jpg'},
 ],
-
-
-    panelinhas: [
+    panelinhas:[
         {nome:"Carne", preco:7.50, foto:'fotos/Captura1.png'},
         {nome:"Bacon", preco:7.50, foto:'fotos/Captura1.png'},
         {nome:"Legumes", preco:7.50, foto:'fotos/Captura1.png'},
         {nome:"Bacon com Linguiça", preco:7.50, foto:'fotos/Captura1.png'},
     ],
-
-    caldos: [
+    caldos:[
         {nome:"Caldo Verde", preco:6.00, foto:'fotos/caldoverde.jpeg'},
         {nome:"Caldo de Feijão", preco:6.00, foto:'fotos/caldofeijao.jpeg'},
         {nome:"Caldo de Frango", preco:6.00, foto:'fotos/caldofrango.jpeg'},
         {nome:"Carne com Mandioca", preco:6.00, foto:'fotos/mandioca.jpeg'},
     ],
-
-    hamburgueres: [
+    hamburgueres:[
         {nome:"X-Baguncinha (combo)", preco:10.00, foto:'fotos/xbaguncinha.jpg'},
         {nome:"X-Carioca (combo)", preco:10.00, foto:'fotos/xcarioca.jpg'},
         {nome:"X-Mineiro (+ fritas)", preco:9.00, foto:'fotos/xmineiro.jpg'},
@@ -130,8 +108,7 @@ const categorias = {
         {nome:"X-Brasileiro (combo)", preco:11.00, foto:'fotos/xbrasileiro.jpg'},
         {nome:"X-Dom Cheddar (combo)", preco:13.00, foto:'fotos/Captura1.png'},
     ],
-
-    espetinhos: [
+    espetinhos:[
         {nome:"Carne", preco:4.50, foto:'fotos/carne.jpeg'},
         {nome:"Frango", preco:3.00, foto:'fotos/frango.jpeg'},
         {nome:"Frango c/ Bacon", preco:4.00, foto:'fotos/frangocbacon.jpeg'},
@@ -139,8 +116,7 @@ const categorias = {
         {nome:"Queijo Coalho", preco:4.00, foto:'fotos/queijo.jpeg'},
         {nome:"Coalho c/ Melaço", preco:4.00, foto:'fotos/melaço.jpeg'},
     ],
-
-    petiscos: [
+    petiscos:[
         {nome:"Batata Frita Pequena", preco:2.00, foto:'fotos/batatapequena.jpeg'},
         {nome:"Batata Frita Média", preco:3.50, foto:'fotos/batatamedia.jpeg'},
         {nome:"Batata Frita Grande", preco:4.50, foto:'fotos/batatagrande.jpeg'},
@@ -150,8 +126,7 @@ const categorias = {
         {nome:"Asas ao Molho Agridoce", preco:5.00, foto:'fotos/asasdefrango.jpeg'},
         {nome:"Cuscuz com Ovo e Coalho", preco:5.00, foto:'fotos/cuscuz.jpeg'},
     ],
-
-    doces: [
+    doces:[
         {nome:"Bolo de Cenoura", preco:1.50, foto:'fotos/Captura1.png'},
         {nome:"Bolo de Chocolate", preco:1.50, foto:'fotos/Captura1.png'},
         {nome:"Bolo Ninho", preco:1.50, foto:'fotos/Captura1.png'},
@@ -162,8 +137,7 @@ const categorias = {
         {nome:"Bolo de Pote", preco:4.00, foto:'fotos/Captura1.png'},
         {nome:"Bolo Formigueiro", preco:1.50, foto:'fotos/boloformigueiro.jpg'},
     ],
-
-    bebidas: [
+    bebidas:[
         {nome:"Coca-Cola", preco:2.00, foto:'fotos/coca.jpeg'},
         {nome:"Coca Zero", preco:2.20, foto:'fotos/cocazero.jpeg'},
         {nome:"Ice Tea", preco:2.10, foto:'fotos/IceTea.jpeg'},
@@ -182,11 +156,7 @@ const categorias = {
     ]
 };
 
-
-/* ===============================
-   CRIA MENU E CARDS AUTOMATICAMENTE
-   (mantive exatamente como você tinha)
-   =============================== */
+/* RESTANTE DO SEU SCRIPT TAMBÉM MANTIDO */
 const menuTabs = document.getElementById("menuTabs");
 const areas = document.getElementById("areas");
 
@@ -196,7 +166,6 @@ Object.keys(categorias).forEach((cat, idx) => {
             ${cat.toUpperCase()}
         </button>
     `;
-
     areas.innerHTML += `<div id="${cat}" class="section ${idx===0 ? 'active' : ''}"></div>`;
 });
 
@@ -214,36 +183,22 @@ Object.keys(categorias).forEach(cat => {
     });
 });
 
-
-// ==================
-// FUNÇÃO DE ABRIR ABA
-// ==================
 function abrirSecao(cat) {
     document.querySelectorAll(".section").forEach(s => s.classList.remove("active"));
     document.getElementById(cat).classList.add("active");
-
     document.querySelectorAll(".menu-centralizado button").forEach(btn => btn.classList.remove("active"));
     this.classList.add("active");
 }
 
-
-// =======================
-// ABRIR A ABA POR HASH
-// =======================
 window.onload = () => {
     const hash = window.location.hash.replace("#","").trim();
     if (hash && document.getElementById(hash)) {
         const botao = document.querySelector(`button[onclick*="${hash}"]`);
         if (botao) abrirSecao.call(botao, hash);
     }
-    // Atualiza carrinho ao carregar a página (mantém comportamento)
     atualizarCarrinho();
 };
 
-
-// ================================
-// CARRINHO
-// ================================
 let pedido = JSON.parse(localStorage.getItem("pedido")) || [];
 
 function addItem(nome, preco) {
@@ -268,13 +223,11 @@ function atualizarCarrinho() {
         return `
             <li class="carrinho-item">
                 <span>${p.nome} — €${p.preco.toFixed(2)}</span>
-
                 <div class="quantidade-box">
                     <button onclick="alterarQuantidade(${i}, -1)">−</button>
                     <span>${p.quantidade}</span>
                     <button onclick="alterarQuantidade(${i}, 1)">+</button>
                 </div>
-
                 <button class="remover" onclick="removerItem(${i})">❌</button>
             </li>
         `;
@@ -329,20 +282,15 @@ function enviarWhatsApp(){
     atualizarCarrinho();
 }
 
-
-// ========================
-// MENU MOBILE
-// ========================
 function toggleMenu(){
     document.getElementById("menuTabs").classList.toggle("menu-open");
 }
 </script>
 
-</body>
-</html>
 <!-- ===================== -->
 <!--       RODAPÉ          -->
 <!-- ===================== -->
+
 <footer class="footer">
     <div class="footer-container">
 
@@ -353,7 +301,7 @@ function toggleMenu(){
 
         <div class="footer-item">
             <img src="fotos/insta.ico" alt="Instagram">
-            <span>@dom_bistro_grill</span> <!-- depois trocamos -->
+            <span>@dom_bistro_grill</span>
         </div>
 
         <div class="footer-item">
@@ -365,3 +313,6 @@ function toggleMenu(){
 
     <p class="copy">© 2025 Dom Bistrô Grill — Todos os direitos reservados.</p>
 </footer>
+
+</body>
+</html>
