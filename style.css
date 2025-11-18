@@ -119,6 +119,12 @@ body {
     margin: 0;
 }
 
+/* Correção do botão abaixo do título */
+.topo-msg .btn-cardapio {
+  margin-top: 15px;
+  display: inline-block;
+}
+
 /* ===========================
    HERO FULLSCREEN
 =========================== */
@@ -126,7 +132,7 @@ body {
   width: 100%;
   height: 100vh;
   margin-bottom: 15px;
-  border-radius: 1000px;
+  border-radius: 100px;
   background-image: url('fotos/imagem principal.jpg');
   background-size: cover;
   background-position: center;
@@ -139,7 +145,6 @@ body {
 .btn-hero,
 .btn-cardapio {
   padding: 12px 20px;
-  top: 100px;
   background: #E66A11; /* Laranja chama */
   color: white;
   border: none;
@@ -147,12 +152,15 @@ body {
   text-decoration: none;
   font-size: 18px;
   cursor: pointer;
+  margin-top: 15px;
+  position: relative;
+  top: 0;
 }
 
 .btn-hero:hover,
 .btn-cardapio:hover {
-  background: #524942; /* Laranja claro */
-  top: 98px;
+  background: #524942;
+  top: 0;
 }
 
 /* ===========================
@@ -190,7 +198,7 @@ header img {
 }
 
 .card img {
-  max-width: 100%;
+  max-width: 200%;
   border-radius: 5px;
 }
 
@@ -338,4 +346,68 @@ header img {
 
 .fechar-btn:hover {
   background: #C4B5A8;
+}
+/* Aviso em todas as fotos dos produtos */
+.card img {
+    display: block;
+    width: 100%;
+    border-radius: 10px;
+}
+
+.card::after {
+    content: "Imagens meramente ilustrativas";
+    display: block;
+    font-size: 11px;
+    color: #777;
+    margin-top: 4px;
+    text-align: center;
+}
+/* ===========================
+   RODAPÉ
+=========================== */
+.footer {
+    background: #504846; /* marrom escuro */
+    color: #fff;
+    padding: 20px 15px;
+    margin-top: 30px;
+}
+
+.footer-container {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.footer-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 16px;
+}
+
+.footer-item img {
+    width: 25px;
+    height: 22px;
+}
+
+.copy {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 14px;
+    opacity: 0.8;
+}
+
+/* Responsivo */
+@media (min-width: 600px) {
+    .footer-container {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+}
+.card .dia {
+  font-size: 14px;
+  color: #8A4A2F;
+  margin: 4px 0;
 }

@@ -18,16 +18,41 @@
 
 <link rel="stylesheet" href="style.css">
 
+<!-- Pequena estilização solicitada (aviso nas imagens) -->
+<style>
+/* Aviso em todas as fotos dos produtos (adicionado conforme solicitado) */
+.card img {
+    display: block;
+    width: 100%;
+    border-radius: 5px;
+}
+
+/* Texto abaixo da imagem indicando que é meramente ilustrativa */
+.card::after {
+    content: "Imagens meramente ilustrativas";
+    display: block;
+    font-size: 11px;
+    color: #777;
+    margin-top: 6px;
+    text-align: center;
+}
+</style>
+
 </head>
 <body>
 
 <header>
 
-    <!-- título com link corrigido -->
+    <!-- título com link corrigido (link somente no título, frase fora do link) -->
     <div style="text-align: center; margin-top: 20px;">
         <a href="index.html" style="text-decoration: none; color: black;">
             <h1>🍽️ Dom Bistrô Grill 🍽️</h1>
-            </a>
+        </a>
+
+        <!-- FRASE DE EFEITO ADICIONADA (fora do link) -->
+        <p style="margin-top: -10px; font-size: 18px; color: #444;">
+            Sabores que lembram o Brasil, preparados com carinho em Guimarães.
+        </p>
     </div>
 
     <!-- Botão mobile -->
@@ -67,18 +92,20 @@
 
 
 <script>
-// ===========================
-// BANCO DE DADOS DO CARDÁPIO
-// ===========================
+/* ===========================
+   BANCO DE DADOS DO CARDÁPIO
+   (sem alterações, mantido como você forneceu)
+   =========================== */
 const categorias = {
-    executivos: [
-        {nome:'Executivo Clássico Segunda-Feira', preco:9.00, foto:'fotos/Captura1.png'},
-        {nome:'Executivo Dom Bistrô', preco:9.00, foto:'fotos/Captura1.png'},
-        {nome:'Executivo do Chefe', preco:9.00, foto:'fotos/Captura1.png'},
-        {nome:'Executivo Festa Brasileira', preco:9.00, foto:'fotos/Captura1.png'},
-        {nome:'Feijoada', preco:9.00, foto:'fotos/Captura1.png'},
-        {nome:'Jantinha', preco:9.00, foto:'fotos/jantinha.jpg'},
-    ],
+   executivos: [
+    {nome: 'Executivo Clássico', preco: 9.00, foto: 'fotos/Captura1.png'},
+    {nome: 'Executivo Dom Bistrô', preco: 9.00, foto: 'fotos/Captura1.png'},
+    {nome: 'Executivo do Chefe', preco: 9.00, foto: 'fotos/Captura1.png'},
+    {nome: 'Executivo Festa Brasileira', preco: 9.00, foto: 'fotos/Captura1.png'},
+    {nome: 'Feijoada', preco: 9.00, foto: 'fotos/Captura1.png'},
+    {nome: 'Jantinha', preco: 9.00, foto: 'fotos/jantinha.jpg'},
+],
+
 
     panelinhas: [
         {nome:"Carne", preco:7.50, foto:'fotos/Captura1.png'},
@@ -88,10 +115,10 @@ const categorias = {
     ],
 
     caldos: [
-        {nome:"Caldo Verde", preco:6.00, foto:'fotos/Captura1.png'},
-        {nome:"Caldo de Feijão", preco:6.00, foto:'fotos/Captura1.png'},
-        {nome:"Caldo de Frango", preco:6.00, foto:'fotos/Captura1.png'},
-        {nome:"Carne com Mandioca", preco:6.00, foto:'fotos/Captura1.png'},
+        {nome:"Caldo Verde", preco:6.00, foto:'fotos/caldoverde.jpeg'},
+        {nome:"Caldo de Feijão", preco:6.00, foto:'fotos/caldofeijao.jpeg'},
+        {nome:"Caldo de Frango", preco:6.00, foto:'fotos/caldofrango.jpeg'},
+        {nome:"Carne com Mandioca", preco:6.00, foto:'fotos/mandioca.jpeg'},
     ],
 
     hamburgueres: [
@@ -105,23 +132,23 @@ const categorias = {
     ],
 
     espetinhos: [
-        {nome:"Carne", preco:4.50, foto:'fotos/Captura1.png'},
-        {nome:"Frango", preco:3.00, foto:'fotos/Captura1.png'},
-        {nome:"Frango c/ Bacon", preco:4.00, foto:'fotos/Captura1.png'},
-        {nome:"Linguiça", preco:2.50, foto:'fotos/Captura1.png'},
-        {nome:"Queijo Coalho", preco:4.00, foto:'fotos/Captura1.png'},
-        {nome:"Coalho c/ Melaço", preco:4.00, foto:'fotos/Captura1.png'},
+        {nome:"Carne", preco:4.50, foto:'fotos/carne.jpeg'},
+        {nome:"Frango", preco:3.00, foto:'fotos/frango.jpeg'},
+        {nome:"Frango c/ Bacon", preco:4.00, foto:'fotos/frangocbacon.jpeg'},
+        {nome:"Linguiça", preco:2.50, foto:'fotos/linguiça.jpeg'},
+        {nome:"Queijo Coalho", preco:4.00, foto:'fotos/queijo.jpeg'},
+        {nome:"Coalho c/ Melaço", preco:4.00, foto:'fotos/melaço.jpeg'},
     ],
 
     petiscos: [
-        {nome:"Batata Frita Pequena", preco:2.00, foto:'fotos/Captura1.png'},
-        {nome:"Batata Frita Média", preco:3.50, foto:'fotos/Captura1.png'},
-        {nome:"Batata Frita Grande", preco:4.50, foto:'fotos/Captura1.png'},
-        {nome:"Batata com Nutella + Ninho", preco:6.00, foto:'fotos/Captura1.png'},
-        {nome:"Anéis de Cebola", preco:3.50, foto:'fotos/Captura1.png'},
-        {nome:"Calabresa Acebolada", preco:6.00, foto:'fotos/Captura1.png'},
-        {nome:"Asas ao Molho Agridoce", preco:5.00, foto:'fotos/Captura1.png'},
-        {nome:"Cuscuz com Ovo e Coalho", preco:5.00, foto:'fotos/Captura1.png'},
+        {nome:"Batata Frita Pequena", preco:2.00, foto:'fotos/batatapequena.jpeg'},
+        {nome:"Batata Frita Média", preco:3.50, foto:'fotos/batatamedia.jpeg'},
+        {nome:"Batata Frita Grande", preco:4.50, foto:'fotos/batatagrande.jpeg'},
+        {nome:"Batata com Nutella + Ninho", preco:6.00, foto:'fotos/batatanutela.jpeg'},
+        {nome:"Anéis de Cebola", preco:3.50, foto:'fotos/aneiscebola.jpeg'},
+        {nome:"Calabresa Acebolada", preco:6.00, foto:'fotos/calabresa.jpeg'},
+        {nome:"Asas ao Molho Agridoce", preco:5.00, foto:'fotos/asasdefrango.jpeg'},
+        {nome:"Cuscuz com Ovo e Coalho", preco:5.00, foto:'fotos/cuscuz.jpeg'},
     ],
 
     doces: [
@@ -137,28 +164,29 @@ const categorias = {
     ],
 
     bebidas: [
-        {nome:"Coca-Cola", preco:2.00, foto:'fotos/Captura1.png'},
-        {nome:"Coca Zero", preco:2.00, foto:'fotos/Captura1.png'},
-        {nome:"Ice Tea", preco:2.10, foto:'fotos/Captura1.png'},
-        {nome:"Guaraná Antarctica", preco:2.00, foto:'fotos/Captura1.png'},
-        {nome:"Sumol Laranja", preco:2.10, foto:'fotos/Captura1.png'},
-        {nome:"Sumol Ananás", preco:2.10, foto:'fotos/Captura1.png'},
-        {nome:"Água 0.5L", preco:1.10, foto:'fotos/Captura1.png'},
-        {nome:"Água das Pedras", preco:1.80, foto:'fotos/Captura1.png'},
-        {nome:"Água c/ Limão", preco:1.80, foto:'fotos/Captura1.png'},
-        {nome:"Super Bock", preco:2.00, foto:'fotos/Captura1.png'},
-        {nome:"Seven Up", preco:2.00, foto:'fotos/superbock.jpg'},
-        {nome:"Compal Laranja", preco:2.00, foto:'fotos/Captura1.png'},
-        {nome:"Sumo Natural Laranja", preco:3.50, foto:'fotos/Captura1.png'},
-        {nome:"Sumo Natural Abacaxi", preco:3.50, foto:'fotos/Captura1.png'},
-        {nome:"Creme de Morango", preco:4.00, foto:'fotos/Captura1.png'},
+        {nome:"Coca-Cola", preco:2.00, foto:'fotos/coca.jpeg'},
+        {nome:"Coca Zero", preco:2.20, foto:'fotos/cocazero.jpeg'},
+        {nome:"Ice Tea", preco:2.10, foto:'fotos/IceTea.jpeg'},
+        {nome:"Guaraná Antarctica", preco:1.50, foto:'fotos/guarana.jpeg'},
+        {nome:"Sumol Laranja", preco:1.40, foto:'fotos/sumollaranja.jpeg'},
+        {nome:"Sumol Ananás", preco:1.40, foto:'fotos/sumolananas.jpeg'},
+        {nome:"Água 0.5L", preco:1.10, foto:'fotos/agua.jpeg'},
+        {nome:"Água das Pedras", preco:1.80, foto:'fotos/aguasdaspedras.jpeg'},
+        {nome:"Água das Pedras c/ Limão", preco:1.80, foto:'fotos/limao.jpeg'},
+        {nome:"Seven Up", preco:2.00, foto:'fotos/seven.jpeg'},
+        {nome:"Super Bock", preco:2.00, foto:'fotos/superbock.jpg'},
+        {nome:"Compal Laranja", preco:2.00, foto:'fotos/compal.jpeg'},
+        {nome:"Sumo Natural Laranja", preco:3.50, foto:'fotos/sumodelaranja.jpeg'},
+        {nome:"Sumo Natural Abacaxi", preco:3.50, foto:'fotos/sumodeabacaxi.jpeg'},
+        {nome:"Creme de Morango", preco:4.00, foto:'fotos/cremedemorango.jpeg'},
     ]
 };
 
 
-// ===============================
-// CRIA MENU E CARDS AUTOMATICAMENTE
-// ===============================
+/* ===============================
+   CRIA MENU E CARDS AUTOMATICAMENTE
+   (mantive exatamente como você tinha)
+   =============================== */
 const menuTabs = document.getElementById("menuTabs");
 const areas = document.getElementById("areas");
 
@@ -208,6 +236,8 @@ window.onload = () => {
         const botao = document.querySelector(`button[onclick*="${hash}"]`);
         if (botao) abrirSecao.call(botao, hash);
     }
+    // Atualiza carrinho ao carregar a página (mantém comportamento)
+    atualizarCarrinho();
 };
 
 
@@ -310,3 +340,28 @@ function toggleMenu(){
 
 </body>
 </html>
+<!-- ===================== -->
+<!--       RODAPÉ          -->
+<!-- ===================== -->
+<footer class="footer">
+    <div class="footer-container">
+
+        <div class="footer-item">
+            <img src="fotos/whatt.ico" alt="WhatsApp">
+            <span>925 278 570</span>
+        </div>
+
+        <div class="footer-item">
+            <img src="fotos/insta.ico" alt="Instagram">
+            <span>@dom_bistro_grill</span> <!-- depois trocamos -->
+        </div>
+
+        <div class="footer-item">
+            <img src="fotos/end.ico" alt="Endereço">
+            <span>Alam São Damasco - S Francisco Centro 35, N/A, 4810-286 Guimarães</span>
+        </div>
+
+    </div>
+
+    <p class="copy">© 2025 Dom Bistrô Grill — Todos os direitos reservados.</p>
+</footer>
