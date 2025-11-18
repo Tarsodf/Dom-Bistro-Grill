@@ -185,13 +185,13 @@ body {
 }
 
 /* ===========================
-   HERO
+  HERO
 =========================== */
 .hero-img {
   width: 100%;
-  height: 48vh;
-  max-height: 420px;
-  margin-bottom: 16px;
+  height: 308vh;
+  max-height: 1000px;
+  margin-bottom: 106px;
   border-radius: 18px;
   background-image: url('fotos/imagem principal.jpg');
   background-size: cover;
@@ -200,7 +200,7 @@ body {
 }
 
 /* ===========================
-   BOTÕES
+  BOTÕES
 =========================== */
 .btn-hero,
 .btn-cardapio {
@@ -221,7 +221,7 @@ body {
 }
 
 /* ===========================
-   CARDÁPIO
+  CARDÁPIO
 =========================== */
 .section {
   display: none;
@@ -237,7 +237,7 @@ body {
 }
 
 /* ===========================
-   CARDS
+  CARDS
 =========================== */
 .card {
   border: 1px solid var(--marrom-medio);
@@ -282,7 +282,7 @@ body {
 }
 
 /* ===========================
-   BOTÃO FLOTANTE
+  BOTÃO FLOTANTE
 =========================== */
 .floating-cart {
   position: fixed;
@@ -299,7 +299,7 @@ body {
 }
 
 /* ===========================
-   CARRINHO
+  CARRINHO
 =========================== */
 #carrinho-box {
   position: fixed;
@@ -401,13 +401,13 @@ body {
 }
 
 /* ===========================
-   RODAPÉ (CORRIGIDO)
+  RODAPÉ (CORRIGIDO)
 =========================== */
 footer.footer {
   margin-top: auto;
   background: var(--rodape-bg);
   color: #fff;
-  padding: 22px 14px;
+  padding: 12px 14px;
   text-align: center;
   width: 100%;
 }
@@ -426,13 +426,13 @@ footer.footer {
 .footer-item {
   display: flex;
   align-items: center;
-  gap: 10px;
-  font-size: 16px;
+  gap: 9px;
+  font-size: 18px;
 }
 
 .footer-item img {
-  width: 24px;
-  height: 24px;
+  width: 34px;
+  height: 34px;
 }
 
 .copy {
@@ -442,7 +442,7 @@ footer.footer {
 }
 
 /* ===========================
-   RESPONSIVO
+  RESPONSIVO
 =========================== */
 @media (max-width: 900px) {
   .card { width: 46%; }
