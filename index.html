@@ -60,31 +60,3 @@
 
 </body>
 </html>
-
-
-<!-- SCRIPT -->
-<script>
-const categorias =
-const menu = document.getElementById("menu");
-
-categorias.forEach(cat => {
-    const a = document.createElement("a");
-    a.href = `Dom Bistro.html#${cat}`;
-    a.textContent = cat.toUpperCase();
-
-    a.onclick = () => {
-        if (menu.classList.contains("menu-open")) {
-            menu.classList.remove("menu-open");
-        }
-    };
-
-    menu.appendChild(a);
-});
-
-function toggleMenu() {
-    menu.classList.toggle("menu-open");
-}
-</script>
-
-</body>
-</html>
