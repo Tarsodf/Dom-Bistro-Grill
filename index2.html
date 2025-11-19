@@ -284,7 +284,7 @@ function enviarWhatsApp(){
     pedido = [];
     atualizarCarrinho();
 }
-/* 🟦 FUNÇÃO DO BOTÃO PAGAR ONLINE (SUBSTITUIR ESTE BLOCO) */
+/* 🟦 NOVA FUNÇÃO DO BOTÃO PAGAR ONLINE (VERSÃO FINAL) */
 document.addEventListener("DOMContentLoaded", function () {
     const pagarBtn = document.getElementById("pagarLinkBtn");
 
@@ -302,18 +302,44 @@ document.addEventListener("DOMContentLoaded", function () {
                 return;
             }
 
-            // Desabilita botão e mostra que está processando
+            const obs = document.getElementById("obs").value;
+            const numeroLoja = "351930580520";
+
+            // 1️⃣ Enviar pedido para WhatsApp como "Pagamento Pendente"
+            let texto = `📢 *Pagamento Pendente Dom Bistrô*%0A`;
+            texto += `👤 Cliente: *${nome}*%0A%0A`;
+            texto += `🛒 *Itens do Pedido:*%0A`;
+
+            pedido.forEach(p => {
+                texto += `- ${p.nome} x${p.quantidade} (€${(p.preco * p.quantidade).toFixed(2)})%0A`;
+            });
+
+            const total = pedido.reduce((t, p) => t + (p.preco * p.quantidade), 0).toFixed(2);
+
+            texto += `%0A💰 Total: *€${total}*%0A%0A`;
+            texto += `📝 Observações:%0A${obs || "(nenhuma)"}%0A%0A`;
+            texto += `⏳ O cliente está a efetuar o pagamento online.`;
+
+            // Abre o WhatsApp para o restaurante
+            window.open(`https://wa.me/${numeroLoja}?text=${texto}`, "_blank");
+
+            // 2️⃣ Informar o cliente
+            alert("O seu pedido foi enviado para nós como 'Pagamento Pendente'. Agora continue para o pagamento.");
+
+            // 3️⃣ Chama a Netlify Function (EasyPay)
             pagarBtn.disabled = true;
             pagarBtn.textContent = "Processando... ⏳";
 
             try {
-                // Monta payload com itens e nome do cliente
                 const payload = {
-                    items: pedido.map(p => ({ nome: p.nome, preco: p.preco, quantidade: p.quantidade })),
+                    items: pedido.map(p => ({
+                        nome: p.nome,
+                        preco: p.preco,
+                        quantidade: p.quantidade
+                    })),
                     customerName: nome
                 };
 
-                // Chama a função do Netlify (rota relativa - funcionará se seu site estiver no Netlify)
                 const res = await fetch("/.netlify/functions/createCheckout", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
@@ -323,7 +349,12 @@ document.addEventListener("DOMContentLoaded", function () {
                 const data = await res.json();
 
                 if (res.ok && data.url) {
-                    // redireciona para o Stripe Checkout
+                    // 4️⃣ Limpa o carrinho (somente se obteve link)
+                    localStorage.removeItem("pedido");
+                    pedido = [];
+                    atualizarCarrinho();
+
+                    // 5️⃣ Redireciona para EasyPay
                     window.location.href = data.url;
                     return;
                 } else {
@@ -341,6 +372,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 });
+
 
 function toggleMenu(){
     document.getElementById("menuTabs").classList.toggle("menu-open");
