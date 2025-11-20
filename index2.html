@@ -32,6 +32,13 @@
     margin-top: 6px;
     text-align: center;
 }
+/* Estilo adicional para a descrição */
+.descricao-item {
+    font-size: 14px;
+    color: #555;
+    margin: 5px 0 10px 0;
+    min-height: 40px; /* Ajuda a manter o layout se as descrições tiverem tamanhos diferentes */
+}
 </style>
 
 </head>
@@ -82,40 +89,40 @@
 const categorias = {
 executivos: [
     {
-        nome: 'Executivo Clássico (Segunda)',
-        preco: 9.00,
+        nome: 'Executivo Clássico (Segunda)', 
+        preco: 9.00, 
         foto: 'fotos/Captura1.png',
         descricao: 'Bife acebolado, arroz, feijão, batata frita e salada.'
     },
     {
-        nome: 'Executivo Dom Bistrô (Terça)',
-        preco: 9.00,
+        nome: 'Executivo Dom Bistrô (Terça)', 
+        preco: 9.00, 
         foto: 'fotos/Captura1.png',
         descricao: 'Empanado de frango, arroz, feijão, batata frita e salada.'
     },
     {
-        nome: 'Executivo do Chefe (Quinta)',
-        preco: 9.00,
+        nome: 'Executivo do Chefe (Quinta)', 
+        preco: 9.00, 
         foto: 'fotos/Captura1.png',
         descricao: 'Carne ao molho Madeira, filé de porco empanado, arroz, feijão, batata frita e salada.'
     },
     {
-        nome: 'Executivo Festa Brasileira (Sexta)',
-        preco: 9.00,
+        nome: 'Executivo Festa Brasileira (Sexta)', 
+        preco: 9.00, 
         foto: 'fotos/Captura1.png',
         descricao: 'Churrasco misto, arroz, feijão, batata frita, farofa e vinagrete.'
     },
     {
-        nome: 'Feijoada (Sábado)',
-        preco: 9.00,
+        nome: 'Feijoada (Sábado)', 
+        preco: 9.00, 
         foto: 'fotos/Captura1.png',
         descricao: 'Feijoada, arroz, couve refogada, torresmo e laranja.'
     },
     {
-        nome: 'Jantinha',
-        preco: 9.00,
+        nome: 'Jantinha', 
+        preco: 9.00, 
         foto: 'fotos/jantinha.jpg',
-        descricao: 'Arroz,Feijão Tropero,Vinagrete, Farofa,Torresmo (Servido todas as Noite).'
+        descricao: 'Prato a combinar (não especificado no cardápio).'
     },
 ],
     panelinhas:[
@@ -131,13 +138,48 @@ executivos: [
         {nome:"Carne com Mandioca", preco:6.00, foto:'fotos/mandioca.jpeg'},
     ],
     hamburgueres:[
-        {nome:"X-Baguncinha (combo)", preco:10.00, foto:'fotos/xbaguncinha.jpg'},
-        {nome:"X-Carioca (combo)", preco:10.00, foto:'fotos/xcarioca.jpg'},
-        {nome:"X-Mineiro (+ fritas)", preco:9.00, foto:'fotos/xmineiro.jpg'},
-        {nome:"X-Gauchesco (+ fritas)", preco:7.00, foto:'fotos/xgauchesco.jpg'},
-        {nome:"X-Nordestino (+ fritas)", preco:8.00, foto:'fotos/xnordestino.jpg'},
-        {nome:"X-Brasileiro (combo)", preco:11.00, foto:'fotos/xbrasileiro.jpg'},
-        {nome:"X-Dom Cheddar (combo)", preco:13.00, foto:'fotos/Captura1.png'},
+        {
+            nome:"X-Baguncinha (combo)", 
+            preco:10.00, 
+            foto:'fotos/xbaguncinha.jpg',
+            descricao: 'Pão, 2 carnes, ovo, bacon, queijo, presunto, alface, tomate e molho especial.'
+        },
+        {
+            nome:"X-Carioca (combo)", 
+            preco:10.00, 
+            foto:'fotos/xcarioca.jpg',
+            descricao: 'Pão, carne, queijo, presunto, abacaxi grelhado, bacon e alface.'
+        },
+        {
+            nome:"X-Mineiro (+ fritas)", 
+            preco:9.00, 
+            foto:'fotos/xmineiro.jpg',
+            descricao: 'Pão, carne, queijo, ovo, bacon, alface, tomate e queijo Minas (ou similar).'
+        },
+        {
+            nome:"X-Gauchesco (+ fritas)", 
+            preco:7.00, 
+            foto:'fotos/xgauchesco.jpg',
+            descricao: 'Pão, carne, queijo, presunto, linguiça defumada, alface e tomate.'
+        },
+        {
+            nome:"X-Nordestino (+ fritas)", 
+            preco:8.00, 
+            foto:'fotos/xnordestino.jpg',
+            descricao: 'Pão, carne, queijo coalho grelhado, carne de sol desfiada e molho.'
+        },
+        {
+            nome:"X-Brasileiro (combo)", 
+            preco:11.00, 
+            foto:'fotos/xbrasileiro.jpg',
+            descricao: 'Pão, 2 carnes, cheddar, bacon, ovo, alface, tomate e batata palha.'
+        },
+        {
+            nome:"X-Dom Cheddar (combo)", 
+            preco:13.00, 
+            foto:'fotos/Captura1.png',
+            descricao: 'Pão, carne, farta porção de queijo cheddar cremoso e cebola caramelizada.'
+        },
     ],
     espetinhos:[
         {nome:"Carne", preco:4.50, foto:'fotos/carne.jpeg'},
@@ -189,7 +231,7 @@ executivos: [
 const menuTabs = document.getElementById("menuTabs");
 const areas = document.getElementById("areas");
 
-// CORREÇÃO APLICADA AQUI: Garantindo que as crases (template literal) estejam corretas
+// Construção do Menu de Abas
 Object.keys(categorias).forEach((cat, idx) => {
     menuTabs.innerHTML += `<button onclick="abrirSecao.call(this, '${cat}')" class="${idx===0 ? 'active' : ''}">
             ${cat.toUpperCase()}
@@ -197,6 +239,7 @@ Object.keys(categorias).forEach((cat, idx) => {
     areas.innerHTML += `<div id="${cat}" class="section ${idx===0 ? 'active' : ''}"></div>`;
 });
 
+// Populando as Seções com os Itens
 Object.keys(categorias).forEach(cat => {
     const div = document.getElementById(cat);
     categorias[cat].forEach(item => {
