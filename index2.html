@@ -81,12 +81,42 @@
 <script>
 const categorias = {
 executivos: [
-    {nome: 'Executivo Clássico', preco: 9.00, foto: 'fotos/Captura1.png'},
-    {nome: 'Executivo Dom Bistrô', preco: 9.00, foto: 'fotos/Captura1.png'},
-    {nome: 'Executivo do Chefe', preco: 9.00, foto: 'fotos/Captura1.png'},
-    {nome: 'Executivo Festa Brasileira', preco: 9.00, foto: 'fotos/Captura1.png'},
-    {nome: 'Feijoada', preco: 9.00, foto: 'fotos/Captura1.png'},
-    {nome: 'Jantinha', preco: 9.00, foto: 'fotos/jantinha.jpg'},
+    {
+        nome: 'Executivo Clássico (Segunda)',
+        preco: 9.00,
+        foto: 'fotos/Captura1.png',
+        descricao: 'Bife acebolado, arroz, feijão, batata frita e salada.'
+    },
+    {
+        nome: 'Executivo Dom Bistrô (Terça)',
+        preco: 9.00,
+        foto: 'fotos/Captura1.png',
+        descricao: 'Empanado de frango, arroz, feijão, batata frita e salada.'
+    },
+    {
+        nome: 'Executivo do Chefe (Quinta)',
+        preco: 9.00,
+        foto: 'fotos/Captura1.png',
+        descricao: 'Carne ao molho Madeira, filé de porco empanado, arroz, feijão, batata frita e salada.'
+    },
+    {
+        nome: 'Executivo Festa Brasileira (Sexta)',
+        preco: 9.00,
+        foto: 'fotos/Captura1.png',
+        descricao: 'Churrasco misto, arroz, feijão, batata frita, farofa e vinagrete.'
+    },
+    {
+        nome: 'Feijoada (Sábado)',
+        preco: 9.00,
+        foto: 'fotos/Captura1.png',
+        descricao: 'Feijoada, arroz, couve refogada, torresmo e laranja.'
+    },
+    {
+        nome: 'Jantinha',
+        preco: 9.00,
+        foto: 'fotos/jantinha.jpg',
+        descricao: 'Arroz,Feijão Tropero,Vinagrete, Farofa,Torresmo (Servido todas as Noite).'
+    },
 ],
     panelinhas:[
         {nome:"Carne", preco:7.50, foto:'fotos/Captura1.png'},
@@ -159,26 +189,26 @@ executivos: [
 const menuTabs = document.getElementById("menuTabs");
 const areas = document.getElementById("areas");
 
+// CORREÇÃO APLICADA AQUI: Garantindo que as crases (template literal) estejam corretas
 Object.keys(categorias).forEach((cat, idx) => {
-    menuTabs.innerHTML += `
-        <button onclick="abrirSecao.call(this, '${cat}')" class="${idx===0 ? 'active' : ''}">
+    menuTabs.innerHTML += `<button onclick="abrirSecao.call(this, '${cat}')" class="${idx===0 ? 'active' : ''}">
             ${cat.toUpperCase()}
-        </button>
-    `;
+        </button>`;
     areas.innerHTML += `<div id="${cat}" class="section ${idx===0 ? 'active' : ''}"></div>`;
 });
 
 Object.keys(categorias).forEach(cat => {
     const div = document.getElementById(cat);
     categorias[cat].forEach(item => {
-        div.innerHTML += `
-            <div class="card">
+        // Se a descrição existir, adiciona-a
+        const descricaoHTML = item.descricao ? `<p class="descricao-item">${item.descricao}</p>` : '';
+        
+        div.innerHTML += `<div class="card">
                 <img src="${item.foto}" alt="${item.nome}">
                 <h3>${item.nome}</h3>
-                <p><strong>€${item.preco.toFixed(2)}</strong></p>
+                ${descricaoHTML} <p><strong>€${item.preco.toFixed(2)}</strong></p>
                 <button onclick="addItem('${item.nome}', ${item.preco})">Adicionar</button>
-            </div>
-        `;
+            </div>`;
     });
 });
 
@@ -219,8 +249,7 @@ function atualizarCarrinho() {
 
     lista.innerHTML = pedido.map((p, i) => {
         total += p.preco * p.quantidade;
-        return `
-            <li class="carrinho-item">
+        return `<li class="carrinho-item">
                 <span>${p.nome} — €${p.preco.toFixed(2)}</span>
                 <div class="quantidade-box">
                     <button onclick="alterarQuantidade(${i}, -1)">−</button>
@@ -228,8 +257,7 @@ function atualizarCarrinho() {
                     <button onclick="alterarQuantidade(${i}, 1)">+</button>
                 </div>
                 <button class="remover" onclick="removerItem(${i})">❌</button>
-            </li>
-        `;
+            </li>`;
     }).join("");
 
     document.getElementById("total").textContent = total.toFixed(2);
