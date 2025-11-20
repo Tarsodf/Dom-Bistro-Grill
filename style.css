@@ -1,5 +1,5 @@
 /* ===========================
-   RESET E BASE
+RESET E BASE
 =========================== */
 :root{
   --marrom-escuro: #4A1F0F;
@@ -29,7 +29,7 @@ body {
 }
 
 /* ===========================
-   NAVBAR + HAMBÚRGUER
+NAVBAR + HAMBÚRGUER
 =========================== */
 .header-row {
   width: 100%;
@@ -61,7 +61,7 @@ body {
 }
 
 /* ===========================
-   NOME DO CLIENTE — CAIXA ALTA
+NOME DO CLIENTE — CAIXA ALTA
 =========================== */
 #nomeCliente {
     text-transform: uppercase;
@@ -78,7 +78,7 @@ body {
 }
 
 /* ===========================
-   OVERLAY MENU MOBILE
+OVERLAY MENU MOBILE
 =========================== */
 .mobile-overlay {
   position: fixed;
@@ -137,7 +137,7 @@ body {
 }
 
 /* ===========================
-   MENU DESKTOP CENTRALIZADO
+MENU DESKTOP CENTRALIZADO
 =========================== */
 .menu-centralizado {
   display: flex;
@@ -166,7 +166,7 @@ body {
 }
 
 /* ===========================
-   TÍTULO
+TÍTULO
 =========================== */
 .topo-msg {
   text-align: center;
@@ -457,7 +457,7 @@ footer.footer {
 }
 
 /* ===========================
-   HORÁRIOS DE FUNCIONAMENTO
+HORÁRIOS DE FUNCIONAMENTO
 =========================== */
 .horarios {
   margin-top: 20px;
