@@ -59,12 +59,14 @@ body {
   font-weight: bold;
   color: #222;
 }
+
 /* ===========================
    NOME DO CLIENTE — CAIXA ALTA
 =========================== */
 #nomeCliente {
     text-transform: uppercase;
 }
+
 .hamburger {
   display: none;
   font-size: 28px;
@@ -223,6 +225,14 @@ body {
 .btn-hero:hover,
 .btn-cardapio:hover {
   background: var(--marrom-escuro);
+}
+
+.card img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover; 
+    object-position: center; 
+    display: block;
 }
 
 /* ===========================
@@ -444,6 +454,26 @@ footer.footer {
   margin-top: 14px;
   font-size: 14px;
   opacity: .8;
+}
+
+/* ===========================
+   HORÁRIOS DE FUNCIONAMENTO
+=========================== */
+.horarios {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.horarios h3 {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.horarios ul {
+  list-style: none;
+  padding: 0;
+  font-size: 15px;
+  line-height: 1.5;
 }
 
 /* ===========================

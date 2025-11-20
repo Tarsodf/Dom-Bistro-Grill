@@ -72,19 +72,15 @@
     <label>Observações:</label>
     <textarea id="obs" rows="4"></textarea>
 
-    <!-- 🟩 BOTÃO JÁ EXISTENTE → MANTIDO -->
     <button class="enviar-btn" onclick="enviarWhatsApp()">Enviar pelo WhatsApp</button>
-
-    <!-- 🟦 NOVO BOTÃO PARA PAGAMENTO ONLINE -->
     <button id="pagarLinkBtn" class="enviar-btn" style="background:#635BFF;">
         Pagar Online 💳
     </button>
 </div>
 
 <script>
-/* TODO O SEU SCRIPT FOI MANTIDO SEM MUDAR NADA */
 const categorias = {
-   executivos: [
+executivos: [
     {nome: 'Executivo Clássico', preco: 9.00, foto: 'fotos/Captura1.png'},
     {nome: 'Executivo Dom Bistrô', preco: 9.00, foto: 'fotos/Captura1.png'},
     {nome: 'Executivo do Chefe', preco: 9.00, foto: 'fotos/Captura1.png'},
@@ -268,7 +264,7 @@ function enviarWhatsApp(){
     }
 
     const obs = document.getElementById("obs").value;
-    const numero = "351930580520";
+    const numero = "351925278570";
 
     let texto = `Pedido Dom Bistrô%0ACliente: ${nome}%0A%0AItens:%0A`;
 
@@ -284,7 +280,8 @@ function enviarWhatsApp(){
     pedido = [];
     atualizarCarrinho();
 }
-/* 🟦 NOVA FUNÇÃO DO BOTÃO PAGAR ONLINE (VERSÃO FINAL) */
+
+/* BOTÃO PAGAR ONLINE */
 document.addEventListener("DOMContentLoaded", function () {
     const pagarBtn = document.getElementById("pagarLinkBtn");
 
@@ -296,18 +293,17 @@ document.addEventListener("DOMContentLoaded", function () {
                 return;
             }
 
-            const nome = document.getElementById("nomeCliente").value.trim();
-            if (!nome) {
+            const nomeCliente = document.getElementById("nomeCliente").value.toUpperCase();
+            if (!nomeCliente) {
                 alert("⚠ Digite seu nome antes de pagar!");
                 return;
             }
 
             const obs = document.getElementById("obs").value;
-            const numeroLoja = "351930580520";
+            const numeroLoja = "351925278570";
 
-            // 1️⃣ Enviar pedido para WhatsApp como "Pagamento Pendente"
             let texto = `📢 *Pagamento Pendente Dom Bistrô*%0A`;
-            texto += `👤 Cliente: *${nome}*%0A%0A`;
+            texto += `👤 Cliente: *${nomeCliente}*%0A%0A`;
             texto += `🛒 *Itens do Pedido:*%0A`;
 
             pedido.forEach(p => {
@@ -320,13 +316,10 @@ document.addEventListener("DOMContentLoaded", function () {
             texto += `📝 Observações:%0A${obs || "(nenhuma)"}%0A%0A`;
             texto += `⏳ O cliente está a efetuar o pagamento online.`;
 
-            // Abre o WhatsApp para o restaurante
             window.open(`https://wa.me/${numeroLoja}?text=${texto}`, "_blank");
 
-            // 2️⃣ Informar o cliente
             alert("O seu pedido foi enviado para nós como 'Pagamento Pendente'. Agora continue para o pagamento.");
 
-            // 3️⃣ Chama a Netlify Function (EasyPay)
             pagarBtn.disabled = true;
             pagarBtn.textContent = "Processando... ⏳";
 
@@ -337,7 +330,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         preco: p.preco,
                         quantidade: p.quantidade
                     })),
-                    customerName: nome
+                    customerName: nomeCliente
                 };
 
                 const res = await fetch("/.netlify/functions/createCheckout", {
@@ -349,12 +342,10 @@ document.addEventListener("DOMContentLoaded", function () {
                 const data = await res.json();
 
                 if (res.ok && data.url) {
-                    // 4️⃣ Limpa o carrinho (somente se obteve link)
                     localStorage.removeItem("pedido");
                     pedido = [];
                     atualizarCarrinho();
 
-                    // 5️⃣ Redireciona para EasyPay
                     window.location.href = data.url;
                     return;
                 } else {
@@ -373,16 +364,16 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 });
 
-
 function toggleMenu(){
     document.getElementById("menuTabs").classList.toggle("menu-open");
 }
 
-</script>
+const nomeInput = document.getElementById('nomeCliente');
+nomeInput.addEventListener('input', () => {
+    nomeInput.value = nomeInput.value.toUpperCase();
+});
 
-<!-- ===================== -->
-<!--       RODAPÉ          -->
-<!-- ===================== -->
+</script>
 
 <footer class="footer">
     <div class="footer-container">
