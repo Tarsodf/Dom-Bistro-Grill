@@ -32,164 +32,88 @@
     margin-top: 6px;
     text-align: center;
 }
-/* Estilo adicional para a descrição */
 .descricao-item {
     font-size: 14px;
     color: #555;
     margin: 5px 0 10px 0;
-    min-height: 40px; /* Ajuda a manter o layout se as descrições tiverem tamanhos diferentes */
+    min-height: 40px;
 }
 </style>
-
 </head>
 <body>
 
 <header>
     <div style="text-align: center; margin-top: 20px;">
         <a href="index.html" style="text-decoration: none; color: black;">
-        <strong><h1>🍽️ Dom Bistrô Grill 🍽️</h1></strong>
+            <h1>🍽️ Dom Bistrô Grill 🍽️</h1>
         </a>
-
         <p style="margin-top: -10px; font-size: 18px; color: #444;">
-        <strong>Sabores que lembram o Brasil, preparados com carinho em Guimarães.</strong>
+            <strong>Sabores que lembram o Brasil, preparados com carinho em Guimarães.</strong>
         </p>
     </div>
-
 </header>
 
 <nav class="menu-centralizado" id="menuTabs"></nav>
-
 <div id="areas"></div>
 
 <div class="floating-cart" onclick="abrirCarrinho()">
- <strong>🛒 <span id="contador-itens">0</span> itens</strong>
+    <strong>🛒 <span id="contador-itens">0</span> itens</strong>
 </div>
 
 <div id="carrinho-box">
     <button class="fechar-btn" onclick="fecharCarrinho()">Fechar Carrinho</button>
-
     <h2>Seu Pedido</h2>
     <ul id="lista"></ul>
-
     <h3>Total: €<span id="total">0,00</span></h3>
-
     <label>Seu nome (obrigatório):</label>
     <input type="text" id="nomeCliente">
-
     <label>Observações:</label>
     <textarea id="obs" rows="4"></textarea>
-
     <button class="enviar-btn" onclick="enviarWhatsApp()">Enviar pelo WhatsApp</button>
-    <button id="pagarLinkBtn" class="enviar-btn" style="background:#635BFF;">
-        Pagar Online 💳
-    </button>
+    <button id="pagarLinkBtn" class="enviar-btn" style="background:#635BFF;">Pagar Online 💳</button>
 </div>
 
 <script>
+// ---------------------- Dados do cardápio ----------------------
 const categorias = {
-executivos: [
-    {
-        nome: 'Executivo Clássico (Segunda)', 
-        preco: 9.00, 
-        foto: 'fotos/Captura1.png',
-        descricao: 'Bife acebolado, arroz, feijão, batata frita e salada.'
-    },
-    {
-        nome: 'Executivo Dom Bistrô (Terça)', 
-        preco: 9.00, 
-        foto: 'fotos/Captura1.png',
-        descricao: 'Empanado de frango, arroz, feijão, batata frita e salada.'
-    },
-    {
-        nome: 'Executivo do Chefe (Quinta)', 
-        preco: 9.00, 
-        foto: 'fotos/Captura1.png',
-        descricao: 'Carne ao molho Madeira, filé de porco empanado, arroz, feijão, batata frita e salada.'
-    },
-    {
-        nome: 'Executivo Festa Brasileira (Sexta)', 
-        preco: 9.00, 
-        foto: 'fotos/Captura1.png',
-        descricao: 'Churrasco misto, arroz, feijão, batata frita, farofa e vinagrete.'
-    },
-    {
-        nome: 'Feijoada (Sábado)', 
-        preco: 9.00, 
-        foto: 'fotos/Captura1.png',
-        descricao: 'Feijoada, arroz, couve refogada, torresmo e laranja.'
-    },
-    {
-        nome: 'Jantinha', 
-        preco: 9.00, 
-        foto: 'fotos/jantinha.jpg',
-        descricao: 'Prato a combinar (não especificado no cardápio).'
-    },
-],
-    panelinhas:[
+    executivos: [
+        {nome: 'Executivo Clássico (Segunda)', preco: 9.00, foto: 'fotos/Captura1.png', descricao: 'Bife acebolado, arroz, feijão, batata frita e salada.'},
+        {nome: 'Executivo Dom Bistrô (Terça)', preco: 9.00, foto: 'fotos/Captura1.png', descricao: 'Empanado de frango, arroz, feijão, batata frita e salada.'},
+        {nome: 'Executivo do Chefe (Quinta)', preco: 9.00, foto: 'fotos/Captura1.png', descricao: 'Carne ao molho Madeira, filé de porco empanado, arroz, feijão, batata frita e salada.'},
+        {nome: 'Executivo Festa Brasileira (Sexta)', preco: 9.00, foto: 'fotos/Captura1.png', descricao: 'Churrasco misto, arroz, feijão, batata frita, farofa e vinagrete.'},
+        {nome: 'Feijoada (Sábado)', preco: 9.00, foto: 'fotos/Captura1.png', descricao: 'Feijoada, arroz, couve refogada, torresmo e laranja.'},
+        {nome: 'Jantinha', preco: 9.00, foto: 'fotos/jantinha.jpg', descricao: 'Prato a combinar (não especificado no cardápio).'}
+    ],
+    panelinhas: [
         {nome:"Carne", preco:7.50, foto:'fotos/Captura1.png'},
         {nome:"Bacon", preco:7.50, foto:'fotos/Captura1.png'},
         {nome:"Legumes", preco:7.50, foto:'fotos/Captura1.png'},
-        {nome:"Bacon com Linguiça", preco:7.50, foto:'fotos/Captura1.png'},
+        {nome:"Bacon com Linguiça", preco:7.50, foto:'fotos/Captura1.png'}
     ],
-    caldos:[
+    caldos: [
         {nome:"Caldo Verde", preco:6.00, foto:'fotos/caldoverde.jpeg'},
         {nome:"Caldo de Feijão", preco:6.00, foto:'fotos/caldofeijao.jpeg'},
         {nome:"Caldo de Frango", preco:6.00, foto:'fotos/caldofrango.jpeg'},
-        {nome:"Carne com Mandioca", preco:6.00, foto:'fotos/mandioca.jpeg'},
+        {nome:"Carne com Mandioca", preco:6.00, foto:'fotos/mandioca.jpeg'}
     ],
-    hamburgueres:[
-        {
-            nome:"X-Baguncinha (combo)", 
-            preco:10.00, 
-            foto:'fotos/xbaguncinha.jpg',
-            descricao: 'Pão, 2 carnes, ovo, bacon, queijo, presunto, alface, tomate e molho especial.'
-        },
-        {
-            nome:"X-Carioca (combo)", 
-            preco:10.00, 
-            foto:'fotos/xcarioca.jpg',
-            descricao: 'Pão, carne, queijo, presunto, abacaxi grelhado, bacon e alface.'
-        },
-        {
-            nome:"X-Mineiro (+ fritas)", 
-            preco:9.00, 
-            foto:'fotos/xmineiro.jpg',
-            descricao: 'Pão, carne, queijo, ovo, bacon, alface, tomate e queijo Minas (ou similar).'
-        },
-        {
-            nome:"X-Gauchesco (+ fritas)", 
-            preco:7.00, 
-            foto:'fotos/xgauchesco.jpg',
-            descricao: 'Pão, carne, queijo, presunto, linguiça defumada, alface e tomate.'
-        },
-        {
-            nome:"X-Nordestino (+ fritas)", 
-            preco:8.00, 
-            foto:'fotos/xnordestino.jpg',
-            descricao: 'Pão, carne, queijo coalho grelhado, carne de sol desfiada e molho.'
-        },
-        {
-            nome:"X-Brasileiro (combo)", 
-            preco:11.00, 
-            foto:'fotos/xbrasileiro.jpg',
-            descricao: 'Pão, 2 carnes, cheddar, bacon, ovo, alface, tomate e batata palha.'
-        },
-        {
-            nome:"X-Dom Cheddar (combo)", 
-            preco:13.00, 
-            foto:'fotos/Captura1.png',
-            descricao: 'Pão, carne, farta porção de queijo cheddar cremoso e cebola caramelizada.'
-        },
+    hamburgueres: [
+        {nome:"X-Baguncinha (combo)", preco:10.00, foto:'fotos/xbaguncinha.jpg', descricao:'Pão, 2 carnes, ovo, bacon, queijo, presunto, alface, tomate e molho especial.'},
+        {nome:"X-Carioca (combo)", preco:10.00, foto:'fotos/xcarioca.jpg', descricao:'Pão, carne, queijo, presunto, abacaxi grelhado, bacon e alface.'},
+        {nome:"X-Mineiro (+ fritas)", preco:9.00, foto:'fotos/xmineiro.jpg', descricao:'Pão, carne, queijo, ovo, bacon, alface, tomate e queijo Minas.'},
+        {nome:"X-Gauchesco (+ fritas)", preco:7.00, foto:'fotos/xgauchesco.jpg', descricao:'Pão, carne, queijo, presunto, linguiça defumada, alface e tomate.'},
+        {nome:"X-Nordestino (+ fritas)", preco:8.00, foto:'fotos/xnordestino.jpg', descricao:'Pão, carne, queijo coalho grelhado, carne de sol desfiada e molho.'},
+        {nome:"X-Brasileiro (combo)", preco:11.00, foto:'fotos/xbrasileiro.jpg', descricao:'Pão, 2 carnes, cheddar, bacon, ovo, alface, tomate e batata palha.'},
+        {nome:"X-Dom Cheddar (combo)", preco:13.00, foto:'fotos/Captura1.png', descricao:'Pão, carne, farta porção de queijo cheddar cremoso e cebola caramelizada.'}
     ],
-    espetinhos:[
+    espetinhos: [
         {nome:"Carne", preco:4.50, foto:'fotos/carne.jpeg'},
         {nome:"Frango", preco:3.00, foto:'fotos/frango.jpeg'},
         {nome:"Frango c/ Bacon", preco:4.00, foto:'fotos/frangocbacon.jpeg'},
         {nome:"Linguiça", preco:2.50, foto:'fotos/linguiça.jpeg'},
         {nome:"Queijo Coalho", preco:4.00, foto:'fotos/queijo.jpeg'},
-        {nome:"Coalho c/ Melaço", preco:4.00, foto:'fotos/melaço.jpeg'},
+        {nome:"Coalho c/ Melaço", preco:4.00, foto:'fotos/melaço.jpeg'}
     ],
-    petiscos:[
+    petiscos: [
         {nome:"Batata Frita Pequena", preco:2.00, foto:'fotos/batatapequena.jpeg'},
         {nome:"Batata Frita Média", preco:3.50, foto:'fotos/batatamedia.jpeg'},
         {nome:"Batata Frita Grande", preco:4.50, foto:'fotos/batatagrande.jpeg'},
@@ -197,9 +121,9 @@ executivos: [
         {nome:"Anéis de Cebola", preco:3.50, foto:'fotos/aneiscebola.jpeg'},
         {nome:"Calabresa Acebolada", preco:6.00, foto:'fotos/calabresa.jpeg'},
         {nome:"Asas ao Molho Agridoce", preco:5.00, foto:'fotos/asasdefrango.jpeg'},
-        {nome:"Cuscuz com Ovo e Coalho", preco:5.00, foto:'fotos/cuscuz.jpeg'},
+        {nome:"Cuscuz com Ovo e Coalho", preco:5.00, foto:'fotos/cuscuz.jpeg'}
     ],
-    doces:[
+    doces: [
         {nome:"Bolo de Cenoura", preco:1.50, foto:'fotos/Captura1.png'},
         {nome:"Bolo de Chocolate", preco:1.50, foto:'fotos/Captura1.png'},
         {nome:"Bolo Ninho", preco:1.50, foto:'fotos/Captura1.png'},
@@ -208,9 +132,9 @@ executivos: [
         {nome:"Brigadeiro", preco:0.50, foto:'fotos/Captura1.png'},
         {nome:"Pudim", preco:2.00, foto:'fotos/Captura1.png'},
         {nome:"Bolo de Pote", preco:4.00, foto:'fotos/Captura1.png'},
-        {nome:"Bolo Formigueiro", preco:1.50, foto:'fotos/boloformigueiro.jpg'},
+        {nome:"Bolo Formigueiro", preco:1.50, foto:'fotos/boloformigueiro.jpg'}
     ],
-    bebidas:[
+    bebidas: [
         {nome:"Coca-Cola", preco:2.00, foto:'fotos/coca.jpeg'},
         {nome:"Coca Zero", preco:2.20, foto:'fotos/cocazero.jpeg'},
         {nome:"Ice Tea", preco:1.40, foto:'fotos/IceTea.jpeg'},
@@ -224,37 +148,35 @@ executivos: [
         {nome:"Super Bock", preco:2.00, foto:'fotos/superbock.jpg'},
         {nome:"Sumo Natural Laranja", preco:3.50, foto:'fotos/sumodelaranja.jpeg'},
         {nome:"Sumo Natural Abacaxi", preco:3.50, foto:'fotos/sumodeabacaxi.jpeg'},
-        {nome:"Creme de Morango", preco:4.00, foto:'fotos/cremedemorango.jpeg'},
+        {nome:"Creme de Morango", preco:4.00, foto:'fotos/cremedemorango.jpeg'}
     ]
 };
 
+// ---------------------- Construção do Menu ----------------------
 const menuTabs = document.getElementById("menuTabs");
 const areas = document.getElementById("areas");
 
-// Construção do Menu de Abas
 Object.keys(categorias).forEach((cat, idx) => {
-    menuTabs.innerHTML += `<button onclick="abrirSecao.call(this, '${cat}')" class="${idx===0 ? 'active' : ''}">
-            ${cat.toUpperCase()}
-        </button>`;
-    areas.innerHTML += `<div id="${cat}" class="section ${idx===0 ? 'active' : ''}"></div>`;
+    menuTabs.innerHTML += `<button onclick="abrirSecao.call(this, '${cat}')" class="${idx===0?'active':''}">${cat.toUpperCase()}</button>`;
+    areas.innerHTML += `<div id="${cat}" class="section ${idx===0?'active':''}"></div>`;
 });
 
-// Populando as Seções com os Itens
+// ---------------------- Populando as seções ----------------------
 Object.keys(categorias).forEach(cat => {
     const div = document.getElementById(cat);
     categorias[cat].forEach(item => {
-        // Se a descrição existir, adiciona-a
         const descricaoHTML = item.descricao ? `<p class="descricao-item">${item.descricao}</p>` : '';
-        
         div.innerHTML += `<div class="card">
-                <img src="${item.foto}" alt="${item.nome}">
-                <h3>${item.nome}</h3>
-                ${descricaoHTML} <p><strong>€${item.preco.toFixed(2)}</strong></p>
-                <button onclick="addItem('${item.nome}', ${item.preco})">Adicionar</button>
-            </div>`;
+            <img src="${item.foto}" alt="${item.nome}">
+            <h3>${item.nome}</h3>
+            ${descricaoHTML}
+            <p><strong>€${item.preco.toFixed(2)}</strong></p>
+            <button onclick="addItem('${item.nome}', ${item.preco})">Adicionar</button>
+        </div>`;
     });
 });
 
+// ---------------------- Funções do Menu ----------------------
 function abrirSecao(cat) {
     document.querySelectorAll(".section").forEach(s => s.classList.remove("active"));
     document.getElementById(cat).classList.add("active");
@@ -264,52 +186,51 @@ function abrirSecao(cat) {
 
 window.onload = () => {
     const hash = window.location.hash.replace("#","").trim();
-    if (hash && document.getElementById(hash)) {
+    if(hash && document.getElementById(hash)){
         const botao = document.querySelector(`button[onclick*="${hash}"]`);
-        if (botao) abrirSecao.call(botao, hash);
+        if(botao) abrirSecao.call(botao, hash);
     }
     atualizarCarrinho();
 };
 
+// ---------------------- Carrinho ----------------------
 let pedido = JSON.parse(localStorage.getItem("pedido")) || [];
 
-function addItem(nome, preco) {
-    const i = pedido.findIndex(item => item.nome === nome);
-    if (i >= 0) pedido[i].quantidade++;
-    else pedido.push({nome, preco, quantidade: 1});
+function addItem(nome, preco){
+    const i = pedido.findIndex(item=>item.nome===nome);
+    if(i>=0) pedido[i].quantidade++;
+    else pedido.push({nome, preco, quantidade:1});
     salvarPedido();
 }
 
-function salvarPedido() {
+function salvarPedido(){
     localStorage.setItem("pedido", JSON.stringify(pedido));
     atualizarCarrinho();
 }
 
-function atualizarCarrinho() {
+function atualizarCarrinho(){
     const lista = document.getElementById("lista");
     const contador = document.getElementById("contador-itens");
     let total = 0;
-
-    lista.innerHTML = pedido.map((p, i) => {
-        total += p.preco * p.quantidade;
+    lista.innerHTML = pedido.map((p,i)=>{
+        total += p.preco*p.quantidade;
         return `<li class="carrinho-item">
-                <span>${p.nome} — €${p.preco.toFixed(2)}</span>
-                <div class="quantidade-box">
-                    <button onclick="alterarQuantidade(${i}, -1)">−</button>
-                    <span>${p.quantidade}</span>
-                    <button onclick="alterarQuantidade(${i}, 1)">+</button>
-                </div>
-                <button class="remover" onclick="removerItem(${i})">❌</button>
-            </li>`;
-    }).join("");
-
+            <span>${p.nome} — €${p.preco.toFixed(2)}</span>
+            <div class="quantidade-box">
+                <button onclick="alterarQuantidade(${i},-1)">−</button>
+                <span>${p.quantidade}</span>
+                <button onclick="alterarQuantidade(${i},1)">+</button>
+            </div>
+            <button class="remover" onclick="removerItem(${i})">❌</button>
+        </li>`;
+    }).join('');
     document.getElementById("total").textContent = total.toFixed(2);
     contador.textContent = pedido.reduce((sum,p)=>sum+p.quantidade,0);
 }
 
-function alterarQuantidade(i, delta){
-    pedido[i].quantidade += delta;
-    if (pedido[i].quantidade <= 0) removerItem(i);
+function alterarQuantidade(i,delta){
+    pedido[i].quantidade+=delta;
+    if(pedido[i].quantidade<=0) removerItem(i);
     salvarPedido();
 }
 
@@ -318,154 +239,83 @@ function removerItem(i){
     salvarPedido();
 }
 
-function abrirCarrinho(){
-    atualizarCarrinho();
-    document.getElementById("carrinho-box").classList.add("carrinho-open");
-}
+function abrirCarrinho(){ atualizarCarrinho(); document.getElementById("carrinho-box").classList.add("carrinho-open"); }
+function fecharCarrinho(){ document.getElementById("carrinho-box").classList.remove("carrinho-open"); }
 
-function fecharCarrinho(){
-    document.getElementById("carrinho-box").classList.remove("carrinho-open");
-}
-
+// ---------------------- WhatsApp ----------------------
 function enviarWhatsApp(){
     const nome = document.getElementById("nomeCliente").value;
-    if(!nome.trim()){
-        alert("⚠ Digite seu nome!");
-        return;
-    }
-
+    if(!nome.trim()){ alert("⚠ Digite seu nome!"); return; }
     const obs = document.getElementById("obs").value;
     const numero = "351925278570";
 
     let texto = `Pedido Dom Bistrô%0ACliente: ${nome}%0A%0AItens:%0A`;
+    pedido.forEach(p=>texto+=`- ${p.nome} x${p.quantidade} (€${(p.preco*p.quantidade).toFixed(2)})%0A`);
+    texto+=`%0ATotal: €${pedido.reduce((t,p)=>t+p.preco*p.quantidade,0).toFixed(2)}%0A%0AObservações:%0A${obs}`;
 
-    pedido.forEach(p=>{
-        texto += `- ${p.nome} x${p.quantidade} (€${(p.preco*p.quantidade).toFixed(2)})%0A`;
-    });
-
-    texto += `%0ATotal: €${pedido.reduce((t,p)=>t+p.preco*p.quantidade,0).toFixed(2)}%0A%0AObservações:%0A${obs}`;
-
-    window.open(`https://wa.me/${numero}?text=${texto}`, '_blank');
-
+    window.open(`https://wa.me/${numero}?text=${texto}`,'_blank');
     localStorage.removeItem("pedido");
-    pedido = [];
+    pedido=[];
     atualizarCarrinho();
 }
 
-/* BOTÃO PAGAR ONLINE */
-document.addEventListener("DOMContentLoaded", function () {
+// ---------------------- Pagar Online ----------------------
+document.addEventListener("DOMContentLoaded", function(){
     const pagarBtn = document.getElementById("pagarLinkBtn");
+    if(!pagarBtn) return;
 
-    if (pagarBtn) {
-        pagarBtn.addEventListener("click", async function () {
+    pagarBtn.addEventListener("click", async function(){
+        if(!pedido.length){ alert("Seu carrinho está vazio!"); return; }
 
-            if (!pedido || pedido.length === 0) {
-                alert("Seu carrinho está vazio!");
-                return;
-            }
+        const nomeCliente = document.getElementById("nomeCliente").value.toUpperCase();
+        if(!nomeCliente){ alert("⚠ Digite seu nome antes de pagar!"); return; }
 
-            const nomeCliente = document.getElementById("nomeCliente").value.toUpperCase();
-            if (!nomeCliente) {
-                alert("⚠ Digite seu nome antes de pagar!");
-                return;
-            }
+        const obs = document.getElementById("obs").value;
+        const numeroLoja = "351925278570";
 
-            const obs = document.getElementById("obs").value;
-            const numeroLoja = "351925278570";
+        let texto = `📢 *Pagamento Pendente Dom Bistrô*%0A👤 Cliente: *${nomeCliente}*%0A%0A🛒 *Itens do Pedido:*%0A`;
+        pedido.forEach(p=>texto+=`- ${p.nome} x${p.quantidade} (€${(p.preco*p.quantidade).toFixed(2)})%0A`);
+        texto+=`%0A💰 Total: *€${pedido.reduce((t,p)=>t+p.preco*p.quantidade,0).toFixed(2)}*%0A%0A📝 Observações:%0A${obs||"(nenhuma)"}%0A%0A⏳ O cliente está a efetuar o pagamento online.`;
 
-            let texto = `📢 *Pagamento Pendente Dom Bistrô*%0A`;
-            texto += `👤 Cliente: *${nomeCliente}*%0A%0A`;
-            texto += `🛒 *Itens do Pedido:*%0A`;
+        window.open(`https://wa.me/${numeroLoja}?text=${texto}`,"_blank");
+        alert("O seu pedido foi enviado como 'Pagamento Pendente'. Continue para o pagamento.");
 
-            pedido.forEach(p => {
-                texto += `- ${p.nome} x${p.quantidade} (€${(p.preco * p.quantidade).toFixed(2)})%0A`;
-            });
+        pagarBtn.disabled=true;
+        pagarBtn.textContent="Processando... ⏳";
 
-            const total = pedido.reduce((t, p) => t + (p.preco * p.quantidade), 0).toFixed(2);
+        try{
+            const payload = { items: pedido.map(p=>({nome:p.nome, preco:p.preco, quantidade:p.quantidade})), customerName: nomeCliente };
+            const res = await fetch("/.netlify/functions/createCheckout", { method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify(payload) });
+            const data = await res.json();
 
-            texto += `%0A💰 Total: *€${total}*%0A%0A`;
-            texto += `📝 Observações:%0A${obs || "(nenhuma)"}%0A%0A`;
-            texto += `⏳ O cliente está a efetuar o pagamento online.`;
-
-            window.open(`https://wa.me/${numeroLoja}?text=${texto}`, "_blank");
-
-            alert("O seu pedido foi enviado para nós como 'Pagamento Pendente'. Agora continue para o pagamento.");
-
-            pagarBtn.disabled = true;
-            pagarBtn.textContent = "Processando... ⏳";
-
-            try {
-                const payload = {
-                    items: pedido.map(p => ({
-                        nome: p.nome,
-                        preco: p.preco,
-                        quantidade: p.quantidade
-                    })),
-                    customerName: nomeCliente
-                };
-
-                const res = await fetch("/.netlify/functions/createCheckout", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify(payload)
-                });
-
-                const data = await res.json();
-
-                if (res.ok && data.url) {
-                    localStorage.removeItem("pedido");
-                    pedido = [];
-                    atualizarCarrinho();
-
-                    window.location.href = data.url;
-                    return;
-                } else {
-                    console.error(data);
-                    alert("Erro ao iniciar o pagamento. Tente novamente.");
-                }
-
-            } catch (err) {
-                console.error(err);
-                alert("Erro de conexão. Tente novamente.");
-            } finally {
-                pagarBtn.disabled = false;
-                pagarBtn.textContent = "Pagar Online 💳";
-            }
-        });
-    }
+            if(res.ok && data.url){
+                localStorage.removeItem("pedido");
+                pedido=[];
+                atualizarCarrinho();
+                window.location.href = data.url;
+            } else { console.error(data); alert("Erro ao iniciar o pagamento. Tente novamente."); }
+        } catch(err){ console.error(err); alert("Erro de conexão. Tente novamente."); }
+        finally{ pagarBtn.disabled=false; pagarBtn.textContent="Pagar Online 💳"; }
+    });
 });
 
-function toggleMenu(){
-    document.getElementById("menuTabs").classList.toggle("menu-open");
-}
+document.getElementById('nomeCliente').addEventListener('input', e=>e.target.value=e.target.value.toUpperCase());
 
-const nomeInput = document.getElementById('nomeCliente');
-nomeInput.addEventListener('input', () => {
-    nomeInput.value = nomeInput.value.toUpperCase();
-});
-
+// ---------------------- Footer ----------------------
 </script>
 
 <footer class="footer">
     <div class="footer-container">
-
         <div class="footer-item">
-            <img src="fotos/whatt.ico" alt="WhatsApp">
-            <span>925 278 570</span>
+            <img src="fotos/whatt.ico" alt="WhatsApp"><span>925 278 570</span>
         </div>
-
         <div class="footer-item">
-            <img src="fotos/insta.ico" alt="Instagram">
-            <span>@dom_bistro_grill</span>
+            <img src="fotos/insta.ico" alt="Instagram"><span>@dom_bistro_grill</span>
         </div>
-
         <div class="footer-item">
-            <img src="fotos/end.ico" alt="Endereço">
-            <span>Alam São Damasco - S Francisco Centro 35, N/A, 4810-286 Guimarães</span>
+            <img src="fotos/end.ico" alt="Endereço"><span>Alam São Damasco - S Francisco Centro 35, N/A, 4810-286 Guimarães</span>
         </div>
-
     </div>
-
     <p class="copy">© 2025 Dom Bistrô Grill — Todos os direitos reservados.</p>
 </footer>
 
