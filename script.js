@@ -1,10 +1,10 @@
 // ---------------------- Dados do cardápio ----------------------
 const categorias = {
     executivos: [
-        {nome: 'Executivo Clássico (Segunda)', preco: 9.00, foto: 'fotos/bife.jpg', descricao: 'Bife acebolado, arroz, feijão, batata frita e salada.'},
-        {nome: 'Executivo Dom Bistrô (Terça)', preco: 9.00, foto: 'fotos/frango.jpg', descricao: 'Empanado de frango, arroz, feijão, batata frita e salada.'},
+        {nome: 'Executivo Clássico (Segunda)', preco: 9.00, foto: 'fotos/bife.png', descricao: 'Bife acebolado, arroz, feijão, batata frita e salada.'},
+        {nome: 'Executivo Dom Bistrô (Terça)', preco: 9.00, foto: 'fotos/empanado.png', descricao: 'Empanado de frango, arroz, feijão, batata frita e salada.'},
         {nome: 'Executivo do Chefe (Quinta)', preco: 9.00, foto: 'fotos/molho.png', descricao: 'Carne ao molho Madeira, filé de porco empanado, arroz, feijão, batata frita e salada.'},
-        {nome: 'Executivo Festa Brasileira (Sexta)', preco: 9.00, foto: 'fotos/mix.jpg', descricao: 'Churrasco misto, arroz, feijão, batata frita, farofa e vinagrete.'},
+        {nome: 'Executivo Festa Brasileira (Sexta)', preco: 9.00, foto: 'fotos/mix.png', descricao: 'Churrasco misto, arroz, feijão, batata frita, farofa e vinagrete.'},
         {nome: 'Feijoada (Sábado)', preco: 9.00, foto: 'fotos/feijoada.png', descricao: 'Feijoada, arroz, couve refogada, torresmo e laranja.'},
         {nome: 'Jantinha', preco: 9.00, foto: 'fotos/jantinha.jpg', descricao: 'Prato pode escolher um espetinho (Carne,Frango,Frango com Bacon,Linguiça,Queijo Coalho).'}
     ],
@@ -35,7 +35,7 @@ const categorias = {
         {nome:"Frango c/ Bacon", preco:4.00, foto:'fotos/frangocbacon.jpeg', descricao: 'Espetinho de frango envolto em bacon.'},
         {nome:"Linguiça", preco:2.50, foto:'fotos/linguiça.jpeg', descricao: 'Espetinho de linguiça defumada.'},
         {nome:"Queijo Coalho", preco:4.00, foto:'fotos/queijo.jpeg', descricao: 'Espetinho de queijo coalho grelhado.'},
-        {nome:"Coalho c/ Melaço", preco:4.00, foto:'fotos/melaso.jpg', descricao: 'Queijo coalho com melaço de cana.'}
+        {nome:"Coalho c/ Melaço", preco:4.00, foto:'fotos/queijo.png', descricao: 'Queijo coalho com melaço de cana.'}
     ],
     petiscos: [
         {nome:"Batata Frita Pequena", preco:2.00, foto:'fotos/batatapequena.jpeg', descricao: 'Porção pequena de batata frita crocante.'},
@@ -52,7 +52,7 @@ const categorias = {
         {nome:"Bolo de Chocolate", preco:1.50, foto:'fotos/Captura1.png', descricao: 'Fatia de bolo de chocolate.'},
         {nome:"Bolo Ninho", preco:1.50, foto:'fotos/Captura1.png', descricao: 'Fatia de bolo com leite Ninho.'},
         {nome:"Bolo de Milho", preco:1.50, foto:'fotos/Captura1.png', descricao: 'Fatia de bolo de milho verde.'},
-        {nome:"Brownie", preco:2.50, foto:'fotos/brawer.jpg', descricao: 'Brownie de chocolate.'},
+        {nome:"Brownie", preco:2.50, foto:'fotos/bk.png', descricao: 'Brownie de chocolate.'},
         {nome:"Brigadeiro", preco:0.50, foto:'fotos/brigadeiro.png', descricao: 'Tradicional brigadeiro brasileiro.'},
         {nome:"Pudim", preco:2.00, foto:'fotos/Captura1.png', descricao: 'Fatia de pudim de leite condensado.'},
         {nome:"Bolo de Pote", preco:4.00, foto:'fotos/bolonopote.png', descricao: 'Bolo de pote com diversas opções.'},
