@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="pt-BR-ingles">
+<head>
+    <meta charset="UTF-8">
+    <title>Dom Bistrô Grill - Cardápio Online</title>
+    <meta name="description" content="Dom Bistrô Grill - Culinária brasileira autêntica em Guimarães, Portugal. Faça seu pedido online!">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="fotos/1-1b9578f1.ico">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header-custom">
+        <div class="banner">
+            <i class="fas fa-shipping-fast"></i> ENTREGAMOS EM GUIMARÃES • PEDIDO MÍNIMO €10
+        </div>
+        <div class="logo-container">
+            <h1 class="logo-title">🔥Dom Bistrô Grill🔥</h1>
+            <p class="logo-subtitle">SABORES AUTÊNTICOS DO BRASIL</p>
+        </div>
+    </header>
+
+    <!-- Menu de Categorias -->
+    <nav class="menu-centralizado" id="menuTabs"></nav>
+
+    <!-- Áreas de Conteúdo -->
+    <div id="areas"></div>
+
+        <!-- Carrinho Flutuante -->
+    <div class="floating-cart" onclick="abrirCarrinho()">
+        <i class="fas fa-shopping-basket"></i>
+        <strong><span id="contador-itens">0</span> itens</strong>
+        <span>| €<span id="total-mini">0,00</span></span>
+    </div>
+
+    <!-- Modal do Carrinho -->
+    <div id="carrinho-box">
+        <button class="fechar-btn" onclick="fecharCarrinho()">
+            <i class="fas fa-times"></i> FECHAR CARRINHO
+        </button>
+
+        <h2><i class="fas fa-receipt"></i> SEU PEDIDO</h2>
+
+        <ul id="lista"></ul>
+
+        <h3>TOTAL: €<span id="total">0,00</span></h3>
+        
+        <label>Seu nome (obrigatório):</label>
+        <input type="text" id="nomeCliente" placeholder="Digite seu nome completo">
+        
+        <label>Observações:</label>
+        <textarea id="obs" rows="4" placeholder="Alguma observação sobre seu pedido?"></textarea>
+        
+        <!-- AVISO DO PROCESSO -->
+        <div class="aviso-processo">
+            <div class="aviso-icon">
+                <i class="fas fa-info-circle"></i>
+            </div>
+            <div class="aviso-texto">
+                <strong>Processo de Pedido:</strong>
+                <ol>
+                    <li>Envie o pedido pelo WhatsApp primeiro</li>
+                    <li>Depois realize o pagamento online</li>
+                </ol>
+            </div>
+        </div>
+        
+        <button class="enviar-btn" onclick="enviarWhatsApp()">
+            <i class="fab fa-whatsapp"></i> 1º ENVIAR PELO WHATSAPP
+        </button>
+        
+        <button id="pagarLinkBtn" class="enviar-btn pagar-btn">
+            <i class="fas fa-credit-card"></i> 2º PAGAR ONLINE 💳
+        </button>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-item">
+                <i class="fab fa-whatsapp"></i><span>925 278 570</span>
+            </div>
+            <div class="footer-item">
+                <i class="fab fa-instagram"></i><span>dom_bistro_grill</span>
+            </div>
+            <div class="footer-item">
+                <i class="fas fa-map-marker-alt"></i><span>Alam São Damasco - S Francisco Centro 35, N/A, 4810-286 Guimarães</span>
+            </div>
+        </div>
+
+        <!-- Links -->
+        <div class="footer-links">
+            <!-- Link para o formulário de confraternização NOVO ESTILO -->
+            <a href="Formulario.html" class="btn-reserva">
+    <i class="fas fa-calendar-alt"></i>
+    FAÇA SUA RESERVA AQUI
+</a>
+            <span>|</span>
+            <a href="termos-1.html">Termos e Condições</a>
+            <span>|</span>
+            <a href="politicas-1.html">Política de Privacidade</a>
+        </div>
+
+        <p class="copy">© 2025 Dom Bistrô Grill — Todos os direitos Reservados.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
