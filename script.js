@@ -27,7 +27,7 @@ const categorias = {
         {nome:"X-Gauchesco (+ fritas)", preco:7.00, foto:'fotos/xgauchesco.jpg', descricao:'Pão, carne, queijo, presunto, linguiça defumada, alface e tomate.'},
         {nome:"X-Nordestino (+ fritas)", preco:8.00, foto:'fotos/xnordestino.jpg', descricao:'Pão, carne, queijo coalho grelhado, carne de sol desfiada e molho.'},
         {nome:"X-Brasileiro (combo)", preco:11.00, foto:'fotos/xbrasileiro.jpg', descricao:'Pão, 2 carnes, cheddar, bacon, ovo, alface, tomate e batata palha.'},
-        {nome:"X-Dom Cheddar (combo)", preco:13.00, foto:'fotos/power.jpg', descricao:'Pão, carne, farta porção de queijo cheddar cremoso e cebola caramelizada.'}
+        {nome:"X-Dom Cheddar (combo)", preco:13.00, foto:'fotos/dom.jpg', descricao:'Pão, carne, farta porção de queijo cheddar cremoso e cebola caramelizada.'}
     ],
     espetinhos: [
         {nome:"Carne", preco:4.50, foto:'fotos/carne.jpeg', descricao: 'Espetinho de carne bovina suculenta.'},
