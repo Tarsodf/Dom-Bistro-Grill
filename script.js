@@ -106,7 +106,7 @@ function calcularTotal() {
     };
 }
 
-// ==================== LIGHTBOX PARA IMAGENS ====================
+// ==================== LIGHTBOX PARA IMAGENS (RESPONSIVO) ====================
 
 let todasImagensLightbox = [];
 let indiceImagemAtual = 0;
@@ -190,9 +190,38 @@ function configurarEventosLightbox() {
             this.classList.toggle('zoom-ativo');
             
             if (this.classList.contains('zoom-ativo')) {
-                mostrarMensagemZoom('Zoom ativado • Clique novamente para sair do zoom');
+                mostrarMensagemZoom('Zoom ativado • Toque novamente para sair do zoom');
             }
         });
+    }
+    
+    // Controles por toque para dispositivos móveis
+    let touchStartX = 0;
+    let touchEndX = 0;
+    
+    if (imagemAmpliada) {
+        imagemAmpliada.addEventListener('touchstart', function(event) {
+            touchStartX = event.changedTouches[0].screenX;
+        });
+        
+        imagemAmpliada.addEventListener('touchend', function(event) {
+            touchEndX = event.changedTouches[0].screenX;
+            handleSwipe();
+        });
+    }
+    
+    function handleSwipe() {
+        const swipeThreshold = 50; // Sensibilidade do deslize
+        
+        if (touchEndX < touchStartX - swipeThreshold) {
+            // Deslizou para a esquerda -> próxima imagem
+            navegarImagem(1);
+        }
+        
+        if (touchEndX > touchStartX + swipeThreshold) {
+            // Deslizou para a direita -> imagem anterior
+            navegarImagem(-1);
+        }
     }
     
     document.addEventListener('keydown', function(event) {
@@ -223,9 +252,64 @@ function configurarEventosLightbox() {
             }
         }
     });
+    
+    // Ajustar tamanho da imagem quando a janela for redimensionada
+    window.addEventListener('resize', function() {
+        ajustarTamanhoImagemResponsivo();
+    });
 }
 
-// Abrir lightbox - FUNÇÃO CORRIGIDA
+// Ajustar tamanho da imagem de forma responsiva
+function ajustarTamanhoImagemResponsivo() {
+    const imagemAmpliada = document.getElementById('imagemAmpliada');
+    const modal = document.getElementById('modalLightbox');
+    
+    if (!imagemAmpliada || !modal || modal.style.display !== 'flex') return;
+    
+    const larguraTela = window.innerWidth;
+    const alturaTela = window.innerHeight;
+    
+    // Ajustar para dispositivos móveis
+    if (larguraTela <= 768) {
+        // Em dispositivos móveis, usar porcentagens maiores
+        imagemAmpliada.style.maxWidth = '95%';
+        imagemAmpliada.style.maxHeight = '70vh';
+        
+        // Ajustar botões de navegação para dispositivos móveis
+        const btnAnterior = document.getElementById('btnAnterior');
+        const btnProximo = document.getElementById('btnProximo');
+        
+        if (btnAnterior && btnProximo) {
+            if (larguraTela <= 480) {
+                // Telas muito pequenas
+                btnAnterior.style.width = '40px';
+                btnAnterior.style.height = '40px';
+                btnAnterior.style.fontSize = '16px';
+                btnProximo.style.width = '40px';
+                btnProximo.style.height = '40px';
+                btnProximo.style.fontSize = '16px';
+                btnAnterior.style.left = '10px';
+                btnProximo.style.right = '10px';
+            } else {
+                // Tablets e celulares maiores
+                btnAnterior.style.width = '50px';
+                btnAnterior.style.height = '50px';
+                btnAnterior.style.fontSize = '20px';
+                btnProximo.style.width = '50px';
+                btnProximo.style.height = '50px';
+                btnProximo.style.fontSize = '20px';
+                btnAnterior.style.left = '15px';
+                btnProximo.style.right = '15px';
+            }
+        }
+    } else {
+        // Desktop - valores padrão
+        imagemAmpliada.style.maxWidth = '90%';
+        imagemAmpliada.style.maxHeight = '80vh';
+    }
+}
+
+// Abrir lightbox - FUNÇÃO CORRIGIDA E RESPONSIVA
 function abrirLightbox(src, alt, index) {
     console.log(`📂 Abrindo lightbox - índice: ${index}`);
     
@@ -241,8 +325,14 @@ function abrirLightbox(src, alt, index) {
     
     indiceImagemAtual = index;
     
-    // IMPORTANTE: SEMPRE REMOVER ZOMP AO ABRIR NOVA IMAGEM
+    // IMPORTANTE: SEMPRE REMOVER ZOOM AO ABRIR NOVA IMAGEM
     imagemAmpliada.classList.remove('zoom-ativo');
+    
+    // Configurar imagem para carregamento responsivo
+    imagemAmpliada.onload = function() {
+        // Após carregar a imagem, ajustar o tamanho responsivo
+        ajustarTamanhoImagemResponsivo();
+    };
     
     imagemAmpliada.src = src;
     imagemAmpliada.alt = alt;
@@ -271,8 +361,21 @@ function abrirLightbox(src, alt, index) {
     modal.style.display = 'flex';
     document.body.style.overflow = 'hidden';
     
+    // Forçar reflow para garantir que o modal está visível
+    void modal.offsetHeight;
+    
+    // Ajustar tamanho imediatamente
+    ajustarTamanhoImagemResponsivo();
+    
     atualizarBotoesNavegacao();
-    mostrarMensagemZoom('Clique na imagem para zoom • Use as setas para navegar • ESC para sair');
+    
+    // Mostrar mensagem apropriada para dispositivo
+    const isMobile = window.innerWidth <= 768;
+    const mensagem = isMobile 
+        ? 'Toque na imagem para zoom • Deslize para navegar • Toque fora para sair'
+        : 'Clique na imagem para zoom • Use as setas para navegar • ESC para sair';
+    
+    mostrarMensagemZoom(mensagem);
 }
 
 // Mostrar mensagem temporária
@@ -287,16 +390,19 @@ function mostrarMensagemZoom(texto) {
     mensagem.textContent = texto;
     mensagem.style.cssText = `
         position: absolute;
-        bottom: 80px;
+        bottom: ${window.innerWidth <= 768 ? '60px' : '80px'};
         left: 50%;
         transform: translateX(-50%);
         background: rgba(0, 0, 0, 0.8);
         color: white;
-        padding: 10px 20px;
+        padding: ${window.innerWidth <= 768 ? '8px 15px' : '10px 20px'};
         border-radius: 20px;
-        font-size: 14px;
+        font-size: ${window.innerWidth <= 768 ? '12px' : '14px'};
         z-index: 10001;
         animation: fadeInOut 3s ease;
+        text-align: center;
+        max-width: 90%;
+        word-wrap: break-word;
     `;
     
     document.querySelector('.modal-imagem').appendChild(mensagem);
@@ -322,11 +428,11 @@ function fecharLightbox() {
     }
 }
 
-// Navegar entre imagens - FUNÇÃO CORRIGIDA (PROBLEMA DO ZOMP RESOLVIDO)
+// Navegar entre imagens - FUNÇÃO CORRIGIDA (PROBLEMA DO ZOOM RESOLVIDO)
 function navegarImagem(direcao) {
     if (todasImagensLightbox.length === 0) return;
     
-    // REMOVER ZOMP ANTES DE NAVEGAR (CORREÇÃO DO PROBLEMA)
+    // REMOVER ZOOM ANTES DE NAVEGAR (CORREÇÃO DO PROBLEMA)
     const imagemAmpliada = document.getElementById('imagemAmpliada');
     if (imagemAmpliada) {
         imagemAmpliada.classList.remove('zoom-ativo');
@@ -353,7 +459,7 @@ function navegarImagem(direcao) {
             imagemAmpliada.style.transition = 'opacity 0.3s ease';
             
             setTimeout(() => {
-                // GARANTIR QUE ZOMP ESTÁ DESATIVADO PARA NOVA IMAGEM
+                // GARANTIR QUE ZOOM ESTÁ DESATIVADO PARA NOVA IMAGEM
                 imagemAmpliada.classList.remove('zoom-ativo');
                 
                 // Carregar nova imagem
@@ -363,6 +469,9 @@ function navegarImagem(direcao) {
                 // Restaurar opacidade
                 setTimeout(() => {
                     imagemAmpliada.style.opacity = '1';
+                    
+                    // Ajustar tamanho após carregar nova imagem
+                    ajustarTamanhoImagemResponsivo();
                 }, 50);
                 
                 // Atualizar informações
@@ -390,8 +499,13 @@ function navegarImagem(direcao) {
                 // Atualizar botões de navegação
                 atualizarBotoesNavegacao();
                 
-                // Mostrar mensagem
-                mostrarMensagemZoom('Clique na imagem para zoom • Use as setas para navegar • ESC para sair');
+                // Mostrar mensagem apropriada para dispositivo
+                const isMobile = window.innerWidth <= 768;
+                const mensagem = isMobile 
+                    ? 'Toque na imagem para zoom • Deslize para navegar • Toque fora para sair'
+                    : 'Clique na imagem para zoom • Use as setas para navegar • ESC para sair';
+                
+                mostrarMensagemZoom(mensagem);
                 
             }, 300);
         }
