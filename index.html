@@ -27,7 +27,7 @@
     <!-- Áreas de Conteúdo -->
     <div id="areas"></div>
 
-        <!-- Carrinho Flutuante -->
+    <!-- Carrinho Flutuante -->
     <div class="floating-cart" onclick="abrirCarrinho()">
         <i class="fas fa-shopping-basket"></i>
         <strong><span id="contador-itens">0</span> itens</strong>
@@ -91,11 +91,10 @@
 
         <!-- Links -->
         <div class="footer-links">
-            <!-- Link para o formulário de confraternização NOVO ESTILO -->
             <a href="Formulario.html" class="btn-reserva">
-    <i class="fas fa-calendar-alt"></i>
-    FAÇA SUA RESERVA AQUI
-</a>
+                <i class="fas fa-calendar-alt"></i>
+                FAÇA SUA RESERVA AQUI
+            </a>
             <span>|</span>
             <a href="termos-1.html">Termos e Condições</a>
             <span>|</span>
@@ -104,6 +103,21 @@
 
         <p class="copy">© 2025 Dom Bistrô Grill — Todos os direitos Reservados.</p>
     </footer>
+
+    <!-- ====================================================== -->
+    <!-- MODAL DE ZOOM NAS IMAGENS (LIGHTBOX) - CORRIGIDO    -->
+    <!-- ====================================================== -->
+    <div id="modalLightbox" class="modal-imagem">
+        <span class="fechar-modal-lightbox">&times;</span>
+        <img class="imagem-ampliada" id="imagemAmpliada" alt="Imagem ampliada">
+        <div class="modal-info" id="infoLightbox"></div>
+        <button class="nav-btn anterior" id="btnAnterior">
+            <i class="fas fa-chevron-left"></i>
+        </button>
+        <button class="nav-btn proximo" id="btnProximo">
+            <i class="fas fa-chevron-right"></i>
+        </button>
+    </div>
 
     <script src="script.js"></script>
 </body>
