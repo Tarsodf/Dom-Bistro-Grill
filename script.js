@@ -544,6 +544,15 @@ document.addEventListener('DOMContentLoaded', function() {
     inicializarCarrinho();
     configurarEventListeners();
     
+    // Inicializar botão do carrinho topo
+    const carrinhoTopoBtn = document.getElementById("carrinhoTopoBtn");
+    if (carrinhoTopoBtn && pedido.length > 0) {
+        carrinhoTopoBtn.classList.remove("hidden");
+        setTimeout(() => {
+            carrinhoTopoBtn.classList.add("visible");
+        }, 100);
+    }
+    
     setTimeout(() => {
         iniciarLightbox();
         atualizarVisibilidadeBotoes();
@@ -585,6 +594,7 @@ function inicializarMenu() {
     }
 }
 
+// AQUI ESTÁ A FUNÇÃO CORRETA COM AS CLASSES RESPONSIVAS
 function criarCardProduto(item, categoria) {
     return `
         <div class="card" data-categoria="${categoria}">
@@ -593,11 +603,11 @@ function criarCardProduto(item, categoria) {
                     onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjhmOGY4Ii8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgZmlsbD0iIzk5OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPkRvbSBCaXN0csO0IEdyaWxsPC90ZXh0Pjx0ZXh0IHg9IjUwJSIgeT0iNjAlIiBmb250LWZhbWlseT0iQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTIiIGZpbGw9IiM5OTkiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5JbWFnZW0gbsOjbyBjYXJyZWdhZGE8L3RleHQ+PC9zdmc+'">
             </div>
             <div class="card-content">
-                <h3>${item.nome}</h3>
+                <h3 class="card-titulo">${item.nome}</h3>
                 <p class="descricao-item">${item.descricao}</p>
                 <div class="card-preco">
                     <span class="preco">€${item.preco.toFixed(2)}</span>
-                    <button onclick="addItem('${item.nome.replace(/'/g, "\\'")}', ${item.preco}, this)">
+                    <button class="btn-adicionar" onclick="addItem('${item.nome.replace(/'/g, "\\'")}', ${item.preco}, this)">
                         <i class="fas fa-plus"></i> ADICIONAR
                     </button>
                 </div>
@@ -636,6 +646,18 @@ function addItem(nome, preco, botao) {
     
     salvarPedido();
     mostrarFeedbackAdicao(botao);
+    
+    // Efeito de animação no botão do carrinho topo
+    const carrinhoTopoBtn = document.getElementById("carrinhoTopoBtn");
+    const contadorTopo = document.getElementById("contadorTopo");
+    
+    if (carrinhoTopoBtn && contadorTopo) {
+        // Animação de "pulse" no contador
+        contadorTopo.style.transform = 'scale(1.3)';
+        setTimeout(() => {
+            contadorTopo.style.transform = 'scale(1)';
+        }, 300);
+    }
 }
 
 function mostrarFeedbackAdicao(botao) {
@@ -659,6 +681,29 @@ function salvarPedido() {
 }
 
 function atualizarCarrinho() {
+    // Botão do carrinho fixo no topo
+    const carrinhoTopoBtn = document.getElementById("carrinhoTopoBtn");
+    const contadorTopo = document.getElementById("contadorTopo");
+    
+    // Mostrar/ocultar botão do carrinho
+    if (carrinhoTopoBtn) {
+        if (pedido.length > 0) {
+            carrinhoTopoBtn.classList.remove("hidden");
+            carrinhoTopoBtn.classList.add("visible");
+        } else {
+            carrinhoTopoBtn.classList.remove("visible");
+            setTimeout(() => {
+                carrinhoTopoBtn.classList.add("hidden");
+            }, 400);
+        }
+    }
+    
+    // Atualizar contador do botão topo
+    if (contadorTopo) {
+        const totalItens = pedido.reduce((sum, item) => sum + item.quantidade, 0);
+        contadorTopo.textContent = totalItens;
+    }
+    
     const lista = document.getElementById("lista");
     const contador = document.getElementById("contador-itens");
     const totalMini = document.getElementById("total-mini");
@@ -785,6 +830,35 @@ function enviarWhatsApp() {
 
 // ---------------------- Configurar Event Listeners GLOBAIS ----------------------
 function configurarEventListeners() {
+    // Configurar evento para o botão do carrinho no topo
+    const carrinhoTopoBtn = document.getElementById("carrinhoTopoBtn");
+    if (carrinhoTopoBtn) {
+        carrinhoTopoBtn.addEventListener("click", function(e) {
+            e.stopPropagation();
+            
+            // Mostrar alerta com os produtos
+            if (pedido.length === 0) {
+                alert("🛒 Seu carrinho está vazio!");
+                return;
+            }
+            
+            let mensagem = "🍔 *ITENS NO CARRINHO:*\n\n";
+            pedido.forEach(item => {
+                mensagem += `• ${item.nome} x${item.quantidade} - €${(item.preco * item.quantidade).toFixed(2)}\n`;
+            });
+            
+            const total = pedido.reduce((sum, item) => sum + (item.preco * item.quantidade), 0);
+            mensagem += `\n💰 *Total: €${total.toFixed(2)}*`;
+            mensagem += `\n\n👉 Clique em "Abrir Carrinho" para ver mais detalhes ou finalizar.`;
+            
+            const abrirCarrinhoCompleto = confirm(mensagem + "\n\nDeseja abrir o carrinho completo?");
+            
+            if (abrirCarrinhoCompleto) {
+                abrirCarrinho();
+            }
+        });
+    }
+    
     const pagarBtn = document.getElementById("pagarLinkBtn");
     const nomeInput = document.getElementById("nomeCliente");
 

@@ -27,6 +27,96 @@ html, body {
 }
 
 /* ===========================
+ BOTÃO DO CARRINHO FIXO (TOPO DIREITO)
+=========================== */
+.carrinho-topo-btn {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: var(--laranja);
+    color: white;
+    padding: 10px 15px;
+    border-radius: 50px;
+    box-shadow: 0 4px 15px var(--sombra);
+    cursor: pointer;
+    z-index: 1001;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 700;
+    font-size: 14px;
+    transition: all 0.4s ease;
+    transform: translateY(-10px);
+    opacity: 0;
+    visibility: hidden;
+    border: 2px solid white;
+}
+
+.carrinho-topo-btn.visible {
+    transform: translateY(0);
+    opacity: 1;
+    visibility: visible;
+}
+
+.carrinho-topo-btn:hover {
+    background: var(--marrom-escuro);
+    transform: scale(1.05) translateY(0);
+}
+
+.carrinho-topo-icon {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.carrinho-topo-icon i {
+    font-size: 18px;
+}
+
+.carrinho-topo-contador {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background: #ff4444;
+    color: white;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 900;
+    border: 2px solid white;
+}
+
+.carrinho-topo-texto {
+    font-size: 14px;
+}
+
+/* Animação para aparecer o botão */
+@keyframes slideDownFadeIn {
+    from {
+        transform: translateY(-20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.carrinho-topo-btn.visible {
+    animation: slideDownFadeIn 0.4s ease forwards;
+}
+
+/* Classe para esconder elementos */
+.hidden {
+    display: none !important;
+}
+
+/* ===========================
  HEADER
 =========================== */
 .header-custom {
@@ -295,34 +385,7 @@ html, body {
 }
 
 /* ===========================
-CARRINHO FLUTUANTE - POSIÇÃO CORRIGIDA
-=========================== */
-.floating-cart {
-  position: fixed;
-  bottom: 80px; /* AFASTADO DO RODAPÉ */
-  right: 20px;
-  background: var(--laranja);
-  color: white;
-  padding: 12px 16px;
-  border-radius: 50px;
-  box-shadow: 0 4px 15px var(--sombra);
-  cursor: pointer;
-  z-index: 999;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-weight: 700;
-  font-size: 14px;
-  transition: all 0.3s ease;
-}
-
-.floating-cart:hover {
-  background: var(--marrom-escuro);
-  transform: scale(1.05);
-}
-
-/* ===========================
- MODAL DO CARRINHO - ALTURA CONTROLADA
+MODAL DO CARRINHO - ALTURA CONTROLADA
 =========================== */
 #carrinho-box {
   position: fixed;
@@ -576,6 +639,23 @@ input:focus, textarea:focus {
   .section.active { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
   .menu-centralizado { justify-content: flex-start; }
   .card-image-container { height: 160px; } /* MESMO TAMANHO */
+  
+  .carrinho-topo-btn {
+    top: 15px;
+    right: 15px;
+    padding: 8px 12px;
+    font-size: 13px;
+  }
+  
+  .carrinho-topo-texto {
+    display: none; /* Esconder texto em mobile */
+  }
+  
+  .carrinho-topo-contador {
+    width: 20px;
+    height: 20px;
+    font-size: 11px;
+  }
 }
 
 @media (max-width: 600px) {
@@ -613,76 +693,75 @@ input:focus, textarea:focus {
 .text-center { text-align: center; }
 .mt-20 { margin-top: 20px; }
 .mb-20 { margin-bottom: 20px; }
-.hidden { display: none; }
 
-   /* Botão de Reserva Fixo no Canto Esquerdo */
-        .fixed-reservation-btn {
-            position: fixed;
-            top: 120px; /* Abaixo do header */
-            left: 200px;
-            background: linear-gradient(135deg, #a99595, #1c1b1b);
-            color: rgb(36, 31, 31);
-            border: none;
-            padding: 12px 20px;
-            border-radius: 25px;
-            font-weight: 700;
-            font-size: 14px;
-            cursor: pointer;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            box-shadow: 0 4px 15px rgba(198, 40, 40, 0.4);
-            z-index: 998;
-            transition: all 0.3s ease;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            white-space: nowrap;
-        }
-        
-        .fixed-reservation-btn:hover {
-            background: linear-gradient(135deg, #8e0000, #c62828);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(198, 40, 40, 0.6);
-        }
-        
-        .fixed-reservation-btn i {
-            font-size: 16px;
-        }
-        
-        /* Responsivo */
-        @media (max-width: 768px) {
-            .fixed-reservation-btn {
-                top: 110px;
-                left: 15px;
-                padding: 10px 16px;
-                font-size: 13px;
-            }
-            
-            .fixed-reservation-btn i {
-                font-size: 14px;
-            }
-        }
-        
-        @media (max-width: 480px) {
-            .fixed-reservation-btn {
-                top: 100px;
-                left: 10px;
-                padding: 8px 12px;
-                font-size: 12px;
-            }
-            
-            .fixed-reservation-btn span {
-                display: none;
-            }
-            
-            .fixed-reservation-btn::after {
-                content: 'RESERVA';
-                font-size: 101px;
-                font-weight: 700;
-            }
-        }
-        /* BOTÃO DE RESERVA ESTILO PREMIUM PISCANTE */
+/* Botão de Reserva Fixo no Canto Esquerdo */
+.fixed-reservation-btn {
+    position: fixed;
+    top: 120px; /* Abaixo do header */
+    left: 200px;
+    background: linear-gradient(135deg, #a99595, #1c1b1b);
+    color: rgb(36, 31, 31);
+    border: none;
+    padding: 12px 20px;
+    border-radius: 25px;
+    font-weight: 700;
+    font-size: 14px;
+    cursor: pointer;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 4px 15px rgba(198, 40, 40, 0.4);
+    z-index: 998;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+}
+
+.fixed-reservation-btn:hover {
+    background: linear-gradient(135deg, #8e0000, #c62828);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(198, 40, 40, 0.6);
+}
+
+.fixed-reservation-btn i {
+    font-size: 16px;
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+    .fixed-reservation-btn {
+        top: 110px;
+        left: 15px;
+        padding: 10px 16px;
+        font-size: 13px;
+    }
+    
+    .fixed-reservation-btn i {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    .fixed-reservation-btn {
+        top: 100px;
+        left: 10px;
+        padding: 8px 12px;
+        font-size: 12px;
+    }
+    
+    .fixed-reservation-btn span {
+        display: none;
+    }
+    
+    .fixed-reservation-btn::after {
+        content: 'RESERVA';
+        font-size: 101px;
+        font-weight: 700;
+    }
+}
+/* BOTÃO DE RESERVA ESTILO PREMIUM PISCANTE */
 .btn-reserva {
     display: inline-flex;
     align-items: center;
@@ -948,4 +1027,262 @@ input:focus, textarea:focus {
 
 .modal-imagem::-webkit-scrollbar-thumb:hover {
     background: #d45a0a;
+}
+/* Estilos responsivos para os cards */
+.card {
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    overflow: hidden;
+    background: white;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
+
+.card-image-container {
+    position: relative;
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+}
+
+.card-image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.card:hover .card-image-container img {
+    transform: scale(1.05);
+}
+
+.card-content {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.card-titulo {
+    font-size: 18px;
+    font-weight: 700;
+    color: #333;
+    margin: 0 0 8px 0;
+    line-height: 1.3;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-height: 46px;
+}
+
+.descricao-item {
+    font-size: 14px;
+    color: #666;
+    line-height: 1.5;
+    margin: 0 0 16px 0;
+    flex-grow: 1;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-height: 63px;
+}
+
+.card-preco {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: auto;
+}
+
+.preco {
+    font-size: 20px;
+    font-weight: 800;
+    color: #E66A11;
+}
+
+.btn-adicionar {
+    background: linear-gradient(135deg, #E66A11 0%, #D45A00 100%);
+    color: white;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+}
+
+.btn-adicionar:hover {
+    background: linear-gradient(135deg, #D45A00 0%, #C34A00 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(226, 106, 17, 0.3);
+}
+
+.btn-adicionar:active {
+    transform: translateY(0);
+}
+
+.btn-adicionar i {
+    font-size: 12px;
+}
+
+/* Responsividade para tablets */
+@media (max-width: 1024px) {
+    .card-titulo {
+        font-size: 16px;
+        min-height: 42px;
+    }
+    
+    .descricao-item {
+        font-size: 13px;
+        -webkit-line-clamp: 3;
+        min-height: 58px;
+    }
+    
+    .preco {
+        font-size: 18px;
+    }
+    
+    .btn-adicionar {
+        padding: 9px 14px;
+        font-size: 13px;
+    }
+    
+    .card-image-container {
+        height: 180px;
+    }
+}
+
+/* Responsividade para celulares */
+@media (max-width: 768px) {
+    .card {
+        border-radius: 10px;
+    }
+    
+    .card-titulo {
+        font-size: 15px;
+        min-height: 40px;
+        -webkit-line-clamp: 2;
+    }
+    
+    .descricao-item {
+        font-size: 12px;
+        -webkit-line-clamp: 2;
+        min-height: 36px;
+        margin-bottom: 12px;
+    }
+    
+    .card-content {
+        padding: 12px;
+    }
+    
+    .card-image-container {
+        height: 160px;
+    }
+    
+    .preco {
+        font-size: 17px;
+    }
+    
+    .btn-adicionar {
+        padding: 8px 12px;
+        font-size: 12px;
+    }
+}
+
+/* Para telas muito pequenas (menos de 480px) */
+@media (max-width: 480px) {
+    .card-titulo {
+        font-size: 14px;
+        min-height: 38px;
+    }
+    
+    .descricao-item {
+        font-size: 11px;
+        -webkit-line-clamp: 2;
+        min-height: 33px;
+    }
+    
+    .card-image-container {
+        height: 140px;
+    }
+    
+    .preco {
+        font-size: 16px;
+    }
+    
+    .btn-adicionar {
+        padding: 7px 10px;
+        font-size: 11px;
+    }
+}
+
+/* Para grids responsivos */
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+    padding: 20px;
+}
+
+@media (max-width: 768px) {
+    .grid-container {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 16px;
+        padding: 16px;
+    }
+}
+
+@media (max-width: 480px) {
+    .grid-container {
+        grid-template-columns: 1fr;
+        gap: 14px;
+        padding: 14px;
+    }
+}
+
+/* Melhorias na legibilidade */
+.card-titulo, .descricao-item {
+    word-break: break-word;
+    hyphens: auto;
+}
+
+/* Ajuste para nomes muito longos */
+.card-titulo {
+    word-wrap: break-word;
+}
+
+/* Ajuste para descrições em dispositivos móveis */
+@media (max-width: 768px) {
+    .descricao-item {
+        line-height: 1.4;
+    }
+}
+
+/* Efeito de feedback ao adicionar item */
+.btn-adicionar.adicionado {
+    background: #00a650 !important;
+    animation: pulse 0.5s ease;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
 }

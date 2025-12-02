@@ -10,6 +10,15 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <!-- Botão do Carrinho Fixo (Topo Direito) -->
+    <div id="carrinhoTopoBtn" class="carrinho-topo-btn hidden">
+        <div class="carrinho-topo-icon">
+            <i class="fas fa-shopping-basket"></i>
+            <span id="contadorTopo" class="carrinho-topo-contador">0</span>
+        </div>
+        <span class="carrinho-topo-texto">Carrinho</span>
+    </div>
+
     <!-- Header -->
     <header class="header-custom">
         <div class="banner">
@@ -26,13 +35,6 @@
 
     <!-- Áreas de Conteúdo -->
     <div id="areas"></div>
-
-    <!-- Carrinho Flutuante -->
-    <div class="floating-cart" onclick="abrirCarrinho()">
-        <i class="fas fa-shopping-basket"></i>
-        <strong><span id="contador-itens">0</span> itens</strong>
-        <span>| €<span id="total-mini">0,00</span></span>
-    </div>
 
     <!-- Modal do Carrinho -->
     <div id="carrinho-box">
