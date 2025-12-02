@@ -1,17 +1,12 @@
-// ---------------------- CONFIGURAÇÕES DE TAXA ----------------------
-const TAXA_FIXA = 0.25; // 0,25 € fixos por item
-const TAXA_PORCENTAGEM = 0.015; // 1,50% por item
-const IVA = 0.13; // 13% de IVA
+// Configurações de taxa (ocultas no código)
+const TAXA_FIXA = 0.25;
+const TAXA_PORCENTAGEM = 0.015;
+const IVA = 0.13;
 
-// ---------------------- Função para calcular preço com taxa ----------------------
+// Função para calcular preço com taxa
 function calcularPrecoComTaxa(precoOriginal) {
-    // Aplica a taxa de 1,50% primeiro
     let precoComPorcentagem = precoOriginal * (1 + TAXA_PORCENTAGEM);
-    
-    // Adiciona a taxa fixa de 0,25 €
     let precoFinal = precoComPorcentagem + TAXA_FIXA;
-    
-    // Arredonda para 2 casas decimais
     return Math.round(precoFinal * 100) / 100;
 }
 
@@ -153,9 +148,6 @@ function configurarEventosLightbox() {
     const imagemAmpliada = document.getElementById('imagemAmpliada');
     
     console.log("⚙️ Configurando eventos do modal...");
-    console.log("Modal encontrado:", !!modal);
-    console.log("Botão fechar:", !!fecharBtn);
-    console.log("Imagem ampliada:", !!imagemAmpliada);
     
     if (fecharBtn) {
         fecharBtn.addEventListener('click', fecharLightbox);
@@ -170,14 +162,15 @@ function configurarEventosLightbox() {
         });
     }
     
-    if (btnAnterior) {
+    // Configurar botões de navegação apenas para desktop
+    if (btnAnterior && window.innerWidth > 768) {
         btnAnterior.addEventListener('click', function(event) {
             event.stopPropagation();
             navegarImagem(-1);
         });
     }
     
-    if (btnProximo) {
+    if (btnProximo && window.innerWidth > 768) {
         btnProximo.addEventListener('click', function(event) {
             event.stopPropagation();
             navegarImagem(1);
@@ -195,31 +188,31 @@ function configurarEventosLightbox() {
         });
     }
     
-    // Controles por toque para dispositivos móveis
-    let touchStartX = 0;
-    let touchEndX = 0;
+    // Controles por toque para dispositivos móveis - DESLIZAR PARA CIMA/BAIXO
+    let touchStartY = 0;
+    let touchEndY = 0;
     
     if (imagemAmpliada) {
         imagemAmpliada.addEventListener('touchstart', function(event) {
-            touchStartX = event.changedTouches[0].screenX;
+            touchStartY = event.changedTouches[0].screenY;
         });
         
         imagemAmpliada.addEventListener('touchend', function(event) {
-            touchEndX = event.changedTouches[0].screenX;
-            handleSwipe();
+            touchEndY = event.changedTouches[0].screenY;
+            handleVerticalSwipe();
         });
     }
     
-    function handleSwipe() {
+    function handleVerticalSwipe() {
         const swipeThreshold = 50; // Sensibilidade do deslize
         
-        if (touchEndX < touchStartX - swipeThreshold) {
-            // Deslizou para a esquerda -> próxima imagem
+        if (touchEndY < touchStartY - swipeThreshold) {
+            // Deslizou para cima -> próxima imagem
             navegarImagem(1);
         }
         
-        if (touchEndX > touchStartX + swipeThreshold) {
-            // Deslizou para a direita -> imagem anterior
+        if (touchEndY > touchStartY + swipeThreshold) {
+            // Deslizou para baixo -> imagem anterior
             navegarImagem(-1);
         }
     }
@@ -235,6 +228,12 @@ function configurarEventosLightbox() {
                     navegarImagem(-1);
                     break;
                 case 'ArrowRight':
+                    navegarImagem(1);
+                    break;
+                case 'ArrowUp':
+                    navegarImagem(-1);
+                    break;
+                case 'ArrowDown':
                     navegarImagem(1);
                     break;
                 case ' ':
@@ -256,7 +255,24 @@ function configurarEventosLightbox() {
     // Ajustar tamanho da imagem quando a janela for redimensionada
     window.addEventListener('resize', function() {
         ajustarTamanhoImagemResponsivo();
+        atualizarVisibilidadeBotoes();
     });
+}
+
+// Atualizar visibilidade dos botões baseado no tamanho da tela
+function atualizarVisibilidadeBotoes() {
+    const btnAnterior = document.getElementById('btnAnterior');
+    const btnProximo = document.getElementById('btnProximo');
+    
+    if (window.innerWidth <= 768) {
+        // Em dispositivos móveis, esconder os botões de navegação
+        if (btnAnterior) btnAnterior.style.display = 'none';
+        if (btnProximo) btnProximo.style.display = 'none';
+    } else {
+        // Em desktop, mostrar os botões
+        if (btnAnterior) btnAnterior.style.display = 'flex';
+        if (btnProximo) btnProximo.style.display = 'flex';
+    }
 }
 
 // Ajustar tamanho da imagem de forma responsiva
@@ -274,42 +290,17 @@ function ajustarTamanhoImagemResponsivo() {
         // Em dispositivos móveis, usar porcentagens maiores
         imagemAmpliada.style.maxWidth = '95%';
         imagemAmpliada.style.maxHeight = '70vh';
-        
-        // Ajustar botões de navegação para dispositivos móveis
-        const btnAnterior = document.getElementById('btnAnterior');
-        const btnProximo = document.getElementById('btnProximo');
-        
-        if (btnAnterior && btnProximo) {
-            if (larguraTela <= 480) {
-                // Telas muito pequenas
-                btnAnterior.style.width = '40px';
-                btnAnterior.style.height = '40px';
-                btnAnterior.style.fontSize = '16px';
-                btnProximo.style.width = '40px';
-                btnProximo.style.height = '40px';
-                btnProximo.style.fontSize = '16px';
-                btnAnterior.style.left = '10px';
-                btnProximo.style.right = '10px';
-            } else {
-                // Tablets e celulares maiores
-                btnAnterior.style.width = '50px';
-                btnAnterior.style.height = '50px';
-                btnAnterior.style.fontSize = '20px';
-                btnProximo.style.width = '50px';
-                btnProximo.style.height = '50px';
-                btnProximo.style.fontSize = '20px';
-                btnAnterior.style.left = '15px';
-                btnProximo.style.right = '15px';
-            }
-        }
     } else {
         // Desktop - valores padrão
         imagemAmpliada.style.maxWidth = '90%';
         imagemAmpliada.style.maxHeight = '80vh';
     }
+    
+    // Atualizar visibilidade dos botões
+    atualizarVisibilidadeBotoes();
 }
 
-// Abrir lightbox - FUNÇÃO CORRIGIDA E RESPONSIVA
+// Abrir lightbox
 function abrirLightbox(src, alt, index) {
     console.log(`📂 Abrindo lightbox - índice: ${index}`);
     
@@ -372,7 +363,7 @@ function abrirLightbox(src, alt, index) {
     // Mostrar mensagem apropriada para dispositivo
     const isMobile = window.innerWidth <= 768;
     const mensagem = isMobile 
-        ? 'Toque na imagem para zoom • Deslize para navegar • Toque fora para sair'
+        ? 'Toque na imagem para zoom • Deslize para cima/baixo para navegar • Toque fora para sair'
         : 'Clique na imagem para zoom • Use as setas para navegar • ESC para sair';
     
     mostrarMensagemZoom(mensagem);
@@ -428,11 +419,11 @@ function fecharLightbox() {
     }
 }
 
-// Navegar entre imagens - FUNÇÃO CORRIGIDA (PROBLEMA DO ZOOM RESOLVIDO)
+// Navegar entre imagens
 function navegarImagem(direcao) {
     if (todasImagensLightbox.length === 0) return;
     
-    // REMOVER ZOOM ANTES DE NAVEGAR (CORREÇÃO DO PROBLEMA)
+    // REMOVER ZOOM ANTES DE NAVEGAR
     const imagemAmpliada = document.getElementById('imagemAmpliada');
     if (imagemAmpliada) {
         imagemAmpliada.classList.remove('zoom-ativo');
@@ -502,7 +493,7 @@ function navegarImagem(direcao) {
                 // Mostrar mensagem apropriada para dispositivo
                 const isMobile = window.innerWidth <= 768;
                 const mensagem = isMobile 
-                    ? 'Toque na imagem para zoom • Deslize para navegar • Toque fora para sair'
+                    ? 'Toque na imagem para zoom • Deslize para cima/baixo para navegar • Toque fora para sair'
                     : 'Clique na imagem para zoom • Use as setas para navegar • ESC para sair';
                 
                 mostrarMensagemZoom(mensagem);
@@ -533,6 +524,9 @@ function atualizarBotoesNavegacao() {
             btnAnterior.disabled = false;
             btnProximo.disabled = false;
         }
+        
+        // Atualizar visibilidade baseado no tamanho da tela
+        atualizarVisibilidadeBotoes();
     }
 }
 
@@ -552,6 +546,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     setTimeout(() => {
         iniciarLightbox();
+        atualizarVisibilidadeBotoes();
     }, 1000);
 });
 
@@ -1069,6 +1064,5 @@ document.head.appendChild(style);
 
 // Verificar console para debug
 console.log("=== DOM BISTRÔ GRILL - SISTEMA CARREGADO ===");
-console.log("Taxa aplicada: 0,25 € + 1,50% em todos os itens");
 console.log("Lightbox configurado e pronto para uso!");
 console.log("Total de categorias:", Object.keys(categorias).length);
