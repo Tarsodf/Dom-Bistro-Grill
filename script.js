@@ -1,24 +1,90 @@
-// Configurações de taxa (ocultas no código)
+// ==================== CONFIGURAÇÕES ====================
 const TAXA_FIXA = 0.25;
 const TAXA_PORCENTAGEM = 0.015;
 const IVA = 0.13;
 
-// Função para calcular preço com taxa
-function calcularPrecoComTaxa(precoOriginal) {
-    let precoComPorcentagem = precoOriginal * (1 + TAXA_PORCENTAGEM);
-    let precoFinal = precoComPorcentagem + TAXA_FIXA;
-    return Math.round(precoFinal * 100) / 100;
-}
+// ==================== PREÇOS DOS ADICIONAIS MELHORADOS ====================
+const PRECOS_ADICIONAIS = {
+    // Adicionais para Executivos (com descrições)
+    'Arroz Extra': { preco: 1.00, descricao: 'Porção adicional de arroz soltinho', categoria: 'executivo' },
+    'Feijão com Caldo': { preco: 1.50, descricao: 'Feijão com caldo temperado', categoria: 'executivo' },
+    'Feijão Tropeiro': { preco: 2.00, descricao: 'Feijão tropeiro com bacon e linguiça', categoria: 'executivo' },
+    'Batata Frita': { preco: 1.50, descricao: 'Porção de batata frita crocante', categoria: 'executivo' },
+    'Duas Carnes': { preco: 3.50, descricao: 'Porção dupla da carne do dia', categoria: 'executivo' },
+    'Carne Extra (Feijoada)': { preco: 2.50, descricao: 'Carne suína adicional para feijoada', categoria: 'executivo' },
+    'Torresmo Extra': { preco: 1.50, descricao: 'Porção extra de torresmo crocante', categoria: 'executivo' },
+    'Couve Refogada': { preco: 1.00, descricao: 'Couve refogada no alho', categoria: 'executivo' },
+    
+    // Adicionais para Hamburgueres
+    'Carne Hamburguer': { preco: 2.00, descricao: 'Hambúrguer artesanal extra', categoria: 'hamburguer' },
+    'Bacon Crocante': { preco: 1.50, descricao: 'Bacon extra crocante', categoria: 'hamburguer' },
+    'Ovo': { preco: 1.00, descricao: 'Ovo frito ou cozido', categoria: 'hamburguer' },
+    'Queijo': { preco: 1.00, descricao: 'Fatia de queijo', categoria: 'hamburguer' },
+    'Presunto': { preco: 1.00, descricao: 'Fatia de presunto', categoria: 'hamburguer' },
+    'Cheddar Cremoso': { preco: 1.50, descricao: 'Cheddar cremoso especial', categoria: 'hamburguer' },
+    'Alface': { preco: 0.50, descricao: 'Folhas de alface frescas', categoria: 'hamburguer' },
+    'Tomate': { preco: 0.50, descricao: 'Fatias de tomate', categoria: 'hamburguer' },
+    'Cebola Caramelizada': { preco: 1.00, descricao: 'Cebola caramelizada no mel', categoria: 'hamburguer' },
+    'Molho Especial': { preco: 0.50, descricao: 'Molho secreto da casa', categoria: 'hamburguer' },
+    
+    // Adicionais para Espetinhos
+    'Farofa': { preco: 0.50, descricao: 'Farofa crocante temperada', categoria: 'espetinho' },
+    'Vinagrete': { preco: 0.50, descricao: 'Vinagrete de tomate e cebola', categoria: 'espetinho' },
+    'Arroz Branco': { preco: 1.00, descricao: 'Porção de arroz', categoria: 'espetinho' },
+    'Molho à Parte': { preco: 0.50, descricao: 'Molho de alho ou pimenta', categoria: 'espetinho' }
+};
 
-// ---------------------- Dados dos Itens do Menu ----------------------
+// ==================== DADOS DO MENU ====================
 const categorias = {
     executivos: [
-        {nome: 'Executivo Clássico (Segunda)', preco: 9.39, foto: 'fotos/bife.png', descricao: 'Bife acebolado, arroz, feijão, batata frita e salada.'},
-        {nome: 'Executivo Dom Bistrô (Terça)', preco: 9.39, foto: 'fotos/empanado.png', descricao: 'Empanado de frango, arroz, feijão, batata frita e salada.'},
-        {nome: 'Executivo do Chefe (Quinta)', preco: 9.39, foto: 'fotos/molho.png', descricao: 'Carne ao molho Madeira, filé de porco empanado, arroz, feijão, batata frita e salada.'},
-        {nome: 'Executivo Festa Brasileira (Sexta)', preco: 9.39, foto: 'fotos/mix.png', descricao: 'Churrasco misto, arroz, feijão, batata frita, farofa e vinagrete.'},
-        {nome: 'Feijoada (Sábado)', preco: 9.39, foto: 'fotos/feijoada.png', descricao: 'Feijoada, arroz, couve refogada, torresmo e laranja.'},
-        {nome: 'Jantinha', preco: 9.39, foto: 'fotos/jantinha.jpg', descricao: 'Prato pode escolher um espetinho (Carne,Frango,Frango com Bacon,Linguiça,Queijo Coalho).'}
+        {
+            nome: 'Executivo Clássico (Segunda)',
+            preco: 9.39,
+            foto: 'fotos/bife.png',
+            descricao: 'Bife acebolado, arroz, feijão, batata frita e salada.',
+            carneDia: 'Bife',
+            dia: 'SEGUNDA'
+        },
+        {
+            nome: 'Executivo Dom Bistrô (Terça)',
+            preco: 9.39,
+            foto: 'fotos/empanado.png',
+            descricao: 'Empanado de frango, arroz, feijão, batata frita e salada.',
+            carneDia: 'Frango',
+            dia: 'TERÇA'
+        },
+        {
+            nome: 'Executivo do Chefe (Quinta)',
+            preco: 9.39,
+            foto: 'fotos/molho.png',
+            descricao: 'Carne ao molho Madeira, filé de porco empanado, arroz, feijão, batata frita e salada.',
+            carneDia: 'Carne ao Molho + Filé de Porco',
+            dia: 'QUINTA'
+        },
+        {
+            nome: 'Executivo Festa Brasileira (Sexta)',
+            preco: 9.39,
+            foto: 'fotos/mix.png',
+            descricao: 'Churrasco misto, arroz, feijão, batata frita, farofa e vinagrete.',
+            carneDia: 'Churrasco Misto',
+            dia: 'SEXTA'
+        },
+        {
+            nome: 'Feijoada Completa (Sábado)',
+            preco: 9.39,
+            foto: 'fotos/feijoada.png',
+            descricao: 'Feijoada completa, arroz, couve refogada, torresmo, farofa e laranja.',
+            carneDia: 'Feijoada',
+            dia: 'SÁBADO'
+        },
+        {
+            nome: 'Jantinha',
+            preco: 9.39,
+            foto: 'fotos/jantinha.jpg',
+            descricao: 'Prato pode escolher um espetinho (Carne, Frango, Frango com Bacon, Linguiça, Queijo Coalho).',
+            carneDia: 'Espetinho',
+            dia: 'DOMINGO'
+        }
     ],
     panelinhas: [
         {nome:"Carne", preco: 7.86, foto:'fotos/Captura1.png', descricao: 'Deliciosa panelinha de carne com temperos especiais.'},
@@ -88,457 +154,33 @@ const categorias = {
     ]
 };
 
-// ---------------------- Função para calcular total com IVA ----------------------
+// ==================== VARIÁVEIS GLOBAIS ====================
+let pedido = JSON.parse(localStorage.getItem("pedido")) || [];
+let itemSelecionadoParaPersonalizar = null;
+let categoriaSelecionadaParaPersonalizar = null;
+let carneDiaSelecionada = null;
+
+// ==================== FUNÇÕES UTILITÁRIAS ====================
+function calcularPrecoComTaxa(precoOriginal) {
+    let precoComPorcentagem = precoOriginal * (1 + TAXA_PORCENTAGEM);
+    let precoFinal = precoComPorcentagem + TAXA_FIXA;
+    return Math.round(precoFinal * 100) / 100;
+}
+
 function calcularTotal() {
     const subtotal = pedido.reduce((sum, item) => sum + (item.preco * item.quantidade), 0);
     const iva = subtotal * IVA;
     const total = subtotal + iva;
     
-    return {
-        subtotal: subtotal,
-        iva: iva,
-        total: total
-    };
+    return { subtotal, iva, total };
 }
 
-// ==================== LIGHTBOX PARA IMAGENS (RESPONSIVO) ====================
-
-let todasImagensLightbox = [];
-let indiceImagemAtual = 0;
-
-// Função para inicializar o lightbox
-function iniciarLightbox() {
-    console.log("🔍 Iniciando lightbox...");
-    
-    const imagensProdutos = document.querySelectorAll('.card-image-container img');
-    todasImagensLightbox = Array.from(imagensProdutos);
-    console.log(`✅ Encontradas ${todasImagensLightbox.length} imagens`);
-    
-    todasImagensLightbox.forEach((imagem, index) => {
-        imagem.onclick = null;
-        
-        imagem.addEventListener('click', function(event) {
-            event.preventDefault();
-            event.stopPropagation();
-            
-            console.log(`🖼️ Clicou na imagem ${index + 1}: ${this.alt}`);
-            abrirLightbox(this.src, this.alt, index);
-        });
-        
-        imagem.style.cursor = 'zoom-in';
-        
-        imagem.addEventListener('mouseenter', function() {
-            this.style.opacity = '0.9';
-        });
-        
-        imagem.addEventListener('mouseleave', function() {
-            this.style.opacity = '1';
-        });
-    });
-    
-    configurarEventosLightbox();
+function isValidEmail(email) {
+    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return re.test(email);
 }
 
-// Configurar eventos do modal lightbox
-function configurarEventosLightbox() {
-    const modal = document.getElementById('modalLightbox');
-    const fecharBtn = document.querySelector('.fechar-modal-lightbox');
-    const btnAnterior = document.getElementById('btnAnterior');
-    const btnProximo = document.getElementById('btnProximo');
-    const imagemAmpliada = document.getElementById('imagemAmpliada');
-    
-    console.log("⚙️ Configurando eventos do modal...");
-    
-    if (fecharBtn) {
-        fecharBtn.addEventListener('click', fecharLightbox);
-        console.log("✅ Evento de fechar configurado");
-    }
-    
-    if (modal) {
-        modal.addEventListener('click', function(event) {
-            if (event.target === modal) {
-                fecharLightbox();
-            }
-        });
-    }
-    
-    // Configurar botões de navegação apenas para desktop
-    if (btnAnterior && window.innerWidth > 768) {
-        btnAnterior.addEventListener('click', function(event) {
-            event.stopPropagation();
-            navegarImagem(-1);
-        });
-    }
-    
-    if (btnProximo && window.innerWidth > 768) {
-        btnProximo.addEventListener('click', function(event) {
-            event.stopPropagation();
-            navegarImagem(1);
-        });
-    }
-    
-    if (imagemAmpliada) {
-        imagemAmpliada.addEventListener('click', function(event) {
-            event.stopPropagation();
-            this.classList.toggle('zoom-ativo');
-            
-            if (this.classList.contains('zoom-ativo')) {
-                mostrarMensagemZoom('Zoom ativado • Toque novamente para sair do zoom');
-            }
-        });
-    }
-    
-    // Controles por toque para dispositivos móveis - DESLIZAR PARA CIMA/BAIXO
-    let touchStartY = 0;
-    let touchEndY = 0;
-    
-    if (imagemAmpliada) {
-        imagemAmpliada.addEventListener('touchstart', function(event) {
-            touchStartY = event.changedTouches[0].screenY;
-        });
-        
-        imagemAmpliada.addEventListener('touchend', function(event) {
-            touchEndY = event.changedTouches[0].screenY;
-            handleVerticalSwipe();
-        });
-    }
-    
-    function handleVerticalSwipe() {
-        const swipeThreshold = 50; // Sensibilidade do deslize
-        
-        if (touchEndY < touchStartY - swipeThreshold) {
-            // Deslizou para cima -> próxima imagem
-            navegarImagem(1);
-        }
-        
-        if (touchEndY > touchStartY + swipeThreshold) {
-            // Deslizou para baixo -> imagem anterior
-            navegarImagem(-1);
-        }
-    }
-    
-    document.addEventListener('keydown', function(event) {
-        const modal = document.getElementById('modalLightbox');
-        if (modal && modal.style.display === 'flex') {
-            switch(event.key) {
-                case 'Escape':
-                    fecharLightbox();
-                    break;
-                case 'ArrowLeft':
-                    navegarImagem(-1);
-                    break;
-                case 'ArrowRight':
-                    navegarImagem(1);
-                    break;
-                case 'ArrowUp':
-                    navegarImagem(-1);
-                    break;
-                case 'ArrowDown':
-                    navegarImagem(1);
-                    break;
-                case ' ':
-                case 'Enter':
-                    event.preventDefault();
-                    const img = document.getElementById('imagemAmpliada');
-                    if (img) img.classList.toggle('zoom-ativo');
-                    break;
-                case 'z':
-                case 'Z':
-                    event.preventDefault();
-                    const imgZ = document.getElementById('imagemAmpliada');
-                    if (imgZ) imgZ.classList.toggle('zoom-ativo');
-                    break;
-            }
-        }
-    });
-    
-    // Ajustar tamanho da imagem quando a janela for redimensionada
-    window.addEventListener('resize', function() {
-        ajustarTamanhoImagemResponsivo();
-        atualizarVisibilidadeBotoes();
-    });
-}
-
-// Atualizar visibilidade dos botões baseado no tamanho da tela
-function atualizarVisibilidadeBotoes() {
-    const btnAnterior = document.getElementById('btnAnterior');
-    const btnProximo = document.getElementById('btnProximo');
-    
-    if (window.innerWidth <= 768) {
-        // Em dispositivos móveis, esconder os botões de navegação
-        if (btnAnterior) btnAnterior.style.display = 'none';
-        if (btnProximo) btnProximo.style.display = 'none';
-    } else {
-        // Em desktop, mostrar os botões
-        if (btnAnterior) btnAnterior.style.display = 'flex';
-        if (btnProximo) btnProximo.style.display = 'flex';
-    }
-}
-
-// Ajustar tamanho da imagem de forma responsiva
-function ajustarTamanhoImagemResponsivo() {
-    const imagemAmpliada = document.getElementById('imagemAmpliada');
-    const modal = document.getElementById('modalLightbox');
-    
-    if (!imagemAmpliada || !modal || modal.style.display !== 'flex') return;
-    
-    const larguraTela = window.innerWidth;
-    const alturaTela = window.innerHeight;
-    
-    // Ajustar para dispositivos móveis
-    if (larguraTela <= 768) {
-        // Em dispositivos móveis, usar porcentagens maiores
-        imagemAmpliada.style.maxWidth = '95%';
-        imagemAmpliada.style.maxHeight = '70vh';
-    } else {
-        // Desktop - valores padrão
-        imagemAmpliada.style.maxWidth = '90%';
-        imagemAmpliada.style.maxHeight = '80vh';
-    }
-    
-    // Atualizar visibilidade dos botões
-    atualizarVisibilidadeBotoes();
-}
-
-// Abrir lightbox
-function abrirLightbox(src, alt, index) {
-    console.log(`📂 Abrindo lightbox - índice: ${index}`);
-    
-    const modal = document.getElementById('modalLightbox');
-    const imagemAmpliada = document.getElementById('imagemAmpliada');
-    const infoDiv = document.getElementById('infoLightbox');
-    
-    if (!modal || !imagemAmpliada) {
-        console.error('❌ Elementos do modal não encontrados!');
-        alert('Erro ao carregar o visualizador de imagens.');
-        return;
-    }
-    
-    indiceImagemAtual = index;
-    
-    // IMPORTANTE: SEMPRE REMOVER ZOOM AO ABRIR NOVA IMAGEM
-    imagemAmpliada.classList.remove('zoom-ativo');
-    
-    // Configurar imagem para carregamento responsivo
-    imagemAmpliada.onload = function() {
-        // Após carregar a imagem, ajustar o tamanho responsivo
-        ajustarTamanhoImagemResponsivo();
-    };
-    
-    imagemAmpliada.src = src;
-    imagemAmpliada.alt = alt;
-    
-    if (infoDiv && todasImagensLightbox[index]) {
-        const card = todasImagensLightbox[index].closest('.card');
-        if (card) {
-            const nome = card.querySelector('h3');
-            const descricao = card.querySelector('.descricao-item');
-            const preco = card.querySelector('.preco');
-            
-            if (nome && descricao && preco) {
-                infoDiv.innerHTML = `
-                    <strong>${nome.textContent}</strong><br>
-                    ${descricao.textContent}<br>
-                    <span style="color: #E66A11; font-weight: bold;">${preco.textContent}</span>
-                `;
-            } else {
-                infoDiv.innerHTML = alt || 'Dom Bistrô Grill';
-            }
-        } else {
-            infoDiv.innerHTML = alt || 'Dom Bistrô Grill';
-        }
-    }
-    
-    modal.style.display = 'flex';
-    document.body.style.overflow = 'hidden';
-    
-    // Forçar reflow para garantir que o modal está visível
-    void modal.offsetHeight;
-    
-    // Ajustar tamanho imediatamente
-    ajustarTamanhoImagemResponsivo();
-    
-    atualizarBotoesNavegacao();
-    
-    // Mostrar mensagem apropriada para dispositivo
-    const isMobile = window.innerWidth <= 768;
-    const mensagem = isMobile 
-        ? 'Toque na imagem para zoom • Deslize para cima/baixo para navegar • Toque fora para sair'
-        : 'Clique na imagem para zoom • Use as setas para navegar • ESC para sair';
-    
-    mostrarMensagemZoom(mensagem);
-}
-
-// Mostrar mensagem temporária
-function mostrarMensagemZoom(texto) {
-    const mensagemAnterior = document.querySelector('.mensagem-zoom');
-    if (mensagemAnterior) {
-        mensagemAnterior.remove();
-    }
-    
-    const mensagem = document.createElement('div');
-    mensagem.className = 'mensagem-zoom';
-    mensagem.textContent = texto;
-    mensagem.style.cssText = `
-        position: absolute;
-        bottom: ${window.innerWidth <= 768 ? '60px' : '80px'};
-        left: 50%;
-        transform: translateX(-50%);
-        background: rgba(0, 0, 0, 0.8);
-        color: white;
-        padding: ${window.innerWidth <= 768 ? '8px 15px' : '10px 20px'};
-        border-radius: 20px;
-        font-size: ${window.innerWidth <= 768 ? '12px' : '14px'};
-        z-index: 10001;
-        animation: fadeInOut 3s ease;
-        text-align: center;
-        max-width: 90%;
-        word-wrap: break-word;
-    `;
-    
-    document.querySelector('.modal-imagem').appendChild(mensagem);
-    
-    setTimeout(() => {
-        if (mensagem.parentNode) {
-            mensagem.style.animation = 'fadeOut 0.5s ease';
-            setTimeout(() => {
-                if (mensagem.parentNode) mensagem.remove();
-            }, 500);
-        }
-    }, 3000);
-}
-
-// Fechar lightbox
-function fecharLightbox() {
-    const modal = document.getElementById('modalLightbox');
-    
-    if (modal) {
-        modal.style.display = 'none';
-        document.body.style.overflow = 'auto';
-        console.log("🔒 Lightbox fechado");
-    }
-}
-
-// Navegar entre imagens
-function navegarImagem(direcao) {
-    if (todasImagensLightbox.length === 0) return;
-    
-    // REMOVER ZOOM ANTES DE NAVEGAR
-    const imagemAmpliada = document.getElementById('imagemAmpliada');
-    if (imagemAmpliada) {
-        imagemAmpliada.classList.remove('zoom-ativo');
-    }
-    
-    indiceImagemAtual += direcao;
-    
-    if (indiceImagemAtual < 0) {
-        indiceImagemAtual = todasImagensLightbox.length - 1;
-    } else if (indiceImagemAtual >= todasImagensLightbox.length) {
-        indiceImagemAtual = 0;
-    }
-    
-    console.log(`➡️ Navegando para imagem ${indiceImagemAtual + 1} de ${todasImagensLightbox.length}`);
-    
-    const novaImagem = todasImagensLightbox[indiceImagemAtual];
-    if (novaImagem) {
-        const imagemAmpliada = document.getElementById('imagemAmpliada');
-        const infoDiv = document.getElementById('infoLightbox');
-        
-        if (imagemAmpliada) {
-            // Efeito de transição
-            imagemAmpliada.style.opacity = '0';
-            imagemAmpliada.style.transition = 'opacity 0.3s ease';
-            
-            setTimeout(() => {
-                // GARANTIR QUE ZOOM ESTÁ DESATIVADO PARA NOVA IMAGEM
-                imagemAmpliada.classList.remove('zoom-ativo');
-                
-                // Carregar nova imagem
-                imagemAmpliada.src = novaImagem.src;
-                imagemAmpliada.alt = novaImagem.alt;
-                
-                // Restaurar opacidade
-                setTimeout(() => {
-                    imagemAmpliada.style.opacity = '1';
-                    
-                    // Ajustar tamanho após carregar nova imagem
-                    ajustarTamanhoImagemResponsivo();
-                }, 50);
-                
-                // Atualizar informações
-                if (infoDiv) {
-                    const card = novaImagem.closest('.card');
-                    if (card) {
-                        const nome = card.querySelector('h3');
-                        const descricao = card.querySelector('.descricao-item');
-                        const preco = card.querySelector('.preco');
-                        
-                        if (nome && descricao && preco) {
-                            infoDiv.innerHTML = `
-                                <strong>${nome.textContent}</strong><br>
-                                ${descricao.textContent}<br>
-                                <span style="color: #E66A11; font-weight: bold;">${preco.textContent}</span>
-                            `;
-                        } else {
-                            infoDiv.innerHTML = novaImagem.alt || 'Dom Bistrô Grill';
-                        }
-                    } else {
-                        infoDiv.innerHTML = novaImagem.alt || 'Dom Bistrô Grill';
-                    }
-                }
-                
-                // Atualizar botões de navegação
-                atualizarBotoesNavegacao();
-                
-                // Mostrar mensagem apropriada para dispositivo
-                const isMobile = window.innerWidth <= 768;
-                const mensagem = isMobile 
-                    ? 'Toque na imagem para zoom • Deslize para cima/baixo para navegar • Toque fora para sair'
-                    : 'Clique na imagem para zoom • Use as setas para navegar • ESC para sair';
-                
-                mostrarMensagemZoom(mensagem);
-                
-            }, 300);
-        }
-    }
-}
-
-// Atualizar botões de navegação
-function atualizarBotoesNavegacao() {
-    const btnAnterior = document.getElementById('btnAnterior');
-    const btnProximo = document.getElementById('btnProximo');
-    
-    if (btnAnterior && btnProximo) {
-        if (todasImagensLightbox.length <= 1) {
-            btnAnterior.style.opacity = '0.3';
-            btnProximo.style.opacity = '0.3';
-            btnAnterior.style.cursor = 'not-allowed';
-            btnProximo.style.cursor = 'not-allowed';
-            btnAnterior.disabled = true;
-            btnProximo.disabled = true;
-        } else {
-            btnAnterior.style.opacity = '1';
-            btnProximo.style.opacity = '1';
-            btnAnterior.style.cursor = 'pointer';
-            btnProximo.style.cursor = 'pointer';
-            btnAnterior.disabled = false;
-            btnProximo.disabled = false;
-        }
-        
-        // Atualizar visibilidade baseado no tamanho da tela
-        atualizarVisibilidadeBotoes();
-    }
-}
-
-// Re-inicializar lightbox quando mudar de seção
-function reiniciarLightboxAposMudanca() {
-    setTimeout(() => {
-        console.log("🔄 Re-iniciando lightbox após mudança de conteúdo...");
-        iniciarLightbox();
-    }, 300);
-}
-
-// ---------------------- Inicialização ----------------------
+// ==================== INICIALIZAÇÃO DO MENU ====================
 document.addEventListener('DOMContentLoaded', function() {
     inicializarMenu();
     inicializarCarrinho();
@@ -555,11 +197,9 @@ document.addEventListener('DOMContentLoaded', function() {
     
     setTimeout(() => {
         iniciarLightbox();
-        atualizarVisibilidadeBotoes();
     }, 1000);
 });
 
-// ---------------------- Construção do Menu ----------------------
 function inicializarMenu() {
     const menuTabs = document.getElementById("menuTabs");
     const areas = document.getElementById("areas");
@@ -594,29 +234,77 @@ function inicializarMenu() {
     }
 }
 
-// AQUI ESTÁ A FUNÇÃO CORRETA COM AS CLASSES RESPONSIVAS
+// ==================== FUNÇÃO ATUALIZADA PARA CRIAR CARDS ====================
 function criarCardProduto(item, categoria) {
+    // Categorias que NÃO terão personalização
+    const categoriasSemPersonalizacao = ['caldos', 'doces', 'bebidas', 'panelinhas'];
+    
+    // Verificar se é petisco e se é Calabresa Acebolada
+    const isCalabresaAcebolada = categoria === 'petiscos' && item.nome === 'Calabresa Acebolada';
+    
+    // Verificar se deve mostrar botão de personalização
+    const mostrarPersonalizacao = 
+        categoria === 'hamburgueres' || 
+        categoria === 'executivos' || 
+        categoria === 'espetinhos' || 
+        isCalabresaAcebolada;
+    
+    let botoesHTML = '';
+    
+    if (mostrarPersonalizacao) {
+        // Passar carneDia para executivos
+        const carneDia = categoria === 'executivos' ? item.carneDia : null;
+        botoesHTML = `
+            <div class="card-preco">
+                <span class="preco">€${item.preco.toFixed(2)}</span>
+                <button class="btn-adicionar" onclick="mostrarModalPersonalizacao('${item.nome.replace(/'/g, "\\'")}', ${item.preco}, '${categoria}', this${carneDia ? `, '${carneDia}'` : ''})">
+                    <i class="fas fa-edit"></i> PERSONALIZAR
+                </button>
+            </div>
+            <button class="btn-adicionar-rapido" onclick="addItem('${item.nome.replace(/'/g, "\\'")}', ${item.preco}, this)">
+                <i class="fas fa-plus"></i> ADICIONAR SEM PERSONALIZAR
+            </button>
+        `;
+    } else if (categoriasSemPersonalizacao.includes(categoria)) {
+        // Para categorias sem personalização, apenas botão de adicionar
+        botoesHTML = `
+            <div class="card-preco">
+                <span class="preco">€${item.preco.toFixed(2)}</span>
+                <button class="btn-adicionar" onclick="addItem('${item.nome.replace(/'/g, "\\'")}', ${item.preco}, this)">
+                    <i class="fas fa-plus"></i> ADICIONAR
+                </button>
+            </div>
+        `;
+    } else {
+        // Para outros petiscos (exceto Calabresa Acebolada)
+        botoesHTML = `
+            <div class="card-preco">
+                <span class="preco">€${item.preco.toFixed(2)}</span>
+                <button class="btn-adicionar" onclick="addItem('${item.nome.replace(/'/g, "\\'")}', ${item.preco}, this)">
+                    <i class="fas fa-plus"></i> ADICIONAR
+                </button>
+            </div>
+        `;
+    }
+    
+    const imagemFallback = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjhmOGY4Ii8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgZmlsbD0iIzk5OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPkRvbSBCaXN0csO0IEdyaWxsPC90ZXh0Pjx0ZXh0IHg9IjUwJSIgeT0iNjAlIiBmb250LWZhbWlseT0iQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTIiIGZpbGw9IiM5OTkiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5JbWFnZW0gbsOjbyBjYXJyZWdhZGE8L3RleHQ+PC9zdmc+';
+    
     return `
         <div class="card" data-categoria="${categoria}">
             <div class="card-image-container">
                 <img src="${item.foto}" alt="${item.nome}" 
-                    onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjhmOGY4Ii8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgZmlsbD0iIzk5OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPkRvbSBCaXN0csO0IEdyaWxsPC90ZXh0Pjx0ZXh0IHg9IjUwJSIgeT0iNjAlIiBmb250LWZhbWlseT0iQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTIiIGZpbGw9IiM5OTkiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5JbWFnZW0gbsOjbyBjYXJyZWdhZGE8L3RleHQ+PC9zdmc+'">
+                    onerror="this.src='${imagemFallback}'">
             </div>
             <div class="card-content">
-                <h3 class="card-titulo">${item.nome}</h3>
+                <h3 class="card-titulo">${item.nome} ${item.dia ? `(${item.dia})` : ''}</h3>
                 <p class="descricao-item">${item.descricao}</p>
-                <div class="card-preco">
-                    <span class="preco">€${item.preco.toFixed(2)}</span>
-                    <button class="btn-adicionar" onclick="addItem('${item.nome.replace(/'/g, "\\'")}', ${item.preco}, this)">
-                        <i class="fas fa-plus"></i> ADICIONAR
-                    </button>
-                </div>
+                ${botoesHTML}
             </div>
         </div>
     `;
 }
 
-// ---------------------- Navegação entre Seções ----------------------
+// ==================== NAVEGAÇÃO ENTRE SEÇÕES ====================
 function abrirSecao(cat) {
     document.querySelectorAll(".section").forEach(s => s.classList.remove("active"));
     document.querySelectorAll(".menu-centralizado button").forEach(btn => btn.classList.remove("active"));
@@ -631,9 +319,349 @@ function abrirSecao(cat) {
     reiniciarLightboxAposMudanca();
 }
 
-// ---------------------- Gerenciamento do Carrinho ----------------------
-let pedido = JSON.parse(localStorage.getItem("pedido")) || [];
+// ==================== MODAL DE PERSONALIZAÇÃO MELHORADO ====================
+function mostrarModalPersonalizacao(nome, preco, categoria, botao, carneDia = null) {
+    itemSelecionadoParaPersonalizar = { nome, preco };
+    categoriaSelecionadaParaPersonalizar = categoria;
+    carneDiaSelecionada = carneDia;
+    
+    // Determinar quais adicionais mostrar
+    const adicionaisFiltrados = filtrarAdicionaisPorCategoria(categoria, carneDia);
+    
+    // Criar modal com estrutura nova
+    const modalHTML = `
+        <div class="modal-overlay" id="modalPersonalizacao">
+            <div class="modal-personalizacao">
+                <!-- Header -->
+                <div class="modal-header">
+                    <button class="btn-fechar-modal" onclick="fecharModalPersonalizacao()">
+                        <i class="fas fa-times"></i>
+                    </button>
+                    <h3>🍽️ Personalizar: ${nome}</h3>
+                    <p>Adicione, remova ou personalize seu pedido</p>
+                </div>
+                
+                <!-- Body -->
+                <div class="modal-body">
+                    <!-- Seção de Remover Ingredientes -->
+                    ${criarSecaoRemoverIngredientes(categoria)}
+                    
+                    <!-- Seção de Ponto da Carne (se aplicável) -->
+                    ${criarSecaoPontoCarne(categoria)}
+                    
+                    <!-- Seção de Adicionais (NOVA VERSÃO MELHORADA) -->
+                    <div class="secao-adicionais">
+                        <div class="secao-titulo">
+                            <i class="fas fa-plus-circle"></i>
+                            <span>Adicionar Ingredientes Extras</span>
+                        </div>
+                        <div class="grid-adicionais" id="gridAdicionais">
+                            ${criarCardsAdicionais(adicionaisFiltrados)}
+                        </div>
+                    </div>
+                    
+                    <!-- Observações -->
+                    <div style="margin: 25px 0;">
+                        <div class="secao-titulo">
+                            <i class="fas fa-edit"></i>
+                            <span>Observações Especiais</span>
+                        </div>
+                        <textarea id="observacoesPersonalizacao" 
+                            placeholder="Alguma observação importante? (ex: menos sal, sem pimenta, mais molho, etc.)"
+                            style="width: 100%; padding: 15px; border: 2px solid #E66A11; border-radius: 10px; resize: vertical; min-height: 100px; font-size: 14px;"></textarea>
+                    </div>
+                    
+                    <!-- Resumo dos Adicionais Selecionados -->
+                    <div class="resumo-adicionais" id="resumoAdicionais" style="display: none;">
+                        <div class="resumo-titulo">
+                            <i class="fas fa-receipt"></i>
+                            <span>Resumo dos Adicionais</span>
+                        </div>
+                        <div class="lista-adicionais" id="listaAdicionais">
+                            <!-- Itens serão inseridos aqui -->
+                        </div>
+                        <div class="total-adicionais">
+                            <span>Total de Adicionais:</span>
+                            <span id="totalAdicionais">€0.00</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Footer -->
+                <div class="modal-footer">
+                    <button class="btn-cancelar" onclick="fecharModalPersonalizacao()">
+                        <i class="fas fa-times"></i> Cancelar
+                    </button>
+                    <button class="btn-confirmar" onclick="confirmarPersonalizacao()">
+                        <i class="fas fa-check"></i> Adicionar ao Carrinho (€${preco.toFixed(2)})
+                    </button>
+                </div>
+            </div>
+        </div>
+    `;
+    
+    document.body.insertAdjacentHTML('beforeend', modalHTML);
+    
+    // Adicionar eventos aos cards de adicionais
+    document.querySelectorAll('.card-adicional').forEach(card => {
+        card.addEventListener('click', function() {
+            this.classList.toggle('selecionado');
+            atualizarResumoAdicionais();
+        });
+    });
+    
+    // Adicionar eventos aos itens de remover
+    document.querySelectorAll('.item-remover').forEach(item => {
+        item.addEventListener('click', function() {
+            this.classList.toggle('selecionado');
+        });
+    });
+    
+    // Adicionar eventos às opções de ponto
+    document.querySelectorAll('.opcao-ponto').forEach(opcao => {
+        opcao.addEventListener('click', function() {
+            document.querySelectorAll('.opcao-ponto').forEach(o => o.classList.remove('selecionado'));
+            this.classList.add('selecionado');
+        });
+    });
+}
 
+function filtrarAdicionaisPorCategoria(categoria, carneDia) {
+    const adicionaisFiltrados = {};
+    
+    Object.keys(PRECOS_ADICIONAIS).forEach(key => {
+        const adicional = PRECOS_ADICIONAIS[key];
+        
+        // Lógica para filtrar adicionais por categoria
+        if (categoria === 'executivos') {
+            if (adicional.categoria === 'executivo') {
+                // Para Feijoada, adicionar opções especiais
+                if (carneDia === 'Feijoada') {
+                    if (key.includes('Carne Extra') || key.includes('Torresmo') || key.includes('Couve')) {
+                        adicionaisFiltrados[key] = adicional;
+                    }
+                }
+                adicionaisFiltrados[key] = adicional;
+            }
+        } else if (categoria === 'hamburgueres') {
+            if (adicional.categoria === 'hamburguer') {
+                adicionaisFiltrados[key] = adicional;
+            }
+        } else if (categoria === 'espetinhos') {
+            if (adicional.categoria === 'espetinho') {
+                adicionaisFiltrados[key] = adicional;
+            }
+        }
+    });
+    
+    return adicionaisFiltrados;
+}
+
+function criarSecaoRemoverIngredientes(categoria) {
+    if (['executivos', 'hamburgueres'].includes(categoria)) {
+        const ingredientes = categoria === 'executivos' ? [
+            'Sem Cebola', 'Sem Azeitonas', 'Sem Vinagrete', 
+            'Sem Salada', 'Sem Torresmo', 'Sem Couve'
+        ] : [
+            'Sem Cebola', 'Sem Ervilhas', 'Sem Abacaxi', 
+            'Sem Bacon', 'Sem Queijo', 'Sem Molho',
+            'Sem Alface', 'Sem Tomate'
+        ];
+        
+        const itensHTML = ingredientes.map(ing => `
+            <div class="item-remover">
+                ${ing}
+            </div>
+        `).join('');
+        
+        return `
+            <div class="secao-remover">
+                <div class="secao-titulo">
+                    <i class="fas fa-ban"></i>
+                    <span>Remover Ingredientes</span>
+                </div>
+                <div class="grid-remover">
+                    ${itensHTML}
+                </div>
+            </div>
+        `;
+    }
+    return '';
+}
+
+function criarSecaoPontoCarne(categoria) {
+    if (['executivos', 'espetinhos'].includes(categoria)) {
+        return `
+            <div class="secao-ponto">
+                <div class="secao-titulo">
+                    <i class="fas fa-fire"></i>
+                    <span>Ponto da Carne</span>
+                </div>
+                <div class="opcoes-ponto">
+                    <div class="opcao-ponto" data-ponto="Bem Passado">
+                        <div class="ponto-nome">Bem Passado</div>
+                        <div class="ponto-descricao">Totalmente cozida</div>
+                    </div>
+                    <div class="opcao-ponto" data-ponto="Ao Ponto">
+                        <div class="ponto-nome">Ao Ponto</div>
+                        <div class="ponto-descricao">Perfeito equilíbrio</div>
+                    </div>
+                    <div class="opcao-ponto" data-ponto="Mal Passado">
+                        <div class="ponto-nome">Mal Passado</div>
+                        <div class="ponto-descricao">Suculenta e macia</div>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+    return '';
+}
+
+function criarCardsAdicionais(adicionais) {
+    return Object.keys(adicionais).map(key => {
+        const adicional = adicionais[key];
+        return `
+            <div class="card-adicional" data-nome="${key}" data-preco="${adicional.preco}">
+                <div class="adicional-titulo">
+                    <span>${key.replace('Adicional ', '')}</span>
+                    <span class="adicional-preco">€${adicional.preco.toFixed(2)}</span>
+                </div>
+                <div class="adicional-descricao">${adicional.descricao}</div>
+                <div class="tag-adicional">${adicional.categoria.toUpperCase()}</div>
+                <div class="selecionar-adicional"></div>
+            </div>
+        `;
+    }).join('');
+}
+
+function atualizarResumoAdicionais() {
+    const adicionaisSelecionados = document.querySelectorAll('.card-adicional.selecionado');
+    const resumoDiv = document.getElementById('resumoAdicionais');
+    const listaDiv = document.getElementById('listaAdicionais');
+    const totalSpan = document.getElementById('totalAdicionais');
+    
+    if (adicionaisSelecionados.length > 0) {
+        let total = 0;
+        let listaHTML = '';
+        
+        adicionaisSelecionados.forEach(card => {
+            const nome = card.dataset.nome;
+            const preco = parseFloat(card.dataset.preco);
+            total += preco;
+            
+            listaHTML += `
+                <div class="item-resumo">
+                    <span class="item-resumo-nome">${nome}</span>
+                    <span class="item-resumo-preco">€${preco.toFixed(2)}</span>
+                </div>
+            `;
+        });
+        
+        listaDiv.innerHTML = listaHTML;
+        totalSpan.textContent = `€${total.toFixed(2)}`;
+        resumoDiv.style.display = 'block';
+    } else {
+        resumoDiv.style.display = 'none';
+    }
+}
+
+function fecharModalPersonalizacao() {
+    const modal = document.getElementById('modalPersonalizacao');
+    if (modal) {
+        modal.remove();
+        itemSelecionadoParaPersonalizar = null;
+        categoriaSelecionadaParaPersonalizar = null;
+        carneDiaSelecionada = null;
+    }
+}
+
+function confirmarPersonalizacao() {
+    if (!itemSelecionadoParaPersonalizar) return;
+    
+    // Coletar ingredientes removidos
+    const ingredientesRemovidos = [];
+    document.querySelectorAll('.item-remover.selecionado').forEach(item => {
+        ingredientesRemovidos.push(item.textContent.trim());
+    });
+    
+    // Coletar ponto da carne
+    let pontoCarne = null;
+    const pontoSelecionado = document.querySelector('.opcao-ponto.selecionado');
+    if (pontoSelecionado) {
+        pontoCarne = pontoSelecionado.dataset.ponto;
+    }
+    
+    // Coletar adicionais
+    const adicionais = [];
+    let precoTotalAdicionais = 0;
+    document.querySelectorAll('.card-adicional.selecionado').forEach(card => {
+        const nome = card.dataset.nome;
+        const preco = parseFloat(card.dataset.preco);
+        adicionais.push({ nome, preco });
+        precoTotalAdicionais += preco;
+    });
+    
+    // Coletar observações
+    const observacoes = document.getElementById('observacoesPersonalizacao').value;
+    
+    // Criar item personalizado
+    const itemPersonalizado = {
+        ...itemSelecionadoParaPersonalizar,
+        ingredientesRemovidos,
+        pontoCarne,
+        adicionais,
+        precoTotalAdicionais,
+        observacoes: observacoes || ''
+    };
+    
+    // Adicionar ao carrinho
+    addItemPersonalizado(itemPersonalizado);
+    fecharModalPersonalizacao();
+}
+
+function addItemPersonalizado(item) {
+    const precoTotal = item.preco + item.precoTotalAdicionais;
+    
+    // Criar nome com personalizações
+    let nomeCompleto = item.nome;
+    
+    if (item.ingredientesRemovidos.length > 0) {
+        nomeCompleto += ` (${item.ingredientesRemovidos.join(', ')})`;
+    }
+    
+    if (item.pontoCarne) {
+        nomeCompleto += ` [${item.pontoCarne}]`;
+    }
+    
+    if (item.adicionais.length > 0) {
+        const adicionaisNomes = item.adicionais.map(a => a.nome);
+        nomeCompleto += ` [+ ${adicionaisNomes.join(', ')}]`;
+    }
+    
+    // Verificar se item já existe no carrinho
+    const itemExistente = pedido.find(p => p.nome === nomeCompleto);
+    
+    if (itemExistente) {
+        itemExistente.quantidade++;
+    } else {
+        pedido.push({
+            nome: nomeCompleto,
+            preco: precoTotal,
+            quantidade: 1,
+            ingredientesRemovidos: item.ingredientesRemovidos,
+            pontoCarne: item.pontoCarne,
+            adicionais: item.adicionais,
+            precoBase: item.preco,
+            precoAdicionais: item.precoTotalAdicionais,
+            observacoes: item.observacoes
+        });
+    }
+    
+    salvarPedido();
+    mostrarFeedbackAdicao();
+}
+
+// ==================== FUNÇÕES DO CARRINHO ====================
 function inicializarCarrinho() {
     atualizarCarrinho();
 }
@@ -646,33 +674,32 @@ function addItem(nome, preco, botao) {
     
     salvarPedido();
     mostrarFeedbackAdicao(botao);
-    
-    // Efeito de animação no botão do carrinho topo
-    const carrinhoTopoBtn = document.getElementById("carrinhoTopoBtn");
-    const contadorTopo = document.getElementById("contadorTopo");
-    
-    if (carrinhoTopoBtn && contadorTopo) {
-        // Animação de "pulse" no contador
-        contadorTopo.style.transform = 'scale(1.3)';
-        setTimeout(() => {
-            contadorTopo.style.transform = 'scale(1)';
-        }, 300);
-    }
 }
 
 function mostrarFeedbackAdicao(botao) {
-    const originalHTML = botao.innerHTML;
-    const originalBg = botao.style.background;
+    if (botao) {
+        const originalHTML = botao.innerHTML;
+        const originalBg = botao.style.background;
+        
+        botao.innerHTML = '<i class="fas fa-check"></i> ADICIONADO!';
+        botao.style.background = '#00a650';
+        botao.disabled = true;
+        
+        setTimeout(() => {
+            botao.innerHTML = originalHTML;
+            botao.style.background = originalBg;
+            botao.disabled = false;
+        }, 1500);
+    }
     
-    botao.innerHTML = '<i class="fas fa-check"></i> ADICIONADO!';
-    botao.style.background = '#00a650';
-    botao.disabled = true;
-    
-    setTimeout(() => {
-        botao.innerHTML = originalHTML;
-        botao.style.background = originalBg;
-        botao.disabled = false;
-    }, 1500);
+    // Animação no carrinho topo
+    const carrinhoTopoBtn = document.getElementById("carrinhoTopoBtn");
+    if (carrinhoTopoBtn) {
+        carrinhoTopoBtn.style.transform = 'scale(1.1)';
+        setTimeout(() => {
+            carrinhoTopoBtn.style.transform = 'scale(1)';
+        }, 300);
+    }
 }
 
 function salvarPedido() {
@@ -689,7 +716,9 @@ function atualizarCarrinho() {
     if (carrinhoTopoBtn) {
         if (pedido.length > 0) {
             carrinhoTopoBtn.classList.remove("hidden");
-            carrinhoTopoBtn.classList.add("visible");
+            setTimeout(() => {
+                carrinhoTopoBtn.classList.add("visible");
+            }, 100);
         } else {
             carrinhoTopoBtn.classList.remove("visible");
             setTimeout(() => {
@@ -706,7 +735,6 @@ function atualizarCarrinho() {
     
     const lista = document.getElementById("lista");
     const contador = document.getElementById("contador-itens");
-    const totalMini = document.getElementById("total-mini");
     const totalElement = document.getElementById("total");
     
     let total = 0;
@@ -717,10 +745,29 @@ function atualizarCarrinho() {
         total += subtotal;
         totalItens += item.quantidade;
         
+        // Mostrar informações de personalização no carrinho
+        let infoAdicional = '';
+        if (item.ingredientesRemovidos && item.ingredientesRemovidos.length > 0) {
+            infoAdicional += `<br><small style="color: #666;">${item.ingredientesRemovidos.join(', ')}</small>`;
+        }
+        if (item.pontoCarne) {
+            infoAdicional += `<br><small style="color: #666;">Ponto: ${item.pontoCarne}</small>`;
+        }
+        if (item.adicionais && item.adicionais.length > 0) {
+            const adicionaisText = item.adicionais.map(a => a.nome).join(', ');
+            const precoAdicionais = item.adicionais.reduce((sum, a) => sum + a.preco, 0);
+            infoAdicional += `<br><small style="color: #28a745;">+ ${adicionaisText} (€${precoAdicionais.toFixed(2)})</small>`;
+        }
+        if (item.observacoes) {
+            infoAdicional += `<br><small style="color: #666;">Obs: ${item.observacoes}</small>`;
+        }
+        
         return `
             <li class="carrinho-item">
                 <div>
-                    <strong>${item.nome}</strong><br>
+                    <strong>${item.nome}</strong>
+                    ${infoAdicional}
+                    <br>
                     <small>€${item.preco.toFixed(2)} cada</small>
                 </div>
                 <div class="quantidade-box">
@@ -740,13 +787,12 @@ function atualizarCarrinho() {
     const totalCalculado = calcularTotal();
     if (totalElement) {
         totalElement.innerHTML = `
-            <strong>Subtotal:</strong> €${totalCalculado.subtotal.toFixed(2)}<br>
-            <strong>IVA (13%):</strong> €${totalCalculado.iva.toFixed(2)}<br>
-            <strong>Total a Pagar:</strong> €${totalCalculado.total.toFixed(2)}
+            Subtotal: €${totalCalculado.subtotal.toFixed(2)}<br>
+            IVA (13%): €${totalCalculado.iva.toFixed(2)}<br>
+            <strong>Total a Pagar: €${totalCalculado.total.toFixed(2)}</strong>
         `;
     }
     
-    if (totalMini) totalMini.textContent = totalCalculado.total.toFixed(2);
     if (contador) contador.textContent = totalItens;
 }
 
@@ -767,7 +813,7 @@ function removerItem(index) {
     salvarPedido();
 }
 
-// ---------------------- Controle do Carrinho ----------------------
+// ==================== CONTROLE DO CARRINHO ====================
 function abrirCarrinho() {
     atualizarCarrinho();
     const carrinhoBox = document.getElementById("carrinho-box");
@@ -785,7 +831,7 @@ function fecharCarrinho() {
     }
 }
 
-// ---------------------- WhatsApp (UNIFICADO) ----------------------
+// ==================== WHATSAPP ====================
 function enviarWhatsApp() {
     const nomeEl = document.getElementById("nomeCliente");
     const nome = nomeEl ? nomeEl.value.trim() : "";
@@ -812,11 +858,29 @@ function enviarWhatsApp() {
     pedido.forEach(item => {
         const subtotal = item.preco * item.quantidade;
         mensagem += `• ${item.nome} x${item.quantidade} - €${subtotal.toFixed(2)}%0A`;
+        
+        // Adicionar informações de personalização ao WhatsApp
+        if (item.ingredientesRemovidos && item.ingredientesRemovidos.length > 0) {
+            mensagem += `  ${item.ingredientesRemovidos.join(', ')}%0A`;
+        }
+        if (item.pontoCarne) {
+            mensagem += `  Ponto: ${item.pontoCarne}%0A`;
+        }
+        if (item.adicionais && item.adicionais.length > 0) {
+            mensagem += `  Adicionais: ${item.adicionais.map(a => a.nome).join(', ')}%0A`;
+        }
+        if (item.observacoes) {
+            mensagem += `  Obs: ${item.observacoes}%0A`;
+        }
+        mensagem += `%0A`;
     });
 
-    const total = pedido.reduce((sum, item) => sum + (item.preco * item.quantidade), 0);
-    mensagem += `%0A💰 *Total: €${total.toFixed(2)}*%0A%0A`;
-    mensagem += `📝 *Observações:*%0A${observacoes || "Nenhuma observação"}`;
+    const totalCalculado = calcularTotal();
+    mensagem += `%0A💰 *Resumo do Pedido:*%0A`;
+    mensagem += `Subtotal: €${totalCalculado.subtotal.toFixed(2)}%0A`;
+    mensagem += `IVA (13%): €${totalCalculado.iva.toFixed(2)}%0A`;
+    mensagem += `*TOTAL: €${totalCalculado.total.toFixed(2)}*%0A%0A`;
+    mensagem += `📝 *Observações Gerais:*%0A${observacoes || "Nenhuma observação"}`;
 
     const urlWhatsApp = `https://wa.me/${numeroWhatsApp}?text=${mensagem}`;
     localStorage.setItem('pedidoEnviado', 'true');
@@ -824,38 +888,18 @@ function enviarWhatsApp() {
     window.open(urlWhatsApp, '_blank');
 
     setTimeout(() => {
-        alert("📝 Pedido enviado com sucesso!\n\n💳 Agora você pode realizar o pagamento online.\n\nOs itens foram mantidos no carrinho para facilitar o pagamento.");
+        alert("📝 Pedido enviado com sucesso!\n\n💳 Agora você pode realizar o pagamento online.");
     }, 800);
 }
 
-// ---------------------- Configurar Event Listeners GLOBAIS ----------------------
+// ==================== CONFIGURAR EVENT LISTENERS GLOBAIS ====================
 function configurarEventListeners() {
     // Configurar evento para o botão do carrinho no topo
     const carrinhoTopoBtn = document.getElementById("carrinhoTopoBtn");
     if (carrinhoTopoBtn) {
         carrinhoTopoBtn.addEventListener("click", function(e) {
             e.stopPropagation();
-            
-            // Mostrar alerta com os produtos
-            if (pedido.length === 0) {
-                alert("🛒 Seu carrinho está vazio!");
-                return;
-            }
-            
-            let mensagem = "🍔 *ITENS NO CARRINHO:*\n\n";
-            pedido.forEach(item => {
-                mensagem += `• ${item.nome} x${item.quantidade} - €${(item.preco * item.quantidade).toFixed(2)}\n`;
-            });
-            
-            const total = pedido.reduce((sum, item) => sum + (item.preco * item.quantidade), 0);
-            mensagem += `\n💰 *Total: €${total.toFixed(2)}*`;
-            mensagem += `\n\n👉 Clique em "Abrir Carrinho" para ver mais detalhes ou finalizar.`;
-            
-            const abrirCarrinhoCompleto = confirm(mensagem + "\n\nDeseja abrir o carrinho completo?");
-            
-            if (abrirCarrinhoCompleto) {
-                abrirCarrinho();
-            }
+            abrirCarrinho();
         });
     }
     
@@ -874,19 +918,19 @@ function configurarEventListeners() {
 
     document.addEventListener('click', function(event) {
         const carrinho = document.getElementById('carrinho-box');
-        const floatingCart = document.querySelector('.floating-cart');
+        const carrinhoTopoBtn = document.getElementById('carrinhoTopoBtn');
 
-        if (!carrinho || !floatingCart) return;
+        if (!carrinho || !carrinhoTopoBtn) return;
 
         if (!carrinho.contains(event.target) &&
-            !floatingCart.contains(event.target) &&
+            !carrinhoTopoBtn.contains(event.target) &&
             carrinho.classList.contains('carrinho-open')) {
             fecharCarrinho();
         }
     });
 }
 
-// ---------------------- PROCESSAR PAGAMENTO (fluxo único) ----------------------
+// ==================== PROCESSAR PAGAMENTO ====================
 function processarPagamento() {
     if(pedido.length === 0) {
         alert("🛒 Seu carrinho está vazio! Adicione itens antes de pagar.");
@@ -916,7 +960,7 @@ function processarPagamento() {
     criarModalPagamento(nomeCliente);
 }
 
-// ---------------------- Modal de Pagamento ----------------------
+// ==================== MODAL DE PAGAMENTO ====================
 function criarModalPagamento(nomeCliente) {
     if (document.getElementById('modalPagamento')) return;
 
@@ -1008,7 +1052,7 @@ function fecharModalPagamento() {
     }
 }
 
-// ---------------------- FINALIZAR PAGAMENTO / EasyPay ----------------------
+// ==================== FINALIZAR PAGAMENTO ====================
 function finalizarPagamento() {
     const emailInput = document.getElementById('emailPagamento');
     const telefoneInput = document.getElementById('telefonePagamento');
@@ -1089,12 +1133,6 @@ function finalizarPagamento() {
     mostrarLoadingPagamento(easypayUrl);
 }
 
-// ---------------------- VALIDADORES E HELPERS ----------------------
-function isValidEmail(email) {
-    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return re.test(email);
-}
-
 function mostrarLoadingPagamento(url) {
     if (document.getElementById('loadingPagamento')) return;
 
@@ -1119,6 +1157,403 @@ function mostrarLoadingPagamento(url) {
     }, 1200);
 }
 
+// ==================== LIGHTBOX PARA IMAGENS ====================
+let todasImagensLightbox = [];
+let indiceImagemAtual = 0;
+
+function iniciarLightbox() {
+    console.log("🔍 Iniciando lightbox...");
+    
+    const imagensProdutos = document.querySelectorAll('.card-image-container img');
+    todasImagensLightbox = Array.from(imagensProdutos);
+    console.log(`✅ Encontradas ${todasImagensLightbox.length} imagens`);
+    
+    todasImagensLightbox.forEach((imagem, index) => {
+        imagem.onclick = null;
+        
+        imagem.addEventListener('click', function(event) {
+            event.preventDefault();
+            event.stopPropagation();
+            
+            console.log(`🖼️ Clicou na imagem ${index + 1}: ${this.alt}`);
+            abrirLightbox(this.src, this.alt, index);
+        });
+        
+        imagem.style.cursor = 'zoom-in';
+        
+        imagem.addEventListener('mouseenter', function() {
+            this.style.opacity = '0.9';
+        });
+        
+        imagem.addEventListener('mouseleave', function() {
+            this.style.opacity = '1';
+        });
+    });
+    
+    configurarEventosLightbox();
+}
+
+function configurarEventosLightbox() {
+    const modal = document.getElementById('modalLightbox');
+    const fecharBtn = document.querySelector('.fechar-modal-lightbox');
+    const btnAnterior = document.getElementById('btnAnterior');
+    const btnProximo = document.getElementById('btnProximo');
+    const imagemAmpliada = document.getElementById('imagemAmpliada');
+    
+    console.log("⚙️ Configurando eventos do modal...");
+    
+    if (fecharBtn) {
+        fecharBtn.addEventListener('click', fecharLightbox);
+        console.log("✅ Evento de fechar configurado");
+    }
+    
+    if (modal) {
+        modal.addEventListener('click', function(event) {
+            if (event.target === modal) {
+                fecharLightbox();
+            }
+        });
+    }
+    
+    // Configurar botões de navegação apenas para desktop
+    if (btnAnterior && window.innerWidth > 768) {
+        btnAnterior.addEventListener('click', function(event) {
+            event.stopPropagation();
+            navegarImagem(-1);
+        });
+    }
+    
+    if (btnProximo && window.innerWidth > 768) {
+        btnProximo.addEventListener('click', function(event) {
+            event.stopPropagation();
+            navegarImagem(1);
+        });
+    }
+    
+    if (imagemAmpliada) {
+        imagemAmpliada.addEventListener('click', function(event) {
+            event.stopPropagation();
+            this.classList.toggle('zoom-ativo');
+            
+            if (this.classList.contains('zoom-ativo')) {
+                mostrarMensagemZoom('Zoom ativado • Toque novamente para sair do zoom');
+            }
+        });
+    }
+    
+    // Controles por toque para dispositivos móveis
+    let touchStartY = 0;
+    let touchEndY = 0;
+    
+    if (imagemAmpliada) {
+        imagemAmpliada.addEventListener('touchstart', function(event) {
+            touchStartY = event.changedTouches[0].screenY;
+        });
+        
+        imagemAmpliada.addEventListener('touchend', function(event) {
+            touchEndY = event.changedTouches[0].screenY;
+            handleVerticalSwipe();
+        });
+    }
+    
+    function handleVerticalSwipe() {
+        const swipeThreshold = 50;
+        
+        if (touchEndY < touchStartY - swipeThreshold) {
+            navegarImagem(1);
+        }
+        
+        if (touchEndY > touchStartY + swipeThreshold) {
+            navegarImagem(-1);
+        }
+    }
+    
+    document.addEventListener('keydown', function(event) {
+        const modal = document.getElementById('modalLightbox');
+        if (modal && modal.style.display === 'flex') {
+            switch(event.key) {
+                case 'Escape':
+                    fecharLightbox();
+                    break;
+                case 'ArrowLeft':
+                    navegarImagem(-1);
+                    break;
+                case 'ArrowRight':
+                    navegarImagem(1);
+                    break;
+                case 'ArrowUp':
+                    navegarImagem(-1);
+                    break;
+                case 'ArrowDown':
+                    navegarImagem(1);
+                    break;
+                case ' ':
+                case 'Enter':
+                    event.preventDefault();
+                    const img = document.getElementById('imagemAmpliada');
+                    if (img) img.classList.toggle('zoom-ativo');
+                    break;
+                case 'z':
+                case 'Z':
+                    event.preventDefault();
+                    const imgZ = document.getElementById('imagemAmpliada');
+                    if (imgZ) imgZ.classList.toggle('zoom-ativo');
+                    break;
+            }
+        }
+    });
+    
+    window.addEventListener('resize', function() {
+        ajustarTamanhoImagemResponsivo();
+        atualizarVisibilidadeBotoes();
+    });
+}
+
+function atualizarVisibilidadeBotoes() {
+    const btnAnterior = document.getElementById('btnAnterior');
+    const btnProximo = document.getElementById('btnProximo');
+    
+    if (window.innerWidth <= 768) {
+        if (btnAnterior) btnAnterior.style.display = 'none';
+        if (btnProximo) btnProximo.style.display = 'none';
+    } else {
+        if (btnAnterior) btnAnterior.style.display = 'flex';
+        if (btnProximo) btnProximo.style.display = 'flex';
+    }
+}
+
+function ajustarTamanhoImagemResponsivo() {
+    const imagemAmpliada = document.getElementById('imagemAmpliada');
+    const modal = document.getElementById('modalLightbox');
+    
+    if (!imagemAmpliada || !modal || modal.style.display !== 'flex') return;
+    
+    const larguraTela = window.innerWidth;
+    
+    if (larguraTela <= 768) {
+        imagemAmpliada.style.maxWidth = '95%';
+        imagemAmpliada.style.maxHeight = '70vh';
+    } else {
+        imagemAmpliada.style.maxWidth = '90%';
+        imagemAmpliada.style.maxHeight = '80vh';
+    }
+    
+    atualizarVisibilidadeBotoes();
+}
+
+function abrirLightbox(src, alt, index) {
+    console.log(`📂 Abrindo lightbox - índice: ${index}`);
+    
+    const modal = document.getElementById('modalLightbox');
+    const imagemAmpliada = document.getElementById('imagemAmpliada');
+    const infoDiv = document.getElementById('infoLightbox');
+    
+    if (!modal || !imagemAmpliada) {
+        console.error('❌ Elementos do modal não encontrados!');
+        alert('Erro ao carregar o visualizador de imagens.');
+        return;
+    }
+    
+    indiceImagemAtual = index;
+    
+    imagemAmpliada.classList.remove('zoom-ativo');
+    
+    imagemAmpliada.onload = function() {
+        ajustarTamanhoImagemResponsivo();
+    };
+    
+    imagemAmpliada.src = src;
+    imagemAmpliada.alt = alt;
+    
+    if (infoDiv && todasImagensLightbox[index]) {
+        const card = todasImagensLightbox[index].closest('.card');
+        if (card) {
+            const nome = card.querySelector('h3');
+            const descricao = card.querySelector('.descricao-item');
+            const preco = card.querySelector('.preco');
+            
+            if (nome && descricao && preco) {
+                infoDiv.innerHTML = `
+                    <strong>${nome.textContent}</strong><br>
+                    ${descricao.textContent}<br>
+                    <span style="color: #E66A11; font-weight: bold;">${preco.textContent}</span>
+                `;
+            } else {
+                infoDiv.innerHTML = alt || 'Dom Bistrô Grill';
+            }
+        } else {
+            infoDiv.innerHTML = alt || 'Dom Bistrô Grill';
+        }
+    }
+    
+    modal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+    
+    void modal.offsetHeight;
+    
+    ajustarTamanhoImagemResponsivo();
+    atualizarBotoesNavegacao();
+    
+    const isMobile = window.innerWidth <= 768;
+    const mensagem = isMobile 
+        ? 'Toque na imagem para zoom • Deslize para cima/baixo para navegar • Toque fora para sair'
+        : 'Clique na imagem para zoom • Use as setas para navegar • ESC para sair';
+    
+    mostrarMensagemZoom(mensagem);
+}
+
+function mostrarMensagemZoom(texto) {
+    const mensagemAnterior = document.querySelector('.mensagem-zoom');
+    if (mensagemAnterior) {
+        mensagemAnterior.remove();
+    }
+    
+    const mensagem = document.createElement('div');
+    mensagem.className = 'mensagem-zoom';
+    mensagem.textContent = texto;
+    mensagem.style.cssText = `
+        position: absolute;
+        bottom: ${window.innerWidth <= 768 ? '60px' : '80px'};
+        left: 50%;
+        transform: translateX(-50%);
+        background: rgba(0, 0, 0, 0.8);
+        color: white;
+        padding: ${window.innerWidth <= 768 ? '8px 15px' : '10px 20px'};
+        border-radius: 20px;
+        font-size: ${window.innerWidth <= 768 ? '12px' : '14px'};
+        z-index: 10001;
+        animation: fadeInOut 3s ease;
+        text-align: center;
+        max-width: 90%;
+        word-wrap: break-word;
+    `;
+    
+    document.querySelector('.modal-conteudo').appendChild(mensagem);
+    
+    setTimeout(() => {
+        if (mensagem.parentNode) {
+            mensagem.style.animation = 'fadeOut 0.5s ease';
+            setTimeout(() => {
+                if (mensagem.parentNode) mensagem.remove();
+            }, 500);
+        }
+    }, 3000);
+}
+
+function fecharLightbox() {
+    const modal = document.getElementById('modalLightbox');
+    
+    if (modal) {
+        modal.style.display = 'none';
+        document.body.style.overflow = 'auto';
+        console.log("🔒 Lightbox fechado");
+    }
+}
+
+function navegarImagem(direcao) {
+    if (todasImagensLightbox.length === 0) return;
+    
+    const imagemAmpliada = document.getElementById('imagemAmpliada');
+    if (imagemAmpliada) {
+        imagemAmpliada.classList.remove('zoom-ativo');
+    }
+    
+    indiceImagemAtual += direcao;
+    
+    if (indiceImagemAtual < 0) {
+        indiceImagemAtual = todasImagensLightbox.length - 1;
+    } else if (indiceImagemAtual >= todasImagensLightbox.length) {
+        indiceImagemAtual = 0;
+    }
+    
+    console.log(`➡️ Navegando para imagem ${indiceImagemAtual + 1} de ${todasImagensLightbox.length}`);
+    
+    const novaImagem = todasImagensLightbox[indiceImagemAtual];
+    if (novaImagem) {
+        const imagemAmpliada = document.getElementById('imagemAmpliada');
+        const infoDiv = document.getElementById('infoLightbox');
+        
+        if (imagemAmpliada) {
+            imagemAmpliada.style.opacity = '0';
+            imagemAmpliada.style.transition = 'opacity 0.3s ease';
+            
+            setTimeout(() => {
+                imagemAmpliada.classList.remove('zoom-ativo');
+                imagemAmpliada.src = novaImagem.src;
+                imagemAmpliada.alt = novaImagem.alt;
+                
+                setTimeout(() => {
+                    imagemAmpliada.style.opacity = '1';
+                    ajustarTamanhoImagemResponsivo();
+                }, 50);
+                
+                if (infoDiv) {
+                    const card = novaImagem.closest('.card');
+                    if (card) {
+                        const nome = card.querySelector('h3');
+                        const descricao = card.querySelector('.descricao-item');
+                        const preco = card.querySelector('.preco');
+                        
+                        if (nome && descricao && preco) {
+                            infoDiv.innerHTML = `
+                                <strong>${nome.textContent}</strong><br>
+                                ${descricao.textContent}<br>
+                                <span style="color: #E66A11; font-weight: bold;">${preco.textContent}</span>
+                            `;
+                        } else {
+                            infoDiv.innerHTML = novaImagem.alt || 'Dom Bistrô Grill';
+                        }
+                    } else {
+                        infoDiv.innerHTML = novaImagem.alt || 'Dom Bistrô Grill';
+                    }
+                }
+                
+                atualizarBotoesNavegacao();
+                
+                const isMobile = window.innerWidth <= 768;
+                const mensagem = isMobile 
+                    ? 'Toque na imagem para zoom • Deslize para cima/baixo para navegar • Toque fora para sair'
+                    : 'Clique na imagem para zoom • Use as setas para navegar • ESC para sair';
+                
+                mostrarMensagemZoom(mensagem);
+                
+            }, 300);
+        }
+    }
+}
+
+function atualizarBotoesNavegacao() {
+    const btnAnterior = document.getElementById('btnAnterior');
+    const btnProximo = document.getElementById('btnProximo');
+    
+    if (btnAnterior && btnProximo) {
+        if (todasImagensLightbox.length <= 1) {
+            btnAnterior.style.opacity = '0.3';
+            btnProximo.style.opacity = '0.3';
+            btnAnterior.style.cursor = 'not-allowed';
+            btnProximo.style.cursor = 'not-allowed';
+            btnAnterior.disabled = true;
+            btnProximo.disabled = true;
+        } else {
+            btnAnterior.style.opacity = '1';
+            btnProximo.style.opacity = '1';
+            btnAnterior.style.cursor = 'pointer';
+            btnProximo.style.cursor = 'pointer';
+            btnAnterior.disabled = false;
+            btnProximo.disabled = false;
+        }
+        
+        atualizarVisibilidadeBotoes();
+    }
+}
+
+function reiniciarLightboxAposMudanca() {
+    setTimeout(() => {
+        console.log("🔄 Re-iniciando lightbox após mudança de conteúdo...");
+        iniciarLightbox();
+    }, 300);
+}
+
 // Adicionar animações CSS para mensagens
 const style = document.createElement('style');
 style.textContent = `
@@ -1138,5 +1573,5 @@ document.head.appendChild(style);
 
 // Verificar console para debug
 console.log("=== DOM BISTRÔ GRILL - SISTEMA CARREGADO ===");
-console.log("Lightbox configurado e pronto para uso!");
-console.log("Total de categorias:", Object.keys(categorias).length);
+console.log("Sistema de adicionais melhorado com visualização moderna!");
+console.log("Feijoada agora tem opção de adicionar carne extra!");

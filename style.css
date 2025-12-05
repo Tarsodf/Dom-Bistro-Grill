@@ -30,90 +30,85 @@ html, body {
  BOTÃO DO CARRINHO FIXO (TOPO DIREITO)
 =========================== */
 .carrinho-topo-btn {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    background: var(--laranja);
-    color: white;
-    padding: 10px 15px;
-    border-radius: 50px;
-    box-shadow: 0 4px 15px var(--sombra);
-    cursor: pointer;
-    z-index: 1001;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-weight: 700;
-    font-size: 14px;
-    transition: all 0.4s ease;
-    transform: translateY(-10px);
-    opacity: 0;
-    visibility: hidden;
-    border: 2px solid white;
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: var(--laranja);
+  color: white;
+  padding: 10px 15px;
+  border-radius: 50px;
+  box-shadow: 0 4px 15px var(--sombra);
+  cursor: pointer;
+  z-index: 1001;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 700;
+  font-size: 14px;
+  transition: all 0.4s ease;
+  transform: translateY(-10px);
+  opacity: 0;
+  visibility: hidden;
+  border: 2px solid white;
 }
 
 .carrinho-topo-btn.visible {
-    transform: translateY(0);
-    opacity: 1;
-    visibility: visible;
+  transform: translateY(0);
+  opacity: 1;
+  visibility: visible;
 }
 
 .carrinho-topo-btn:hover {
-    background: var(--marrom-escuro);
-    transform: scale(1.05) translateY(0);
+  background: var(--marrom-escuro);
+  transform: scale(1.05) translateY(0);
 }
 
 .carrinho-topo-icon {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .carrinho-topo-icon i {
-    font-size: 18px;
+  font-size: 18px;
 }
 
 .carrinho-topo-contador {
-    position: absolute;
-    top: -8px;
-    right: -8px;
-    background: #ff4444;
-    color: white;
-    width: 22px;
-    height: 22px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 12px;
-    font-weight: 900;
-    border: 2px solid white;
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background: #ff4444;
+  color: white;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 900;
+  border: 2px solid white;
 }
 
 .carrinho-topo-texto {
-    font-size: 14px;
+  font-size: 14px;
 }
 
 /* Animação para aparecer o botão */
 @keyframes slideDownFadeIn {
-    from {
-        transform: translateY(-20px);
-        opacity: 0;
-    }
-    to {
-        transform: translateY(0);
-        opacity: 1;
-    }
+  from {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
 
 .carrinho-topo-btn.visible {
-    animation: slideDownFadeIn 0.4s ease forwards;
-}
-
-/* Classe para esconder elementos */
-.hidden {
-    display: none !important;
+  animation: slideDownFadeIn 0.4s ease forwards;
 }
 
 /* ===========================
@@ -227,7 +222,7 @@ html, body {
 }
 
 /* ===========================
- CARD DO PRODUTO - TODAS IMAGENS PADRONIZADAS
+ CARD DO PRODUTO - DESIGN UNIFICADO
 =========================== */
 .card {
   background: white;
@@ -246,46 +241,33 @@ html, body {
   box-shadow: 0 8px 20px var(--sombra);
 }
 
-/* CONTAINER DA IMAGEM - MESMO TAMANHO PARA TODAS AS CATEGORIAS */
+/* Container da imagem - design unificado */
 .card-image-container {
   width: 100%;
-  height: 200px; /* ALTURA FIXA PARA TODAS */
+  height: 200px; /* Altura padrão desktop */
   overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
   border-bottom: 3px solid var(--laranja);
   background: #222020;
+  position: relative;
 }
 
-/* IMAGEM PADRÃO - MESMO ESTILO PARA TODAS AS CATEGORIAS */
+/* Imagem padronizada para todas as categorias */
 .card-image-container img {
   width: 100%;
   height: 100%;
-  object-fit: cover; /* TODAS USAM COVER - MESMO COMPORTAMENTO */
-  transition: transform 0.3s ease;
+  object-fit: cover; /* Todas usam cover */
+  transition: transform 0.5s ease;
   display: block;
-}
-
-/* REMOVER ESTILOS ESPECÍFICOS - TODAS AS IMAGENS SÃO IGUAIS */
-.card[data-categoria="bebidas"] .card-image-container img,
-.card[data-categoria="hamburgueres"] .card-image-container img,
-.card[data-categoria="executivos"] .card-image-container img,
-.card[data-categoria="panelinhas"] .card-image-container img,
-.card[data-categoria="caldos"] .card-image-container img,
-.card[data-categoria="espetinhos"] .card-image-container img,
-.card[data-categoria="petiscos"] .card-image-container img,
-.card[data-categoria="doces"] .card-image-container img {
-  object-fit: cover; /* PADRÃO PARA TODAS */
-  padding: 0; /* REMOVER PADDING ESPECIAL */
-  background: #222020; /* MESMO BACKGROUND */
 }
 
 .card:hover .card-image-container img {
   transform: scale(1.05);
 }
 
-/* PLACEHOLDER PARA IMAGENS FALTANDO */
+/* Placeholder para imagens ausentes */
 .card-image-container img:not([src]),
 .card-image-container img[src=""],
 .card-image-container img[src*="undefined"] {
@@ -313,32 +295,43 @@ html, body {
 
 /* Conteúdo do card */
 .card-content {
-  padding: 15px;
-  flex-grow: 1;
+  padding: 16px;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  flex-grow: 1;
 }
 
-.card h3 {
-  font-size: 1.1rem;
+.card-titulo {
+  font-size: 18px;
   font-weight: 700;
-  color: var(--marrom-escuro);
+  color: #333;
+  margin: 0 0 8px 0;
   line-height: 1.3;
-  margin: 0;
-  min-height: 42px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-height: 46px;
+  word-break: break-word;
+  hyphens: auto;
+  word-wrap: break-word;
 }
 
 .descricao-item {
-  font-size: 13px;
+  font-size: 14px;
   color: #666;
-  line-height: 1.4;
+  line-height: 1.5;
+  margin: 0 0 16px 0;
   flex-grow: 1;
-  margin: 0;
   display: -webkit-box;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
+  text-overflow: ellipsis;
+  min-height: 63px;
+  word-break: break-word;
+  hyphens: auto;
 }
 
 .card-preco {
@@ -349,30 +342,77 @@ html, body {
 }
 
 .preco {
-  font-size: 1.3rem;
-  font-weight: 900;
-  color: var(--laranja);
+  font-size: 20px;
+  font-weight: 800;
+  color: #E66A11;
 }
 
-.card button {
-  background: var(--marrom-escuro);
+.btn-adicionar {
+  background: linear-gradient(135deg, #E66A11 0%, #D45A00 100%);
   color: white;
   border: none;
   padding: 10px 16px;
-  border-radius: 20px;
-  font-weight: 700;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.btn-adicionar:hover {
+  background: linear-gradient(135deg, #D45A00 0%, #C34A00 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(226, 106, 17, 0.3);
+}
+
+.btn-adicionar:active {
+  transform: translateY(0);
+}
+
+.btn-adicionar i {
+  font-size: 12px;
+}
+
+.btn-adicionar-rapido {
+  background: #28a745;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
-  text-transform: uppercase;
-  font-size: 13px;
+  margin-top: 10px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 14px;
 }
 
-.card button:hover {
-  background: var(--laranja);
-  transform: scale(1.05);
+.btn-adicionar-rapido:hover {
+  background: #218838;
+  transform: translateY(-2px);
 }
 
-/* Aviso */
+/* Efeito de feedback ao adicionar item */
+.btn-adicionar.adicionado {
+  background: #00a650 !important;
+  animation: pulse 0.5s ease;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+/* Aviso no card */
 .card::after {
   content: "Imagens meramente ilustrativas";
   display: block;
@@ -385,14 +425,519 @@ html, body {
 }
 
 /* ===========================
- MODAL DO CARRINHO - ALTURA CONTROLADA
+ NOVOS ESTILOS PARA ADICIONAIS MELHORADOS
+=========================== */
+
+/* Modal Overlay */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.85);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+  padding: 20px;
+}
+
+/* Modal Principal */
+.modal-personalizacao {
+  background: white;
+  border-radius: 20px;
+  width: 100%;
+  max-width: 800px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+  animation: modalAppear 0.4s ease;
+}
+
+@keyframes modalAppear {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+/* Header do Modal */
+.modal-header {
+  background: linear-gradient(135deg, #E66A11 0%, #ff8c42 100%);
+  color: white;
+  padding: 25px;
+  border-radius: 20px 20px 0 0;
+  position: relative;
+}
+
+.modal-header h3 {
+  font-size: 22px;
+  font-weight: 700;
+  margin: 0;
+}
+
+.modal-header p {
+  opacity: 0.9;
+  margin-top: 5px;
+  font-size: 14px;
+}
+
+.btn-fechar-modal {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: rgba(255,255,255,0.2);
+  border: none;
+  color: white;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 18px;
+  transition: all 0.3s ease;
+}
+
+.btn-fechar-modal:hover {
+  background: rgba(255,255,255,0.3);
+  transform: rotate(90deg);
+}
+
+.modal-body {
+  padding: 25px;
+}
+
+/* Seções do Modal */
+.secao-adicionais {
+  background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+  border-radius: 15px;
+  padding: 25px;
+  margin: 20px 0;
+  border: 2px solid #E66A11;
+  box-shadow: 0 10px 30px rgba(230, 106, 17, 0.1);
+}
+
+.secao-titulo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #E66A11;
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 25px;
+  padding-bottom: 15px;
+  border-bottom: 2px dashed #E66A11;
+}
+
+.secao-titulo i {
+  font-size: 22px;
+}
+
+/* Grid de Adicionais */
+.grid-adicionais {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 18px;
+  margin-bottom: 25px;
+}
+
+/* Card de Adicional */
+.card-adicional {
+  background: white;
+  border: 2px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 20px;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.card-adicional::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: #E66A11;
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
+}
+
+.card-adicional:hover {
+  transform: translateY(-8px);
+  border-color: #E66A11;
+  box-shadow: 0 15px 35px rgba(230, 106, 17, 0.15);
+}
+
+.card-adicional:hover::before {
+  transform: scaleX(1);
+}
+
+.card-adicional.selecionado {
+  background: linear-gradient(135deg, #FFF8F0 0%, #FFE8D6 100%);
+  border-color: #E66A11;
+  border-width: 3px;
+  animation: pulseSelect 0.5s ease;
+}
+
+@keyframes pulseSelect {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.02); }
+  100% { transform: scale(1); }
+}
+
+.card-adicional.selecionado::after {
+  content: "✓";
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: #E66A11;
+  color: white;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 14px;
+  box-shadow: 0 3px 10px rgba(230, 106, 17, 0.3);
+}
+
+/* Conteúdo do Card Adicional */
+.adicional-titulo {
+  font-weight: 700;
+  color: #333;
+  font-size: 16px;
+  line-height: 1.3;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.adicional-preco {
+  color: #E66A11;
+  font-weight: 800;
+  font-size: 18px;
+  white-space: nowrap;
+}
+
+.adicional-descricao {
+  color: #666;
+  font-size: 13px;
+  line-height: 1.4;
+  margin-top: 5px;
+}
+
+/* Tag de Categoria */
+.tag-adicional {
+  display: inline-block;
+  padding: 4px 10px;
+  background: linear-gradient(135deg, #E66A11 0%, #ff8c42 100%);
+  color: white;
+  border-radius: 15px;
+  font-size: 11px;
+  font-weight: 600;
+  margin-top: 8px;
+  align-self: flex-start;
+}
+
+/* Botão de Seleção */
+.selecionar-adicional {
+  position: absolute;
+  bottom: 15px;
+  right: 15px;
+  width: 24px;
+  height: 24px;
+  border: 2px solid #ddd;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.card-adicional.selecionado .selecionar-adicional {
+  background: #E66A11;
+  border-color: #E66A11;
+}
+
+.selecionar-adicional::before {
+  content: '';
+  width: 12px;
+  height: 12px;
+  background: white;
+  border-radius: 50%;
+  transform: scale(0);
+  transition: transform 0.3s ease;
+}
+
+.card-adicional.selecionado .selecionar-adicional::before {
+  transform: scale(1);
+}
+
+/* Seção de Remover Ingredientes */
+.secao-remover {
+  background: #fff8f0;
+  border-radius: 15px;
+  padding: 25px;
+  margin: 20px 0;
+  border: 2px solid #ffa726;
+}
+
+.grid-remover {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 15px;
+}
+
+.item-remover {
+  background: white;
+  border: 2px solid #ffa726;
+  border-radius: 10px;
+  padding: 15px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: center;
+}
+
+.item-remover:hover {
+  background: #fff3e0;
+  transform: translateY(-3px);
+}
+
+.item-remover.selecionado {
+  background: #ffecb3;
+  border-color: #ff9800;
+  font-weight: 600;
+}
+
+/* Seção de Ponto da Carne */
+.secao-ponto {
+  background: #fff8f0;
+  border-radius: 15px;
+  padding: 25px;
+  margin: 20px 0;
+  border: 2px solid #d45a00;
+}
+
+.opcoes-ponto {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.opcao-ponto {
+  flex: 1;
+  min-width: 150px;
+  background: white;
+  border: 3px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: center;
+  position: relative;
+}
+
+.opcao-ponto:hover {
+  border-color: #E66A11;
+  transform: translateY(-5px);
+}
+
+.opcao-ponto.selecionado {
+  background: linear-gradient(135deg, #FFF8F0 0%, #FFE8D6 100%);
+  border-color: #E66A11;
+  box-shadow: 0 10px 25px rgba(230, 106, 17, 0.1);
+}
+
+.opcao-ponto.selecionado::after {
+  content: "✓";
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  color: #E66A11;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.ponto-nome {
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 5px;
+  font-size: 16px;
+}
+
+.ponto-descricao {
+  color: #666;
+  font-size: 13px;
+  margin-top: 5px;
+}
+
+/* Resumo de Adicionais */
+.resumo-adicionais {
+  background: #f8f9fa;
+  border-radius: 15px;
+  padding: 25px;
+  margin: 25px 0;
+  border: 2px solid #28a745;
+}
+
+.resumo-titulo {
+  color: #28a745;
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.lista-adicionais {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.item-resumo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;
+  background: white;
+  border-radius: 10px;
+  border: 1px solid #e0e0e0;
+}
+
+.item-resumo-nome {
+  font-weight: 600;
+  color: #333;
+}
+
+.item-resumo-preco {
+  color: #28a745;
+  font-weight: 700;
+  font-size: 16px;
+}
+
+.total-adicionais {
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 2px solid #ddd;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+/* Footer do Modal */
+.modal-footer {
+  padding: 25px;
+  background: #f8f9fa;
+  border-radius: 0 0 20px 20px;
+  display: flex;
+  gap: 15px;
+}
+
+.btn-cancelar {
+  flex: 1;
+  padding: 18px;
+  background: #6c757d;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 16px;
+}
+
+.btn-cancelar:hover {
+  background: #5a6268;
+  transform: translateY(-2px);
+}
+
+.btn-confirmar {
+  flex: 2;
+  padding: 18px;
+  background: linear-gradient(135deg, #E66A11 0%, #ff8c42 100%);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.btn-confirmar:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(230, 106, 17, 0.3);
+}
+
+/* ===========================
+ CARRINHO FLUTUANTE MODERNO
+=========================== */
+.carrinho-flutuante {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  background: linear-gradient(135deg, #E66A11 0%, #ff8c42 100%);
+  color: white;
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 10px 30px rgba(230, 106, 17, 0.3);
+  z-index: 1000;
+  transition: all 0.3s ease;
+}
+
+.carrinho-flutuante:hover {
+  transform: scale(1.1) rotate(10deg);
+}
+
+.carrinho-contador {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background: #ff4757;
+  color: white;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 14px;
+  border: 3px solid white;
+}
+
+.carrinho-flutuante i {
+  font-size: 26px;
+}
+
+/* ===========================
+ MODAL DO CARRINHO
 =========================== */
 #carrinho-box {
   position: fixed;
-  top: 10vh; /* NÃO COMEÇA NO TOPO */
+  top: 10vh; /* Não começa no topo */
   right: -100%;
   width: 100%;
-  height: 80vh; /* ALTURA LIMITADA */
+  height: 80vh; /* Altura limitada */
   background: white;
   box-shadow: -5px 0 15px var(--sombra);
   padding: 20px;
@@ -424,9 +969,7 @@ html, body {
   background: var(--marrom-medio);
 }
 
-/* ===========================
-ITENS DO CARRINHO - CORRIGIDO
-=========================== */
+/* Itens do carrinho */
 .carrinho-item {
   display: flex;
   flex-direction: column;
@@ -502,27 +1045,7 @@ ITENS DO CARRINHO - CORRIGIDO
   background: #c82333;
 }
 
-/* Layout para desktop - itens lado a lado */
-@media (min-width: 768px) {
-  .carrinho-item {
-    flex-direction: row;
-    align-items: center;
-    gap: 15px;
-  }
-  
-  .quantidade-box {
-    margin: 0;
-    justify-content: center;
-  }
-  
-  .remover {
-    align-self: center;
-  }
-}
-
-/* ===========================
- BOTÕES
-=========================== */
+/* Botões do carrinho */
 .enviar-btn {
   background: var(--whatsapp);
   color: white;
@@ -541,7 +1064,6 @@ ITENS DO CARRINHO - CORRIGIDO
   background: #1da851;
 }
 
-/* Link pagar */
 .pagar-btn {
   background: var(--marrom-medio);
 }
@@ -550,9 +1072,7 @@ ITENS DO CARRINHO - CORRIGIDO
   background: var(--marrom-escuro);
 }
 
-/* ===========================
- FORMULÁRIOS
-=========================== */
+/* Formulários */
 input, textarea {
   width: 100%;
   padding: 12px;
@@ -627,19 +1147,394 @@ input:focus, textarea:focus {
   text-decoration: underline;
 }
 
+/* Botão de reserva piscante */
+.btn-reserva {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1px;
+  background: linear-gradient(45deg, #ff0000, #ff7a00);
+  padding: 2px 2px;
+  border-radius: 10px;
+  color: #fff !important;
+  font-size: 1.2rem;
+  font-weight: 800;
+  text-decoration: none;
+  box-shadow: 0 0 10px rgba(255, 81, 0, 0.8);
+  animation: pulsar 1.2s infinite alternate ease-in-out,
+            brilho 1.8s infinite alternate ease-in-out;
+  transition: transform 0.2s ease;
+}
+
+.btn-reserva:hover {
+  transform: scale(1.12);
+}
+
+@keyframes pulsar {
+  0% { transform: scale(1); }
+  100% { transform: scale(1.07); }
+}
+
+@keyframes brilho {
+  0% { box-shadow: 0 0 15px rgba(255, 81, 0, 0.7); }
+  100% { box-shadow: 0 0 25px rgba(255, 0, 0, 1); }
+}
+
+/* Botão de reserva fixo */
+.fixed-reservation-btn {
+  position: fixed;
+  top: 120px;
+  left: 200px;
+  background: linear-gradient(135deg, #a99595, #1c1b1b);
+  color: rgb(36, 31, 31);
+  border: none;
+  padding: 12px 20px;
+  border-radius: 25px;
+  font-weight: 700;
+  font-size: 14px;
+  cursor: pointer;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 4px 15px rgba(198, 40, 40, 0.4);
+  z-index: 998;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+}
+
+.fixed-reservation-btn:hover {
+  background: linear-gradient(135deg, #8e0000, #c62828);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(198, 40, 40, 0.6);
+}
+
+.fixed-reservation-btn i {
+  font-size: 16px;
+}
+
 /* ===========================
- RESPONSIVIDADE - TAMANHOS PADRÃO PARA TODAS AS CATEGORIAS
+ MODAL LIGHTBOX PARA IMAGENS
 =========================== */
+.modal-imagem {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.92);
+  z-index: 2000;
+  justify-content: center;
+  align-items: center;
+  animation: fadeIn 0.3s ease;
+}
+
+.modal-conteudo {
+  position: relative;
+  max-width: 90%;
+  max-height: 90%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.imagem-ampliada {
+  max-width: 100%;
+  max-height: 80vh;
+  object-fit: contain;
+  border-radius: 8px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  cursor: zoom-in;
+  transition: transform 0.3s ease;
+}
+
+.imagem-ampliada.zoom-ativo {
+  cursor: zoom-out;
+  transform: scale(1.5);
+  transform-origin: center;
+}
+
+.fechar-modal {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  color: white;
+  font-size: 40px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: color 0.3s ease;
+  z-index: 2001;
+  background: rgba(0, 0, 0, 0.5);
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+.fechar-modal:hover {
+  color: var(--laranja);
+  background: rgba(0, 0, 0, 0.7);
+}
+
+.modal-info {
+  color: white;
+  text-align: center;
+  margin-top: 15px;
+  padding: 10px 15px;
+  background: rgba(0, 0, 0, 0.7);
+  border-radius: 8px;
+  max-width: 80%;
+  font-size: 16px;
+  line-height: 1.4;
+}
+
+.modal-navegacao {
+  position: absolute;
+  width: 100%;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  justify-content: space-between;
+  padding: 0 20px;
+  pointer-events: none;
+  z-index: 2001;
+}
+
+.nav-btn {
+  pointer-events: auto;
+  background: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 20px;
+  transition: all 0.3s ease;
+  outline: none;
+}
+
+.nav-btn:hover {
+  background: rgba(0, 0, 0, 0.8);
+  color: var(--laranja);
+  transform: scale(1.1);
+}
+
+.zoom-indicador {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 8px 15px;
+  border-radius: 20px;
+  font-size: 14px;
+  display: none;
+  z-index: 2001;
+}
+
+.zoom-indicador.ativo {
+  display: block;
+  animation: fadeInOut 2s ease;
+}
+
+@keyframes fadeInOut {
+  0% { opacity: 0; }
+  20% { opacity: 1; }
+  80% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+/* Scrollbar para modal */
+.modal-imagem::-webkit-scrollbar {
+  width: 8px;
+}
+
+.modal-imagem::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.modal-imagem::-webkit-scrollbar-thumb {
+  background: var(--laranja);
+  border-radius: 4px;
+}
+
+.modal-imagem::-webkit-scrollbar-thumb:hover {
+  background: #d45a0a;
+}
+
+/* ===========================
+ RESPONSIVIDADE GERAL
+=========================== */
+
+/* Layout para desktop - carrinho */
+@media (min-width: 768px) {
+  .carrinho-item {
+    flex-direction: row;
+    align-items: center;
+    gap: 15px;
+  }
+  
+  .quantidade-box {
+    margin: 0;
+    justify-content: center;
+  }
+  
+  .remover {
+    align-self: center;
+  }
+}
+
+/* Menu mobile */
+@media (max-width: 480px) {
+  .menu-centralizado {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 6px;
+  }
+  
+  .menu-centralizado button {
+    padding: 8px 10px;
+    font-size: 11px;
+    text-align: center;
+  }
+}
+
+/* Botão fixo de reserva responsivo */
+@media (max-width: 768px) {
+  .fixed-reservation-btn {
+    top: 110px;
+    left: 15px;
+    padding: 10px 16px;
+    font-size: 13px;
+  }
+  
+  .fixed-reservation-btn i {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .fixed-reservation-btn {
+    top: 100px;
+    left: 10px;
+    padding: 8px 12px;
+    font-size: 12px;
+  }
+  
+  .fixed-reservation-btn span {
+    display: none;
+  }
+  
+  .fixed-reservation-btn::after {
+    content: 'RESERVA';
+    font-size: 10px;
+    font-weight: 700;
+  }
+}
+
+/* Modal lightbox responsivo */
+@media (max-width: 768px) {
+  .modal-conteudo {
+    max-width: 95%;
+  }
+  
+  .fechar-modal {
+    top: 10px;
+    right: 15px;
+    font-size: 35px;
+    width: 45px;
+    height: 45px;
+  }
+  
+  .nav-btn {
+    width: 45px;
+    height: 45px;
+    font-size: 18px;
+  }
+  
+  .modal-info {
+    font-size: 14px;
+    max-width: 90%;
+  }
+}
+
+@media (max-width: 480px) {
+  .imagem-ampliada {
+    max-height: 70vh;
+  }
+  
+  .fechar-modal {
+    top: 5px;
+    right: 10px;
+    font-size: 30px;
+    width: 40px;
+    height: 40px;
+  }
+  
+  .nav-btn {
+    width: 40px;
+    height: 40px;
+    font-size: 16px;
+    padding: 0 10px;
+  }
+  
+  .modal-info {
+    font-size: 13px;
+    padding: 8px 12px;
+  }
+}
+
+/* ===========================
+ RESPONSIVIDADE DAS IMAGENS DOS CARDS
+=========================== */
+
+/* Tamanhos padrão para desktop */
+.card-image-container {
+  height: 200px;
+}
+
+/* Responsividade geral das imagens */
 @media (max-width: 1024px) {
   .section.active { grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); }
   .card-image-container { height: 180px; }
+  .card-titulo { font-size: 16px; min-height: 42px; }
+  .descricao-item { font-size: 13px; min-height: 58px; }
+  .preco { font-size: 18px; }
+  .btn-adicionar { padding: 9px 14px; font-size: 13px; }
 }
 
 @media (max-width: 768px) {
   .section.active { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
-  .menu-centralizado { justify-content: flex-start; }
   .card-image-container { height: 160px; }
+  .menu-centralizado { justify-content: flex-start; }
   
+  /* Card styles para tablet */
+  .card { border-radius: 10px; }
+  .card-titulo { font-size: 15px; min-height: 40px; -webkit-line-clamp: 2; }
+  .descricao-item { 
+    font-size: 12px; 
+    -webkit-line-clamp: 2; 
+    min-height: 36px; 
+    margin-bottom: 12px;
+    line-height: 1.4;
+  }
+  .card-content { padding: 12px; }
+  .preco { font-size: 17px; }
+  .btn-adicionar { padding: 8px 12px; font-size: 12px; }
+  
+  /* Botão carrinho topo em mobile */
   .carrinho-topo-btn {
     top: 15px;
     right: 15px;
@@ -647,14 +1542,33 @@ input:focus, textarea:focus {
     font-size: 13px;
   }
   
-  .carrinho-topo-texto {
-    display: none;
+  .carrinho-topo-texto { display: none; }
+  .carrinho-topo-contador { width: 20px; height: 20px; font-size: 11px; }
+  
+  /* Responsividade para o novo modal */
+  .modal-personalizacao {
+    max-height: 95vh;
+    border-radius: 15px;
   }
   
-  .carrinho-topo-contador {
-    width: 20px;
-    height: 20px;
-    font-size: 11px;
+  .modal-body {
+    padding: 15px;
+  }
+  
+  .modal-footer {
+    flex-direction: column;
+  }
+  
+  .grid-adicionais {
+    grid-template-columns: 1fr;
+  }
+  
+  .opcoes-ponto {
+    flex-direction: column;
+  }
+  
+  .grid-remover {
+    grid-template-columns: 1fr;
   }
 }
 
@@ -666,19 +1580,28 @@ input:focus, textarea:focus {
 @media (max-width: 480px) {
   .section.active { grid-template-columns: 1fr; }
   .card { max-width: 300px; margin: auto; }
-  .card-image-container { height: 150px; }
+  .card-image-container { height: 140px; }
   
-  /* MENU MOBILE - BOTÕES ALINHADOS */
-  .menu-centralizado {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 6px;
+  /* Card styles para mobile pequeno */
+  .card-titulo { font-size: 14px; min-height: 38px; }
+  .descricao-item { 
+    font-size: 11px; 
+    -webkit-line-clamp: 2; 
+    min-height: 33px;
+  }
+  .preco { font-size: 16px; }
+  .btn-adicionar { padding: 7px 10px; font-size: 11px; }
+  
+  /* Carrinho flutuante mobile */
+  .carrinho-flutuante {
+    bottom: 20px;
+    right: 20px;
+    width: 60px;
+    height: 60px;
   }
   
-  .menu-centralizado button {
-    padding: 8px 10px;
-    font-size: 11px;
-    text-align: center;
+  .carrinho-flutuante i {
+    font-size: 22px;
   }
 }
 
@@ -712,595 +1635,7 @@ input:focus, textarea:focus {
 .mt-20 { margin-top: 20px; }
 .mb-20 { margin-bottom: 20px; }
 
-/* Botão de Reserva Fixo no Canto Esquerdo */
-.fixed-reservation-btn {
-    position: fixed;
-    top: 120px; /* Abaixo do header */
-    left: 200px;
-    background: linear-gradient(135deg, #a99595, #1c1b1b);
-    color: rgb(36, 31, 31);
-    border: none;
-    padding: 12px 20px;
-    border-radius: 25px;
-    font-weight: 700;
-    font-size: 14px;
-    cursor: pointer;
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    box-shadow: 0 4px 15px rgba(198, 40, 40, 0.4);
-    z-index: 998;
-    transition: all 0.3s ease;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    white-space: nowrap;
-}
-
-.fixed-reservation-btn:hover {
-    background: linear-gradient(135deg, #8e0000, #c62828);
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(198, 40, 40, 0.6);
-}
-
-.fixed-reservation-btn i {
-    font-size: 16px;
-}
-
-/* Responsivo */
-@media (max-width: 768px) {
-    .fixed-reservation-btn {
-        top: 110px;
-        left: 15px;
-        padding: 10px 16px;
-        font-size: 13px;
-    }
-    
-    .fixed-reservation-btn i {
-        font-size: 14px;
-    }
-}
-
-@media (max-width: 480px) {
-    .fixed-reservation-btn {
-        top: 100px;
-        left: 10px;
-        padding: 8px 12px;
-        font-size: 12px;
-    }
-    
-    .fixed-reservation-btn span {
-        display: none;
-    }
-    
-    .fixed-reservation-btn::after {
-        content: 'RESERVA';
-        font-size: 101px;
-        font-weight: 700;
-    }
-}
-/* BOTÃO DE RESERVA ESTILO PREMIUM PISCANTE */
-.btn-reserva {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 1px;
-    background: linear-gradient(45deg, #ff0000, #ff7a00);
-    padding: 2px 2px;
-    border-radius: 10px;
-    color: #fff !important;
-    font-size: 1.2rem;
-    font-weight: 800;
-    text-decoration: none;
-    box-shadow: 0 0 10px rgba(255, 81, 0, 0.8);
-    
-    /* Animações */
-    animation: pulsar 1.2s infinite alternate ease-in-out,
-              brilho 1.8s infinite alternate ease-in-out;
-              
-    transition: transform 0.2s ease;
-}
-
-.btn-reserva:hover {
-    transform: scale(1.12);
-}
-
-/* Pulsação */
-@keyframes pulsar {
-    0% { transform: scale(1); }
-    100% { transform: scale(1.07); }
-}
-
-/* Brilho */
-@keyframes brilho {
-    0% { box-shadow: 0 0 15px rgba(255, 81, 0, 0.7); }
-    100% { box-shadow: 0 0 25px rgba(255, 0, 0, 1); }
-}
-/* ===========================
- MODAL LIGHTBOX PARA IMAGENS
-=========================== */
-
-/* Fundo escuro do modal */
-.modal-imagem {
-    display: none; /* Escondido por padrão */
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.92); /* Fundo mais escuro */
-    z-index: 2000;
-    justify-content: center;
-    align-items: center;
-    animation: fadeIn 0.3s ease;
-}
-
-/* Conteúdo do modal */
-.modal-conteudo {
-    position: relative;
-    max-width: 90%;
-    max-height: 90%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-
-/* Imagem ampliada */
-.imagem-ampliada {
-    max-width: 100%;
-    max-height: 80vh;
-    object-fit: contain;
-    border-radius: 8px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-    cursor: zoom-in;
-    transition: transform 0.3s ease;
-}
-
-/* Efeito de zoom ao passar o mouse na imagem ampliada */
-.imagem-ampliada.zoom-ativo {
-    cursor: zoom-out;
-    transform: scale(1.5);
-    transform-origin: center;
-}
-
-/* Botão fechar */
-.fechar-modal {
-    position: absolute;
-    top: 20px;
-    right: 30px;
-    color: white;
-    font-size: 40px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: color 0.3s ease;
-    z-index: 2001;
-    background: rgba(0, 0, 0, 0.5);
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    line-height: 1;
-}
-
-.fechar-modal:hover {
-    color: var(--laranja);
-    background: rgba(0, 0, 0, 0.7);
-}
-
-/* Informações da imagem */
-.modal-info {
-    color: white;
-    text-align: center;
-    margin-top: 15px;
-    padding: 10px 15px;
-    background: rgba(0, 0, 0, 0.7);
-    border-radius: 8px;
-    max-width: 80%;
-    font-size: 16px;
-    line-height: 1.4;
-}
-
-/* Navegação entre imagens */
-.modal-navegacao {
-    position: absolute;
-    width: 100%;
-    top: 50%;
-    transform: translateY(-50%);
-    display: flex;
-    justify-content: space-between;
-    padding: 0 20px;
-    pointer-events: none; /* Permite clicar através dos botões */
-    z-index: 2001;
-}
-
-.nav-btn {
-    pointer-events: auto; /* Reativa cliques nos botões */
-    background: rgba(0, 0, 0, 0.5);
-    color: white;
-    border: none;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    font-size: 20px;
-    transition: all 0.3s ease;
-    outline: none;
-}
-
-.nav-btn:hover {
-    background: rgba(0, 0, 0, 0.8);
-    color: var(--laranja);
-    transform: scale(1.1);
-}
-
-/* Animação para entrada do modal */
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
-
-@keyframes zoomIn {
-    from { transform: scale(0.7); opacity: 0; }
-    to { transform: scale(1); opacity: 1; }
-}
-
-/* Indicador de zoom (aparece no canto) */
-.zoom-indicador {
-    position: absolute;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: rgba(0, 0, 0, 0.7);
-    color: white;
-    padding: 8px 15px;
-    border-radius: 20px;
-    font-size: 14px;
-    display: none;
-    z-index: 2001;
-}
-
-.zoom-indicador.ativo {
-    display: block;
-    animation: fadeInOut 2s ease;
-}
-
-@keyframes fadeInOut {
-    0% { opacity: 0; }
-    20% { opacity: 1; }
-    80% { opacity: 1; }
-    100% { opacity: 0; }
-}
-
-/* Responsividade */
-@media (max-width: 768px) {
-    .modal-conteudo {
-        max-width: 95%;
-    }
-    
-    .fechar-modal {
-        top: 10px;
-        right: 15px;
-        font-size: 35px;
-        width: 45px;
-        height: 45px;
-    }
-    
-    .nav-btn {
-        width: 45px;
-        height: 45px;
-        font-size: 18px;
-    }
-    
-    .modal-info {
-        font-size: 14px;
-        max-width: 90%;
-    }
-}
-
-@media (max-width: 480px) {
-    .imagem-ampliada {
-        max-height: 70vh;
-    }
-    
-    .fechar-modal {
-        top: 5px;
-        right: 10px;
-        font-size: 30px;
-        width: 40px;
-        height: 40px;
-    }
-    
-    .nav-btn {
-        width: 40px;
-        height: 40px;
-        font-size: 16px;
-        padding: 0 10px;
-    }
-    
-    .modal-info {
-        font-size: 13px;
-        padding: 8px 12px;
-    }
-}
-
-/* Scrollbar personalizada para o modal */
-.modal-imagem::-webkit-scrollbar {
-    width: 8px;
-}
-
-.modal-imagem::-webkit-scrollbar-track {
-    background: rgba(255, 255, 255, 0.1);
-}
-
-.modal-imagem::-webkit-scrollbar-thumb {
-    background: var(--laranja);
-    border-radius: 4px;
-}
-
-.modal-imagem::-webkit-scrollbar-thumb:hover {
-    background: #d45a0a;
-}
-/* Estilos responsivos para os cards */
-.card {
-    border: 1px solid #e0e0e0;
-    border-radius: 12px;
-    overflow: hidden;
-    background: white;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-}
-
-.card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-}
-
-.card-image-container {
-    position: relative;
-    width: 100%;
-    height: 200px;
-    overflow: hidden;
-}
-
-.card-image-container img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.5s ease;
-}
-
-.card:hover .card-image-container img {
-    transform: scale(1.05);
-}
-
-.card-content {
-    padding: 16px;
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
-}
-
-.card-titulo {
-    font-size: 18px;
-    font-weight: 700;
-    color: #333;
-    margin: 0 0 8px 0;
-    line-height: 1.3;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    min-height: 46px;
-}
-
-.descricao-item {
-    font-size: 14px;
-    color: #666;
-    line-height: 1.5;
-    margin: 0 0 16px 0;
-    flex-grow: 1;
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    min-height: 63px;
-}
-
-.card-preco {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: auto;
-}
-
-.preco {
-    font-size: 20px;
-    font-weight: 800;
-    color: #E66A11;
-}
-
-.btn-adicionar {
-    background: linear-gradient(135deg, #E66A11 0%, #D45A00 100%);
-    color: white;
-    border: none;
-    padding: 10px 16px;
-    border-radius: 8px;
-    font-weight: 600;
-    font-size: 14px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    transition: all 0.3s ease;
-    white-space: nowrap;
-}
-
-.btn-adicionar:hover {
-    background: linear-gradient(135deg, #D45A00 0%, #C34A00 100%);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(226, 106, 17, 0.3);
-}
-
-.btn-adicionar:active {
-    transform: translateY(0);
-}
-
-.btn-adicionar i {
-    font-size: 12px;
-}
-
-/* Responsividade para tablets */
-@media (max-width: 1024px) {
-    .card-titulo {
-        font-size: 16px;
-        min-height: 42px;
-    }
-    
-    .descricao-item {
-        font-size: 13px;
-        -webkit-line-clamp: 3;
-        min-height: 58px;
-    }
-    
-    .preco {
-        font-size: 18px;
-    }
-    
-    .btn-adicionar {
-        padding: 9px 14px;
-        font-size: 13px;
-    }
-    
-    .card-image-container {
-        height: 180px;
-    }
-}
-
-/* Responsividade para celulares */
-@media (max-width: 768px) {
-    .card {
-        border-radius: 10px;
-    }
-    
-    .card-titulo {
-        font-size: 15px;
-        min-height: 40px;
-        -webkit-line-clamp: 2;
-    }
-    
-    .descricao-item {
-        font-size: 12px;
-        -webkit-line-clamp: 2;
-        min-height: 36px;
-        margin-bottom: 12px;
-    }
-    
-    .card-content {
-        padding: 12px;
-    }
-    
-    .card-image-container {
-        height: 160px;
-    }
-    
-    .preco {
-        font-size: 17px;
-    }
-    
-    .btn-adicionar {
-        padding: 8px 12px;
-        font-size: 12px;
-    }
-}
-
-/* Para telas muito pequenas (menos de 480px) */
-@media (max-width: 480px) {
-    .card-titulo {
-        font-size: 14px;
-        min-height: 38px;
-    }
-    
-    .descricao-item {
-        font-size: 11px;
-        -webkit-line-clamp: 2;
-        min-height: 33px;
-    }
-    
-    .card-image-container {
-        height: 150px;
-    }
-    
-    .preco {
-        font-size: 16px;
-    }
-    
-    .btn-adicionar {
-        padding: 7px 10px;
-        font-size: 11px;
-    }
-}
-
-/* Para grids responsivos */
-.grid-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 20px;
-    padding: 20px;
-}
-
-@media (max-width: 768px) {
-    .grid-container {
-        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-        gap: 16px;
-        padding: 16px;
-    }
-}
-
-@media (max-width: 480px) {
-    .grid-container {
-        grid-template-columns: 1fr;
-        gap: 14px;
-        padding: 14px;
-    }
-}
-
-/* Melhorias na legibilidade */
-.card-titulo, .descricao-item {
-    word-break: break-word;
-    hyphens: auto;
-}
-
-/* Ajuste para nomes muito longos */
-.card-titulo {
-    word-wrap: break-word;
-}
-
-/* Ajuste para descrições em dispositivos móveis */
-@media (max-width: 768px) {
-    .descricao-item {
-        line-height: 1.4;
-    }
-}
-
-/* Efeito de feedback ao adicionar item */
-.btn-adicionar.adicionado {
-    background: #00a650 !important;
-    animation: pulse 0.5s ease;
-}
-
-@keyframes pulse {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.05); }
-    100% { transform: scale(1); }
+/* Classe para esconder elementos */
+.hidden {
+  display: none !important;
 }
