@@ -1411,6 +1411,283 @@ input:focus, textarea:focus {
   }
 }
 
+ /* Estilo para o alerta de alergénios DENTRO DO RODAPÉ */
+        .alerta-alergenios-rodape {
+            position: relative;
+            background: linear-gradient(135deg, #ff4444 0%, #ff6b6b 100%);
+            border: 6px solid #cc0000;
+            border-radius: 70px;
+            padding: 10px 4px;
+            font-size: 13px;
+            color: white;
+            cursor: pointer;
+            margin: 15px auto 30px auto;
+            width: 200px;
+            box-shadow: 0 40px 10px rgba(255, 68, 68, 0.4);
+            font-weight: 500;
+            text-align: center;
+            animation: pulse-rodape 3s infinite;
+            float: left;
+            margin-left: 25px;
+        }
+        
+        @keyframes pulse-rodape {
+            0% { 
+                box-shadow: 0 0 0 0 rgba(255, 68, 68, 0.4);
+            }
+            70% { 
+                box-shadow: 0 0 0 6px rgba(255, 68, 68, 0);
+            }
+            100% { 
+                box-shadow: 0 0 0 0 rgba(255, 68, 68, 0);
+            }
+        }
+        
+        .alerta-alergenios-rodape:hover {
+            background: linear-gradient(135deg, #ff3333 0%, #ff5555 100%);
+            transform: scale(1.05);
+            box-shadow: 0 4px 15px rgba(255, 68, 68, 0.5);
+        }
+        
+        .alerta-icon-rodape {
+            display: inline-block;
+            margin-right: 6px;
+            color: white;
+            font-size: 14px;
+            vertical-align: middle;
+        }
+        
+        .alerta-texto-rodape {
+            display: inline-block;
+            font-weight: 700;
+            vertical-align: middle;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+            font-size: 11px;
+        }
+        
+        .alerta-tooltip-rodape {
+            visibility: hidden;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            bottom: calc(100% + 12px);
+            width: 300px;
+            background-color: #fff;
+            color: #333;
+            border: 2px solid #ff4444;
+            border-radius: 8px;
+            padding: 15px;
+            font-size: 12px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+            z-index: 1000;
+            opacity: 0;
+            transition: all 0.3s ease;
+            text-align: left;
+        }
+        
+        .alerta-alergenios-rodape:hover .alerta-tooltip-rodape {
+            visibility: visible;
+            opacity: 1;
+            transform: translateX(-50%) translateY(-3px);
+        }
+        
+        .alerta-tooltip-rodape h4 {
+            margin: 0 0 8px 0;
+            font-size: 13px;
+            color: #ff4444;
+            border-bottom: 1px solid #ffeaea;
+            padding-bottom: 6px;
+            font-weight: 700;
+        }
+        
+        .alerta-tooltip-rodape p {
+            margin: 6px 0;
+            line-height: 1.5;
+            font-size: 11px;
+        }
+        
+        .alerta-tooltip-rodape strong {
+            color: #ff4444;
+            font-weight: 700;
+        }
+        
+        .alerta-tooltip-rodape .destaque-rodape {
+            background-color: #fff5f5;
+            padding: 8px;
+            border-radius: 4px;
+            border-left: 3px solid #ff4444;
+            margin: 10px 0;
+            font-weight: 600;
+            font-size: 11px;
+        }
+        
+        .alerta-tooltip-rodape .lista-alergenios-rodape {
+            font-size: 10px;
+            color: #666;
+            margin-top: 10px;
+            font-style: italic;
+            border-top: 1px solid #eee;
+            padding-top: 8px;
+        }
+        
+        /* Seta do tooltip */
+        .alerta-tooltip-rodape::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -8px;
+            border-width: 8px;
+            border-style: solid;
+            border-color: #ff4444 transparent transparent transparent;
+        }
+        
+        /* Ajustes no footer para acomodar o alerta */
+        .footer {
+            position: relative;
+            min-height: 120px;
+            padding-bottom: 10px;
+        }
+        
+        .footer-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        
+        /* Container especial para o alerta no rodapé */
+        .footer-alerta-container {
+            position: absolute;
+            left: 20px;
+            bottom: 20px;
+            width: auto;
+        }
+        
+        /* Responsivo para o alerta NO RODAPÉ */
+        @media (max-width: 1024px) {
+            .footer-alerta-container {
+                left: 15px;
+                bottom: 15px;
+            }
+            
+            .alerta-alergenios-rodape {
+                width: 180px;
+                font-size: 11px;
+                padding: 8px 12px;
+                margin-left: 0;
+            }
+            
+            .alerta-tooltip-rodape {
+                width: 280px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .footer-alerta-container {
+                position: relative;
+                left: auto;
+                bottom: auto;
+                width: 100%;
+                text-align: center;
+                margin-top: 15px;
+                margin-bottom: 10px;
+            }
+            
+            .alerta-alergenios-rodape {
+                width: 170px;
+                font-size: 10px;
+                padding: 7px 10px;
+                margin: 0 auto;
+                float: none;
+            }
+            
+            .alerta-icon-rodape {
+                font-size: 13px;
+                margin-right: 5px;
+            }
+            
+            .alerta-texto-rodape {
+                font-size: 10px;
+            }
+            
+            .alerta-tooltip-rodape {
+                width: 260px;
+                padding: 12px;
+                font-size: 11px;
+                bottom: calc(100% + 10px);
+                left: 50%;
+            }
+            
+            .alerta-tooltip-rodape h4 {
+                font-size: 12px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .alerta-alergenios-rodape {
+                width: 160px;
+                font-size: 10px;
+                padding: 6px 9px;
+            }
+            
+            .alerta-icon-rodape {
+                font-size: 12px;
+                margin-right: 4px;
+            }
+            
+            .alerta-texto-rodape {
+                font-size: 9px;
+            }
+            
+            .alerta-tooltip-rodape {
+                width: 240px;
+                font-size: 10px;
+                padding: 10px;
+            }
+            
+            .alerta-tooltip-rodape h4 {
+                font-size: 11px;
+            }
+        }
+        
+        @media (max-width: 375px) {
+            .alerta-alergenios-rodape {
+                width: 140px;
+                padding: 5px 8px;
+                font-size: 9px;
+            }
+            
+            .alerta-texto-rodape {
+                font-size: 8px;
+            }
+            
+            .alerta-icon-rodape {
+                font-size: 11px;
+                margin-right: 3px;
+            }
+            
+            .alerta-tooltip-rodape {
+                width: 220px;
+                left: 50%;
+            }
+        }
+        
+        @media (max-width: 320px) {
+            .alerta-alergenios-rodape {
+                width: 130px;
+                padding: 5px 7px;
+            }
+            
+            .alerta-texto-rodape {
+                font-size: 8px;
+            }
+            
+            .alerta-tooltip-rodape {
+                width: 200px;
+            }
+        }
+
 /* Botão fixo de reserva responsivo */
 @media (max-width: 768px) {
   .fixed-reservation-btn {

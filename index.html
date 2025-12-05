@@ -8,243 +8,7 @@
     <link rel="icon" type="image/png" href="fotos/1-1b9578f1.ico">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
-    <style>
-        /* Estilo para o alerta de alergénios - OTIMIZADO PARA MOBILE */
-        .alerta-alergenios {
-            position: absolute;
-            top: 15px;
-            left: 105px;
-            background: linear-gradient(135deg, #ff4444 0%, #ff6b6b 100%);
-            border: 2px solid #cc0000;
-            border-radius: 8px;
-            padding: 10px 15px;
-            font-size: 13px;
-            color: white;
-            cursor: pointer;
-            z-index: 100;
-            transition: all 0.3s ease;
-            max-width: 200px;
-            box-shadow: 0 4px 15px rgba(255, 68, 68, 0.3);
-            font-weight: 600;
-            text-align: center;
-            animation: pulse 2s infinite;
-        }
-        
-        @keyframes pulse {
-            0% { box-shadow: 0 0 0 0 rgba(255, 68, 68, 0.7); }
-            70% { box-shadow: 0 0 0 8px rgba(255, 68, 68, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(255, 68, 68, 0); }
-        }
-        
-        .alerta-alergenios:hover {
-            background: linear-gradient(135deg, #ff3333 0%, #ff5555 100%);
-            transform: scale(1.05);
-            box-shadow: 0 6px 20px rgba(255, 68, 68, 0.4);
-        }
-        
-        .alerta-icon {
-            display: inline-block;
-            margin-right: 8px;
-            color: white;
-            font-size: 16px;
-            vertical-align: middle;
-        }
-        
-        .alerta-texto {
-            display: inline-block;
-            font-weight: 700;
-            vertical-align: middle;
-            text-shadow: 0 1px 2px rgba(0,0,0,0.2);
-        }
-        
-        .alerta-tooltip {
-            visibility: hidden;
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-            top: calc(100% + 10px);
-            width: 320px;
-            background-color: #fff;
-            color: #333;
-            border: 2px solid #ff4444;
-            border-radius: 8px;
-            padding: 15px;
-            font-size: 12px;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
-            z-index: 1000;
-            opacity: 0;
-            transition: opacity 0.3s;
-            text-align: left;
-        }
-        
-        .alerta-alergenios:hover .alerta-tooltip {
-            visibility: visible;
-            opacity: 1;
-        }
-        
-        .alerta-tooltip h4 {
-            margin: 0 0 10px 0;
-            font-size: 14px;
-            color: #ff4444;
-            border-bottom: 2px solid #ffeaea;
-            padding-bottom: 6px;
-            font-weight: 700;
-        }
-        
-        .alerta-tooltip p {
-            margin: 8px 0;
-            line-height: 1.5;
-        }
-        
-        .alerta-tooltip strong {
-            color: #ff4444;
-            font-weight: 700;
-        }
-        
-        .alerta-tooltip .destaque {
-            background-color: #fff5f5;
-            padding: 10px;
-            border-radius: 5px;
-            border-left: 3px solid #ff4444;
-            margin: 12px 0;
-            font-weight: 600;
-        }
-        
-        .alerta-tooltip .lista-alergenios {
-            font-size: 11px;
-            color: #666;
-            margin-top: 10px;
-            font-style: italic;
-        }
-        
-        /* RESPONSIVO OTIMIZADO */
-        @media (max-width: 1024px) {
-            .alerta-alergenios {
-                top: 12px;
-                left: 12px;
-                max-width: 180px;
-                font-size: 12px;
-                padding: 9px 12px;
-            }
-        }
-        
-        @media (max-width: 768px) {
-            .alerta-alergenios {
-                top: 10px;
-                left: 10px;
-                max-width: 160px;
-                font-size: 11px;
-                padding: 8px 10px;
-            }
-            
-            .alerta-icon {
-                font-size: 14px;
-                margin-right: 6px;
-            }
-            
-            .alerta-tooltip {
-                width: 280px;
-                left: 50%;
-                transform: translateX(-50%);
-            }
-        }
-        
-        @media (max-width: 480px) {
-            .alerta-alergenios {
-                top: 8px;
-                left: 8px;
-                max-width: 150px;
-                font-size: 10px;
-                padding: 7px 9px;
-            }
-            
-            .alerta-icon {
-                font-size: 13px;
-                margin-right: 5px;
-            }
-            
-            .alerta-texto {
-                font-size: 10px;
-            }
-            
-            .alerta-tooltip {
-                width: 260px;
-                font-size: 11px;
-                padding: 12px;
-            }
-            
-            .alerta-tooltip h4 {
-                font-size: 12px;
-            }
-        }
-        
-        @media (max-width: 375px) {
-            .alerta-alergenios {
-                max-width: 130px;
-                padding: 6px 8px;
-            }
-            
-            .alerta-texto {
-                font-size: 9px;
-            }
-            
-            .alerta-icon {
-                font-size: 12px;
-                margin-right: 4px;
-            }
-            
-            .alerta-tooltip {
-                width: 240px;
-                left: 50%;
-                transform: translateX(-50%);
-            }
-        }
-        
-        @media (max-width: 320px) {
-            .alerta-alergenios {
-                max-width: 120px;
-                padding: 5px 7px;
-                font-size: 9px;
-            }
-            
-            .alerta-icon {
-                font-size: 11px;
-                margin-right: 3px;
-            }
-            
-            .alerta-texto {
-                font-size: 9px;
-            }
-            
-            /* Versão mínima para telas muito pequenas */
-            .alerta-alergenios.mobile-mini .alerta-texto {
-                display: none;
-            }
-            
-            .alerta-alergenios.mobile-mini {
-                width: 40px;
-                height: 40px;
-                border-radius: 50%;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                padding: 0;
-            }
-        }
-        
-        /* Para garantir que não sobreponha elementos importantes */
-        @media (max-width: 768px) {
-            .logo-container {
-                padding-top: 10px;
-            }
-            
-            .header-custom {
-                position: relative;
-                min-height: 120px;
-            }
-        }
-    </style>
-</head>
+    </head>
 <body>
     <!-- Botão do Carrinho Fixo (Topo Direito) -->
     <div id="carrinhoTopoBtn" class="carrinho-topo-btn hidden">
@@ -257,36 +21,6 @@
 
     <!-- Header -->
     <header class="header-custom">
-        <!-- Alerta para Alérgicos - OTIMIZADO PARA TODOS OS DISPOSITIVOS -->
-        <div class="alerta-alergenios" title="CLIQUE OU PASSE O MOUSE PARA INFORMAÇÕES IMPORTANTES">
-            <span class="alerta-icon">
-                <i class="fas fa-exclamation-triangle"></i>
-            </span>
-            <span class="alerta-texto">⚠️ ALERTA PARA ALÉRGICOS</span>
-            <div class="alerta-tooltip">
-                <h4>⚠️ ATENÇÃO: ALERGIAS ALIMENTARES</h4>
-                
-                <div class="destaque">
-                    <strong>CONSULTE-NOS ANTES DE FAZER SEU PEDIDO!</strong>
-                </div>
-                
-                <p>Nossos pratos podem conter ou ter contato com os 14 alergénios principais listados pela legislação europeia:</p>
-                
-                <p>• <strong>Glúten</strong> (trigo, centeio, cevada, etc.)<br>
-                • <strong>Leite e derivados</strong><br>
-                • <strong>Ovos</strong><br>
-                • <strong>Frutos secos</strong> (amendoim, amêndoas, nozes, etc.)<br>
-                • <strong>Soja, peixe, crustáceos, moluscos</strong><br>
-                • <strong>E outros alergénios</strong></p>
-                
-                <p><strong>INFORME nossa equipe sobre suas alergias ou intolerâncias alimentares.</strong></p>
-                
-                <p><strong>⚠️ Risco de contaminação cruzada:</strong> Utilizamos os mesmos utensílios e áreas de preparo.</p>
-                
-                <p class="lista-alergenios">Conforme Regulamento (UE) n.º 1169/2011 sobre informação ao consumidor.</p>
-            </div>
-        </div>
-        
         <div class="banner">
             <i class="fas fa-shipping-fast"></i> ENTREGAMOS EM GUIMARÃES • PEDIDO MÍNIMO €10
         </div>
@@ -296,23 +30,120 @@
         </div>
     </header>
 
-    <!-- Resto do código permanece igual -->
+    <!-- Menu de Categorias -->
     <nav class="menu-centralizado" id="menuTabs"></nav>
+
+    <!-- Áreas de Conteúdo -->
     <div id="areas"></div>
 
     <!-- Modal do Carrinho -->
     <div id="carrinho-box">
-        <!-- ... conteúdo do carrinho ... -->
+        <button class="fechar-btn" onclick="fecharCarrinho()">
+            <i class="fas fa-times"></i> FECHAR CARRINHO
+        </button>
+
+        <h2><i class="fas fa-receipt"></i> SEU PEDIDO</h2>
+
+        <ul id="lista"></ul>
+
+        <h3>TOTAL: €<span id="total">0,00</span></h3>
+        
+        <label>Seu nome (obrigatório):</label>
+        <input type="text" id="nomeCliente" placeholder="Digite seu nome completo">
+        
+        <label>Observações:</label>
+        <textarea id="obs" rows="4" placeholder="Alguma observação sobre seu pedido?"></textarea>
+        
+        <!-- AVISO DO PROCESSO -->
+        <div class="aviso-processo">
+            <div class="aviso-icon">
+                <i class="fas fa-info-circle"></i>
+            </div>
+            <div class="aviso-texto">
+                <strong>Processo de Pedido:</strong>
+                <ol>
+                    <li>Envie o pedido pelo WhatsApp primeiro</li>
+                    <li>Depois realize o pagamento online</li>
+                </ol>
+            </div>
+        </div>
+        
+        <button class="enviar-btn" onclick="enviarWhatsApp()">
+            <i class="fab fa-whatsapp"></i> 1º ENVIAR PELO WHATSAPP
+        </button>
+        
+        <button id="pagarLinkBtn" class="enviar-btn pagar-btn">
+            <i class="fas fa-credit-card"></i> 2º PAGAR ONLINE 💳
+        </button>
     </div>
 
     <!-- Footer -->
     <footer class="footer">
-        <!-- ... conteúdo do footer ... -->
+        <div class="footer-container">
+            <div class="footer-item">
+                <i class="fab fa-whatsapp"></i><span>925 278 570</span>
+            </div>
+            <div class="footer-item">
+                <i class="fab fa-instagram"></i><span>dom_bistro_grill</span>
+            </div>
+            <div class="footer-item">
+                <i class="fas fa-map-marker-alt"></i><span>Alam São Damasco - S Francisco Centro 35, N/A, 4810-286 Guimarães</span>
+            </div>
+        </div>
+
+        <!-- Links -->
+        <div class="footer-links">
+            <a href="Formulario.html" class="btn-reserva">
+                <i class="fas fa-calendar-alt"></i>
+                FAÇA SUA RESERVA AQUI
+            </a>
+            <span>|</span>
+            <a href="termos-1.html">Termos e Condições</a>
+            <span>|</span>
+            <a href="politicas-1.html">Política de Privacidade</a>
+        </div>
+
+        <!-- Container do alerta DENTRO do rodapé -->
+        <div class="footer-alerta-container">
+            <div class="alerta-alergenios-rodape" title="⚠️ INFORMAÇÃO IMPORTANTE SOBRE ALERGIAS">
+                <span class="alerta-icon-rodape">
+                    <i class="fas fa-exclamation-triangle"></i>
+                </span>
+                <span class="alerta-texto-rodape">⚠️ ALERTA ALÉRGICOS</span>
+                <div class="alerta-tooltip-rodape">
+                    <h4>⚠️ ATENÇÃO: ALERGIAS ALIMENTARES</h4>
+                    
+                    <div class="destaque-rodape">
+                        <strong>CONSULTE-NOS ANTES DE FAZER SEU PEDIDO!</strong>
+                    </div>
+                    
+                    <p>Nossos pratos podem conter ou ter contato com os 14 alergénios principais listados pela legislação europeia.</p>
+                    
+                    <p><strong>INFORME nossa equipe sobre suas alergias ou intolerâncias alimentares.</strong></p>
+                    
+                    <p><strong>⚠️ Risco de contaminação cruzada:</strong> Utilizamos os mesmos utensílios e áreas de preparo.</p>
+                    
+                    <p class="lista-alergenios-rodape">Conforme Regulamento (UE) n.º 1169/2011 sobre informação ao consumidor.</p>
+                </div>
+            </div>
+        </div>
+
+        <p class="copy">© 2025 Dom Bistrô Grill — Todos os direitos Reservados.</p>
     </footer>
 
-    <!-- Modal de Zoom -->
+    <!-- ====================================================== -->
+    <!-- MODAL DE ZOOM NAS IMAGENS (LIGHTBOX) - CORRIGIDO    -->
+    <!-- ====================================================== -->
     <div id="modalLightbox" class="modal-imagem">
-        <!-- ... conteúdo do modal ... -->
+        <span class="fechar-modal-lightbox">&times;</span>
+        <img class="imagem-ampliada" id="imagemAmpliada" alt="Imagem ampliada">
+        <div class="modal-info" id="infoLightbox"></div>
+        <button class="nav-btn anterior" id="btnAnterior">
+            <i class="fas fa-chevron-left"></i>
+        </button>
+        <button class="nav-btn proximo" id="btnProximo">
+            <i class="fas fa-chevron-right"></i>
+        </button>
     </div>
 
     <script src="script.js"></script>
