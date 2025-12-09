@@ -87,9 +87,9 @@ const categorias = {
         }
     ],
     panelinhas: [
-        {nome:"Carne", preco: 7.86, foto:'fotos/Captura1.png', descricao: 'Deliciosa panelinha de carne com temperos especiais.'},
-        {nome:"Bacon", preco: 7.86, foto:'fotos/Captura1.png', descricao: 'Panelinha de bacon crocante e saborosa.'},
-        {nome:"Legumes", preco: 7.86, foto:'fotos/Captura1.png', descricao: 'Panelinha de legumes frescos e selecionados.'},
+        {nome:"Carne", preco: 7.86, foto:'fotos/panelhinha de carne.jpg', descricao: 'Lentamente cozida com cerveja artesanal, resultando em uma carne incrivelmente macia e suculenta. A cerveja adiciona profundidade ao sabor, criando um prato reconfortante ideal para qualquer refeição...'},
+        {nome:"Bacon", preco: 7.86, foto:'fotos/bacon.png', descricao: 'Panelinha de bacon crocante e saborosa.'},
+        {nome:"Legumes", preco: 7.86, foto:'fotos/legumes.png', descricao: 'Panelinha de legumes frescos e selecionados.'},
         {nome:"Bacon com Linguiça", preco: 7.86, foto:'fotos/Captura1.png', descricao: 'Combinação perfeita de bacon e linguiça.'}
     ],
     caldos: [
@@ -104,7 +104,7 @@ const categorias = {
         {nome:"X-Mineiro (+ fritas)", preco: 9.59, foto:'fotos/xmineiro.jpg', descricao:'Pão, carne, queijo, ovo, bacon, alface, tomate e queijo Minas.'},
         {nome:"X-Gauchesco (+ fritas)", preco: 7.61, foto:'fotos/xgauchesco.jpg', descricao:'Pão, carne, queijo, presunto, linguiça defumada, alface e tomate.'},
         {nome:"X-Nordestino (+ fritas)", preco: 8.56, foto:'fotos/xnordestino.jpg', descricao:'Pão, carne, queijo coalho grelhado, carne de sol desfiada e molho.'},
-        {nome:"X-Brasileiro (combo)", preco: 11.67, foto:'fotos/xbrasileiro.jpg', descricao:'Pão, 2 carnes, cheddar, bacon, ovo, alface, tomate e batata palha.'},
+        {nome:"X-Brasileiro (combo)", preco: 11.67, foto:'fotos/xbrasileirinho.jpg', descricao:'Pão, 2 carnes, cheddar, bacon, ovo, alface, tomate e batata palha.'},
         {nome:"X-Dom Cheddar (combo)", preco: 13.70, foto:'fotos/dom.jpg', descricao:'Pão, carne, farta porção de queijo cheddar cremoso e cebola caramelizada.'}
     ],
     espetinhos: [
@@ -126,14 +126,13 @@ const categorias = {
         {nome:"Cuscuz com Ovo e Coalho", preco: 5.33, foto:'fotos/cuscuz.jpeg', descricao: 'Cuscuz com ovo e queijo coalho.'}
     ],
     doces: [
-        {nome:"Bolo de Cenoura", preco: 1.77, foto:'fotos/Captura1.png', descricao: 'Fatia de bolo de cenoura com cobertura.'},
-        {nome:"Bolo de Chocolate", preco: 1.77, foto:'fotos/Captura1.png', descricao: 'Fatia de bolo de chocolate.'},
-        {nome:"Bolo Ninho", preco: 1.77, foto:'fotos/Captura1.png', descricao: 'Fatia de bolo com leite Ninho.'},
-        {nome:"Bolo de Milho", preco: 1.77, foto:'fotos/Captura1.png', descricao: 'Fatia de bolo de milho verde.'},
-        {nome:"Brownie", preco: 2.79, foto:'fotos/bk.png', descricao: 'Brownie de chocolate.'},
+        {nome:"Bolo de Cenoura", preco: 1.77, foto:'fotos/bolodecenoura.jpg', descricao: 'Fatia de bolo de cenoura com cobertura.'},
+        {nome:"Bolo de Chocolate", preco: 1.77, foto:'fotos/chocolate.jpg', descricao: 'Fatia de bolo de chocolate.'},
+        {nome:"Bolo Ninho", preco: 1.77, foto:'fotos/ninho.jpg', descricao: 'Fatia de bolo com leite Ninho.'},
+        {nome:"Bolo de Milho", preco: 1.77, foto:'fotos/milho.jpg', descricao: 'Fatia de bolo de milho verde.'},
         {nome:"Brigadeiro", preco: 0.75, foto:'fotos/brigadeiro.png', descricao: 'Tradicional brigadeiro brasileiro.'},
-        {nome:"Pudim", preco: 2.28, foto:'fotos/Captura1.png', descricao: 'Fatia de pudim de leite condensado.'},
-        {nome:"Bolo de Pote", preco: 4.31, foto:'fotos/bolonopote.png', descricao: 'Bolo de pote com diversas opções.'},
+        {nome:"Pudim", preco: 2.28, foto:'fotos/pudim.jpg', descricao: 'Fatia de pudim de leite condensado.'},
+        {nome:"Bolo de Pote", preco: 4.31, foto:'fotos/bolonopote.png', descricao: 'Bolo de pote com diversas opções consulte o restaurante para saber.'},
         {nome:"Bolo Formigueiro", preco: 1.77, foto:'fotos/boloformigueiro.jpg', descricao: 'Fatia de bolo formigueiro.'}
     ],
     bebidas: [
@@ -186,6 +185,9 @@ document.addEventListener('DOMContentLoaded', function() {
     inicializarCarrinho();
     configurarEventListeners();
     
+    // Preload de imagens para melhor performance
+    preloadImagens();
+    
     // Inicializar botão do carrinho topo
     const carrinhoTopoBtn = document.getElementById("carrinhoTopoBtn");
     if (carrinhoTopoBtn && pedido.length > 0) {
@@ -199,6 +201,17 @@ document.addEventListener('DOMContentLoaded', function() {
         iniciarLightbox();
     }, 1000);
 });
+
+function preloadImagens() {
+    // Pré-carregar imagens para melhor performance em dispositivos móveis
+    const todasImagens = Object.values(categorias).flat().map(item => item.foto);
+    const imagensUnicas = [...new Set(todasImagens)];
+    
+    imagensUnicas.forEach(src => {
+        const img = new Image();
+        img.src = src;
+    });
+}
 
 function inicializarMenu() {
     const menuTabs = document.getElementById("menuTabs");
@@ -293,7 +306,9 @@ function criarCardProduto(item, categoria) {
         <div class="card" data-categoria="${categoria}">
             <div class="card-image-container">
                 <img src="${item.foto}" alt="${item.nome}" 
-                    onerror="this.src='${imagemFallback}'">
+                    onerror="this.src='${imagemFallback}'"
+                    loading="lazy"
+                    class="produto-imagem">
             </div>
             <div class="card-content">
                 <h3 class="card-titulo">${item.nome} ${item.dia ? `(${item.dia})` : ''}</h3>
@@ -325,6 +340,10 @@ function mostrarModalPersonalizacao(nome, preco, categoria, botao, carneDia = nu
     categoriaSelecionadaParaPersonalizar = categoria;
     carneDiaSelecionada = carneDia;
     
+    // Encontrar a imagem do produto para mostrar no modal
+    const card = botao.closest('.card');
+    const imagemProduto = card ? card.querySelector('img').src : '';
+    
     // Determinar quais adicionais mostrar
     const adicionaisFiltrados = filtrarAdicionaisPorCategoria(categoria, carneDia);
     
@@ -337,8 +356,14 @@ function mostrarModalPersonalizacao(nome, preco, categoria, botao, carneDia = nu
                     <button class="btn-fechar-modal" onclick="fecharModalPersonalizacao()">
                         <i class="fas fa-times"></i>
                     </button>
-                    <h3>🍽️ Personalizar: ${nome}</h3>
-                    <p>Adicione, remova ou personalize seu pedido</p>
+                    <div class="produto-info-modal">
+                        ${imagemProduto ? `<img src="${imagemProduto}" alt="${nome}" class="produto-imagem-modal">` : ''}
+                        <div>
+                            <h3>🍽️ Personalizar: ${nome}</h3>
+                            <p class="preco-base-modal">Preço base: €${preco.toFixed(2)}</p>
+                        </div>
+                    </div>
+                    <p class="subtitulo-modal">Adicione, remova ou personalize seu pedido</p>
                 </div>
                 
                 <!-- Body -->
@@ -389,12 +414,18 @@ function mostrarModalPersonalizacao(nome, preco, categoria, botao, carneDia = nu
                 
                 <!-- Footer -->
                 <div class="modal-footer">
-                    <button class="btn-cancelar" onclick="fecharModalPersonalizacao()">
-                        <i class="fas fa-times"></i> Cancelar
-                    </button>
-                    <button class="btn-confirmar" onclick="confirmarPersonalizacao()">
-                        <i class="fas fa-check"></i> Adicionar ao Carrinho (€${preco.toFixed(2)})
-                    </button>
+                    <div class="total-pedido-modal">
+                        <span>Total do Pedido:</span>
+                        <span id="totalPedidoModal">€${preco.toFixed(2)}</span>
+                    </div>
+                    <div class="botoes-modal">
+                        <button class="btn-cancelar" onclick="fecharModalPersonalizacao()">
+                            <i class="fas fa-times"></i> Cancelar
+                        </button>
+                        <button class="btn-confirmar" onclick="confirmarPersonalizacao()">
+                            <i class="fas fa-check"></i> Adicionar ao Carrinho
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -402,11 +433,25 @@ function mostrarModalPersonalizacao(nome, preco, categoria, botao, carneDia = nu
     
     document.body.insertAdjacentHTML('beforeend', modalHTML);
     
+    // Atualizar evento para atualizar total em tempo real
+    const atualizarTotalModal = () => {
+        const adicionaisSelecionados = document.querySelectorAll('.card-adicional.selecionado');
+        let totalAdicionais = 0;
+        
+        adicionaisSelecionados.forEach(card => {
+            totalAdicionais += parseFloat(card.dataset.preco);
+        });
+        
+        const totalFinal = preco + totalAdicionais;
+        document.getElementById('totalPedidoModal').textContent = `€${totalFinal.toFixed(2)}`;
+    };
+    
     // Adicionar eventos aos cards de adicionais
     document.querySelectorAll('.card-adicional').forEach(card => {
         card.addEventListener('click', function() {
             this.classList.toggle('selecionado');
             atualizarResumoAdicionais();
+            atualizarTotalModal();
         });
     });
     
@@ -435,12 +480,6 @@ function filtrarAdicionaisPorCategoria(categoria, carneDia) {
         // Lógica para filtrar adicionais por categoria
         if (categoria === 'executivos') {
             if (adicional.categoria === 'executivo') {
-                // Para Feijoada, adicionar opções especiais
-                if (carneDia === 'Feijoada') {
-                    if (key.includes('Carne Extra') || key.includes('Torresmo') || key.includes('Couve')) {
-                        adicionaisFiltrados[key] = adicional;
-                    }
-                }
                 adicionaisFiltrados[key] = adicional;
             }
         } else if (categoria === 'hamburgueres') {
@@ -528,7 +567,9 @@ function criarCardsAdicionais(adicionais) {
                 </div>
                 <div class="adicional-descricao">${adicional.descricao}</div>
                 <div class="tag-adicional">${adicional.categoria.toUpperCase()}</div>
-                <div class="selecionar-adicional"></div>
+                <div class="selecionar-adicional">
+                    <i class="fas fa-plus"></i>
+                </div>
             </div>
         `;
     }).join('');

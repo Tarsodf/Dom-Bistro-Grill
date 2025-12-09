@@ -222,7 +222,7 @@ html, body {
 }
 
 /* ===========================
- CARD DO PRODUTO - DESIGN UNIFICADO
+ CARD DO PRODUTO - DESIGN UNIFICADO COM ZOOM
 =========================== */
 .card {
   background: white;
@@ -241,30 +241,95 @@ html, body {
   box-shadow: 0 8px 20px var(--sombra);
 }
 
-/* Container da imagem - design unificado */
+/* ==================== ZOOM INTERATIVO NAS IMAGENS ==================== */
 .card-image-container {
+  position: relative;
   width: 100%;
-  height: 200px; /* Altura padrão desktop */
+  height: 200px;
   overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  cursor: zoom-in;
+  border-radius: 8px 8px 0 0;
+  transition: transform 0.3s ease;
   border-bottom: 3px solid var(--laranja);
   background: #222020;
-  position: relative;
+}
+
+.card-image-container:hover {
+  transform: scale(1.02);
 }
 
 /* Imagem padronizada para todas as categorias */
 .card-image-container img {
   width: 100%;
   height: 100%;
-  object-fit: cover; /* Todas usam cover */
+  object-fit: cover;
   transition: transform 0.5s ease;
   display: block;
 }
 
-.card:hover .card-image-container img {
-  transform: scale(1.05);
+.card-image-container:hover img {
+  transform: scale(1.1);
+}
+
+/* Lente de aumento (aparece ao passar o mouse) */
+.lente-zoom {
+  position: absolute;
+  width: 150px;
+  height: 150px;
+  border: 2px solid rgba(230, 106, 17, 0.8);
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s;
+  z-index: 10;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Resultado do zoom (aparece ao lado) */
+.resultado-zoom {
+  position: fixed;
+  top: 50%;
+  right: 50px;
+  transform: translateY(-50%);
+  width: 400px;
+  height: 400px;
+  background-size: 800px 800px;
+  background-repeat: no-repeat;
+  border: 3px solid #E66A11;
+  border-radius: 10px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s;
+  z-index: 1000;
+  overflow: hidden;
+}
+
+.resultado-zoom.ativo {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Indicador visual para mostrar que é clicável */
+.indicador-zoom {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  background: rgba(230, 106, 17, 0.9);
+  color: white;
+  padding: 5px 10px;
+  border-radius: 15px;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.card-image-container:hover .indicador-zoom {
+  opacity: 1;
 }
 
 /* Placeholder para imagens ausentes */
@@ -1215,9 +1280,7 @@ input:focus, textarea:focus {
   font-size: 16px;
 }
 
-/* ===========================
- MODAL LIGHTBOX PARA IMAGENS
-=========================== */
+/* ==================== LIGHTBOX COM ZOOM INTEGRADO ==================== */
 .modal-imagem {
   display: none;
   position: fixed;
@@ -1225,7 +1288,7 @@ input:focus, textarea:focus {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.92);
+  background-color: rgba(0, 0, 0, 0.95);
   z-index: 2000;
   justify-content: center;
   align-items: center;
@@ -1254,7 +1317,7 @@ input:focus, textarea:focus {
 
 .imagem-ampliada.zoom-ativo {
   cursor: zoom-out;
-  transform: scale(1.5);
+  transform: scale(2);
   transform-origin: center;
 }
 
@@ -1330,6 +1393,42 @@ input:focus, textarea:focus {
   transform: scale(1.1);
 }
 
+/* Controles do zoom no lightbox */
+.controles-zoom {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.7);
+  padding: 10px 20px;
+  border-radius: 25px;
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  z-index: 1001;
+}
+
+.controles-zoom button {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
+  padding: 5px 10px;
+  border-radius: 50%;
+  transition: background 0.3s;
+}
+
+.controles-zoom button:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.controles-zoom span {
+  color: white;
+  font-size: 14px;
+  margin: 0 10px;
+}
+
 .zoom-indicador {
   position: absolute;
   bottom: 20px;
@@ -1375,8 +1474,32 @@ input:focus, textarea:focus {
 }
 
 /* ===========================
- RESPONSIVIDADE GERAL
+ RESPONSIVIDADE GERAL E ZOOM
 =========================== */
+
+/* Para dispositivos móveis */
+@media (max-width: 768px) {
+  .resultado-zoom {
+    display: none; /* Esconde o zoom lateral em mobile */
+  }
+  
+  .card-image-container {
+    cursor: pointer; /* Muda cursor para pointer em mobile */
+  }
+  
+  .lente-zoom {
+    display: none; /* Esconde a lente em mobile */
+  }
+  
+  .indicador-zoom {
+    opacity: 1; /* Sempre visível em mobile */
+    background: rgba(0, 0, 0, 0.7);
+  }
+  
+  .imagem-ampliada.zoom-ativo {
+    transform: scale(2.5); /* Zoom maior em mobile */
+  }
+}
 
 /* Layout para desktop - carrinho */
 @media (min-width: 768px) {
