@@ -217,6 +217,11 @@ function inicializarMenu() {
     const menuTabs = document.getElementById("menuTabs");
     const areas = document.getElementById("areas");
 
+    if (!menuTabs || !areas) {
+        console.error("Elementos do menu não encontrados");
+        return;
+    }
+
     const nomesCategorias = {
         executivos: 'PRATOS EXECUTIVOS',
         panelinhas: 'PANELINHAS',
@@ -236,9 +241,11 @@ function inicializarMenu() {
 
     Object.keys(categorias).forEach(cat => {
         const div = document.getElementById(cat);
-        categorias[cat].forEach(item => {
-            div.innerHTML += criarCardProduto(item, cat);
-        });
+        if (div) {
+            categorias[cat].forEach(item => {
+                div.innerHTML += criarCardProduto(item, cat);
+            });
+        }
     });
 
     const hash = window.location.hash.replace("#","").trim();
@@ -321,17 +328,29 @@ function criarCardProduto(item, categoria) {
 
 // ==================== NAVEGAÇÃO ENTRE SEÇÕES ====================
 function abrirSecao(cat) {
-    document.querySelectorAll(".section").forEach(s => s.classList.remove("active"));
-    document.querySelectorAll(".menu-centralizado button").forEach(btn => btn.classList.remove("active"));
+    const sections = document.querySelectorAll(".section");
+    const buttons = document.querySelectorAll(".menu-centralizado button");
     
-    document.getElementById(cat).classList.add("active");
-    const botao = Array.from(document.querySelectorAll(".menu-centralizado button"))
+    if (sections.length === 0 || buttons.length === 0) return;
+    
+    sections.forEach(s => s.classList.remove("active"));
+    buttons.forEach(btn => btn.classList.remove("active"));
+    
+    const targetSection = document.getElementById(cat);
+    if (targetSection) {
+        targetSection.classList.add("active");
+    }
+    
+    const botao = Array.from(buttons)
         .find(btn => btn.onclick && btn.onclick.toString().includes(cat));
     if(botao) botao.classList.add("active");
     
     window.location.hash = cat;
     
-    reiniciarLightboxAposMudanca();
+    // Re-iniciar lightbox após mudança de conteúdo
+    setTimeout(() => {
+        iniciarLightbox();
+    }, 300);
 }
 
 // ==================== MODAL DE PERSONALIZAÇÃO MELHORADO ====================
@@ -433,6 +452,9 @@ function mostrarModalPersonalizacao(nome, preco, categoria, botao, carneDia = nu
     
     document.body.insertAdjacentHTML('beforeend', modalHTML);
     
+    // Ajustar altura do modal body para dispositivos móveis
+    ajustarAlturaModalMobile();
+    
     // Atualizar evento para atualizar total em tempo real
     const atualizarTotalModal = () => {
         const adicionaisSelecionados = document.querySelectorAll('.card-adicional.selecionado');
@@ -443,7 +465,10 @@ function mostrarModalPersonalizacao(nome, preco, categoria, botao, carneDia = nu
         });
         
         const totalFinal = preco + totalAdicionais;
-        document.getElementById('totalPedidoModal').textContent = `€${totalFinal.toFixed(2)}`;
+        const totalElement = document.getElementById('totalPedidoModal');
+        if (totalElement) {
+            totalElement.textContent = `€${totalFinal.toFixed(2)}`;
+        }
     };
     
     // Adicionar eventos aos cards de adicionais
@@ -469,6 +494,26 @@ function mostrarModalPersonalizacao(nome, preco, categoria, botao, carneDia = nu
             this.classList.add('selecionado');
         });
     });
+    
+    // Configurar evento de redimensionamento para ajustar modal em mobile
+    window.addEventListener('resize', ajustarAlturaModalMobile);
+}
+
+function ajustarAlturaModalMobile() {
+    const modalBody = document.querySelector('.modal-body');
+    const modalPersonalizacao = document.querySelector('.modal-personalizacao');
+    
+    if (!modalBody || !modalPersonalizacao) return;
+    
+    if (window.innerWidth <= 768) {
+        // Para mobile, ajustar altura máxima
+        modalPersonalizacao.style.maxHeight = '85vh';
+        modalBody.style.maxHeight = 'calc(85vh - 200px)';
+    } else {
+        // Para desktop, usar valores padrão
+        modalPersonalizacao.style.maxHeight = '90vh';
+        modalBody.style.maxHeight = 'calc(90vh - 220px)';
+    }
 }
 
 function filtrarAdicionaisPorCategoria(categoria, carneDia) {
@@ -557,6 +602,10 @@ function criarSecaoPontoCarne(categoria) {
 }
 
 function criarCardsAdicionais(adicionais) {
+    if (Object.keys(adicionais).length === 0) {
+        return '<p style="text-align: center; color: #666; padding: 20px;">Nenhum adicional disponível para esta categoria.</p>';
+    }
+    
     return Object.keys(adicionais).map(key => {
         const adicional = adicionais[key];
         return `
@@ -580,6 +629,8 @@ function atualizarResumoAdicionais() {
     const resumoDiv = document.getElementById('resumoAdicionais');
     const listaDiv = document.getElementById('listaAdicionais');
     const totalSpan = document.getElementById('totalAdicionais');
+    
+    if (!resumoDiv || !listaDiv || !totalSpan) return;
     
     if (adicionaisSelecionados.length > 0) {
         let total = 0;
@@ -614,6 +665,9 @@ function fecharModalPersonalizacao() {
         categoriaSelecionadaParaPersonalizar = null;
         carneDiaSelecionada = null;
     }
+    
+    // Remover evento de resize
+    window.removeEventListener('resize', ajustarAlturaModalMobile);
 }
 
 function confirmarPersonalizacao() {
@@ -643,7 +697,8 @@ function confirmarPersonalizacao() {
     });
     
     // Coletar observações
-    const observacoes = document.getElementById('observacoesPersonalizacao').value;
+    const observacoesInput = document.getElementById('observacoesPersonalizacao');
+    const observacoes = observacoesInput ? observacoesInput.value : '';
     
     // Criar item personalizado
     const itemPersonalizado = {
@@ -777,6 +832,8 @@ function atualizarCarrinho() {
     const lista = document.getElementById("lista");
     const contador = document.getElementById("contador-itens");
     const totalElement = document.getElementById("total");
+    
+    if (!lista) return;
     
     let total = 0;
     let totalItens = 0;
@@ -1198,7 +1255,7 @@ function mostrarLoadingPagamento(url) {
     }, 1200);
 }
 
-// ==================== LIGHTBOX PARA IMAGENS ====================
+// ==================== LIGHTBOX PARA IMAGENS - CORRIGIDO ====================
 let todasImagensLightbox = [];
 let indiceImagemAtual = 0;
 
@@ -1469,7 +1526,10 @@ function mostrarMensagemZoom(texto) {
         word-wrap: break-word;
     `;
     
-    document.querySelector('.modal-conteudo').appendChild(mensagem);
+    const modalConteudo = document.querySelector('.modal-conteudo');
+    if (modalConteudo) {
+        modalConteudo.appendChild(mensagem);
+    }
     
     setTimeout(() => {
         if (mensagem.parentNode) {
@@ -1586,13 +1646,6 @@ function atualizarBotoesNavegacao() {
         
         atualizarVisibilidadeBotoes();
     }
-}
-
-function reiniciarLightboxAposMudanca() {
-    setTimeout(() => {
-        console.log("🔄 Re-iniciando lightbox após mudança de conteúdo...");
-        iniciarLightbox();
-    }, 300);
 }
 
 // Adicionar animações CSS para mensagens
