@@ -531,11 +531,9 @@ html, body {
 
 /* Header do Modal */
 .modal-header {
-  background: linear-gradient(135deg, #E66A11 0%, #ff8c42 100%);
-  color: white;
-  padding: 25px;
-  border-radius: 20px 20px 0 0;
-  position: relative;
+  .card-image-container {
+    height: 200px !important;
+}
 }
 
 .modal-header h3 {
@@ -947,13 +945,8 @@ html, body {
   gap: 10px;
 }
 
-.btn-confirmar:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 25px rgba(230, 106, 17, 0.3);
-}
-
-/* ===========================
- CARRINHO FLUTUANTE MODERNO
+===========================
+CARRINHO FLUTUANTE MODERNO
 =========================== */
 .carrinho-flutuante {
   position: fixed;
