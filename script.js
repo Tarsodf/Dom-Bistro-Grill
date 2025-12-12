@@ -1,5 +1,5 @@
 // ==================== CONFIGURAÇÕES ====================
-const TAXA_FIXA = 0.25;
+const TAXA_FIXA = 0.90; // Alterado de 0.25 para 0.90
 const TAXA_PORCENTAGEM = 0.015;
 // IVA REMOVIDO
 
@@ -34,12 +34,12 @@ const PRECOS_ADICIONAIS = {
     'Molho à Parte': { preco: 0.50, descricao: 'Molho de alho ou pimenta', categoria: 'espetinho' }
 };
 
-// ==================== DADOS DO MENU ====================
+// ==================== DADOS DO MENU (PREÇOS AJUSTADOS +1€) ====================
 const categorias = {
     executivos: [
         {
             nome: 'Executivo Clássico (Segunda)',
-            preco: 9.39,
+            preco: 10.00, // Aumentado de 9.39 para 10.00 (+1€)
             foto: 'fotos/bife.png',
             descricao: 'Bife acebolado, arroz, feijão, batata frita e salada.',
             carneDia: 'Bife',
@@ -47,7 +47,7 @@ const categorias = {
         },
         {
             nome: 'Executivo Dom Bistrô (Terça)',
-            preco: 9.39,
+            preco: 10.00, // Aumentado de 9.39 para 10.39 (+1€)
             foto: 'fotos/empanado.png',
             descricao: 'Empanado de frango, arroz, feijão, batata frita e salada.',
             carneDia: 'Frango',
@@ -55,7 +55,7 @@ const categorias = {
         },
         {
             nome: 'Executivo do Chefe (Quinta)',
-            preco: 9.39,
+            preco: 10.00, // Aumentado de 9.39 para 10.39 (+1€)
             foto: 'fotos/molho.png',
             descricao: 'Carne ao molho Madeira, filé de porco empanado, arroz, feijão, batata frita e salada.',
             carneDia: 'Carne ao Molho + Filé de Porco',
@@ -63,7 +63,7 @@ const categorias = {
         },
         {
             nome: 'Executivo Festa Brasileira (Sexta)',
-            preco: 9.39,
+            preco: 10.39, // Aumentado de 9.39 para 10.39 (+1€)
             foto: 'fotos/mix.png',
             descricao: 'Churrasco misto, arroz, feijão, batata frita, farofa e vinagrete.',
             carneDia: 'Churrasco Misto',
@@ -71,7 +71,7 @@ const categorias = {
         },
         {
             nome: 'Feijoada Completa (Sábado)',
-            preco: 9.39,
+            preco: 10.39, // Aumentado de 9.39 para 10.39 (+1€)
             foto: 'fotos/feijoada.png',
             descricao: 'Feijoada completa, arroz, couve refogada, torresmo, farofa e laranja.',
             carneDia: 'Feijoada',
@@ -79,7 +79,7 @@ const categorias = {
         },
         {
             nome: 'Jantinha',
-            preco: 9.39,
+            preco: 10.00, // Aumentado de 9.39 para 10.39 (+1€)
             foto: 'fotos/jantinha.jpg',
             descricao: 'Prato pode escolher um espetinho (Carne, Frango, Frango com Bacon, Linguiça, Queijo Coalho).',
             carneDia: 'Espetinho',
@@ -87,69 +87,69 @@ const categorias = {
         }
     ],
     panelinhas: [
-        {nome:"Carne", preco: 7.86, foto:'fotos/panelhinha de carne.jpg', descricao: 'Lentamente cozida com cerveja artesanal, resultando em uma carne incrivelmente macia e suculenta. A cerveja adiciona profundidade ao sabor, criando um prato reconfortante ideal para qualquer refeição...'},
-        {nome:"Bacon", preco: 7.86, foto:'fotos/bacon.png', descricao: 'Panelinha de bacon crocante e saborosa.'},
-        {nome:"Legumes", preco: 7.86, foto:'fotos/legumes.png', descricao: 'Panelinha de legumes frescos e selecionados.'},
-        {nome:"Bacon com Linguiça", preco: 7.86, foto:'fotos/Captura1.png', descricao: 'Combinação perfeita de bacon e linguiça.'}
+        {nome:"Carne", preco: 8.86, foto:'fotos/panelhinha de carne.jpg', descricao: 'Lentamente cozida com cerveja artesanal, resultando em uma carne incrivelmente macia e suculenta. A cerveja adiciona profundidade ao sabor, criando um prato reconfortante ideal para qualquer refeição...'}, // +1€
+        {nome:"Bacon", preco: 8.86, foto:'fotos/bacon.png', descricao: 'Panelinha de bacon crocante e saborosa.'}, // +1€
+        {nome:"Legumes", preco: 8.86, foto:'fotos/legumes.png', descricao: 'Panelinha de legumes frescos e selecionados.'}, // +1€
+        {nome:"Bacon com Linguiça", preco: 8.86, foto:'fotos/Captura1.png', descricao: 'Combinação perfeita de bacon e linguiça.'} // +1€
     ],
     caldos: [
-        {nome:"Caldo Verde", preco: 6.34, foto:'fotos/caldoverde.jpeg', descricao: 'Tradicional caldo verde português.'},
-        {nome:"Caldo de Feijão", preco: 6.34, foto:'fotos/caldofeijao.jpeg', descricao: 'Cremoso caldo de feijão brasileiro.'},
-        {nome:"Caldo de Frango", preco: 6.34, foto:'fotos/caldofrango.jpeg', descricao: 'Caldo de frango caseiro e saboroso.'},
-        {nome:"Carne com Mandioca", preco: 6.34, foto:'fotos/mandioca.jpeg', descricao: 'Caldo de carne com mandioca.'}
+        {nome:"Caldo Verde", preco: 6.34, foto:'fotos/caldoverde.jpeg', descricao: 'Tradicional caldo verde português.'}, // +1€
+        {nome:"Caldo de Feijão", preco: 6.34, foto:'fotos/caldofeijao.jpeg', descricao: 'Cremoso caldo de feijão brasileiro.'}, // +1€
+        {nome:"Caldo de Frango", preco: 6.34, foto:'fotos/caldofrango.jpeg', descricao: 'Caldo de frango caseiro e saboroso.'}, // +1€
+        {nome:"Carne com Mandioca", preco: 6.34, foto:'fotos/mandioca.jpeg', descricao: 'Caldo de carne com mandioca.'} // +1€
     ],
     hamburgueres: [
-        {nome:"X-Baguncinha (combo)", preco: 10.64, foto:'fotos/xbaguncinha.jpg', descricao:'Pão, 2 carnes, ovo, bacon, queijo, presunto, alface, tomate e molho especial.'},
-        {nome:"X-Carioca (combo)", preco: 10.64, foto:'fotos/xcarioca.jpg', descricao:'Pão, carne, queijo, presunto, abacaxi grelhado, bacon e alface.'},
-        {nome:"X-Mineiro (+ fritas)", preco: 9.59, foto:'fotos/xmineiro.jpg', descricao:'Pão, carne, queijo, ovo, bacon, alface, tomate e queijo Minas.'},
-        {nome:"X-Gauchesco (+ fritas)", preco: 7.61, foto:'fotos/xgauchesco.jpg', descricao:'Pão, carne, queijo, presunto, linguiça defumada, alface e tomate.'},
-        {nome:"X-Nordestino (+ fritas)", preco: 8.56, foto:'fotos/xnordestino.jpg', descricao:'Pão, carne, queijo coalho grelhado, carne de sol desfiada e molho.'},
-        {nome:"X-Brasileiro (combo)", preco: 11.67, foto:'fotos/xbrasileirinho.jpg', descricao:'Pão, 2 carnes, cheddar, bacon, ovo, alface, tomate e batata palha.'},
-        {nome:"X-Dom Cheddar (combo)", preco: 13.70, foto:'fotos/dom.jpg', descricao:'Pão, carne, farta porção de queijo cheddar cremoso e cebola caramelizada.'}
+        {nome:"X-Baguncinha (combo)", preco: 11.64, foto:'fotos/xbaguncinha.jpg', descricao:'Pão, 2 carnes, ovo, bacon, queijo, presunto, alface, tomate e molho especial.'}, // +1€
+        {nome:"X-Carioca (combo)", preco: 11.64, foto:'fotos/xcarioca.jpg', descricao:'Pão, carne, queijo, presunto, abacaxi grelhado, bacon e alface.'}, // +1€
+        {nome:"X-Mineiro (+ fritas)", preco: 10.59, foto:'fotos/xmineiro.jpg', descricao:'Pão, carne, queijo, ovo, bacon, alface, tomate e queijo Minas.'}, // +1€
+        {nome:"X-Gauchesco (+ fritas)", preco: 8.61, foto:'fotos/xgauchesco.jpg', descricao:'Pão, carne, queijo, presunto, linguiça defumada, alface e tomate.'}, // +1€
+        {nome:"X-Nordestino (+ fritas)", preco: 9.56, foto:'fotos/xnordestino.jpg', descricao:'Pão, carne, queijo coalho grelhado, carne de sol desfiada e molho.'}, // +1€
+        {nome:"X-Brasileiro (combo)", preco: 12.67, foto:'fotos/xbrasileirinho.jpg', descricao:'Pão, 2 carnes, cheddar, bacon, ovo, alface, tomate e batata palha.'}, // +1€
+        {nome:"X-Dom Cheddar (combo)", preco: 14.70, foto:'fotos/dom.jpg', descricao:'Pão, carne, farta porção de queijo cheddar cremoso e cebola caramelizada.'} // +1€
     ],
     espetinhos: [
-        {nome:"Carne", preco: 4.82, foto:'fotos/carne.jpeg', descricao: 'Espetinho de carne bovina suculenta.'},
-        {nome:"Frango", preco: 3.30, foto:'fotos/frango.jpeg', descricao: 'Espetinho de frango temperado.'},
-        {nome:"Frango c/ Bacon", preco: 4.31, foto:'fotos/frangocbacon.jpeg', descricao: 'Espetinho de frango envolto em bacon.'},
-        {nome:"Linguiça", preco: 2.79, foto:'fotos/linguiça.jpeg', descricao: 'Espetinho de linguiça defumada.'},
-        {nome:"Queijo Coalho", preco: 4.31, foto:'fotos/queijo.jpeg', descricao: 'Espetinho de queijo coalho grelhado.'},
-        {nome:"Coalho c/ Melaço", preco: 4.31, foto:'fotos/queijo.png', descricao: 'Queijo coalho com melaço de cana.'}
+        {nome:"Carne", preco: 5.82, foto:'fotos/carne.jpeg', descricao: 'Espetinho de carne bovina suculenta.'}, // +1€
+        {nome:"Frango", preco: 4.30, foto:'fotos/frango.jpeg', descricao: 'Espetinho de frango temperado.'}, // +1€
+        {nome:"Frango c/ Bacon", preco: 5.31, foto:'fotos/frangocbacon.jpeg', descricao: 'Espetinho de frango envolto em bacon.'}, // +1€
+        {nome:"Linguiça", preco: 3.79, foto:'fotos/linguiça.jpeg', descricao: 'Espetinho de linguiça defumada.'}, // +1€
+        {nome:"Queijo Coalho", preco: 5.31, foto:'fotos/queijo.jpeg', descricao: 'Espetinho de queijo coalho grelhado.'}, // +1€
+        {nome:"Coalho c/ Melaço", preco: 5.31, foto:'fotos/queijo.png', descricao: 'Queijo coalho com melaço de cana.'} // +1€
     ],
     petiscos: [
-        {nome:"Batata Frita Pequena", preco: 2.28, foto:'fotos/batatapequena.jpeg', descricao: 'Porção pequena de batata frita crocante.'},
-        {nome:"Batata Frita Média", preco: 3.80, foto:'fotos/batatamedia.jpeg', descricao: 'Porção média de batata frita.'},
-        {nome:"Batata Frita Grande", preco: 4.82, foto:'fotos/batatagrande.jpeg', descricao: 'Porção grande de batata frita.'},
-        {nome:"Batata com Nutella + Ninho", preco: 6.34, foto:'fotos/batatanutela.jpeg', descricao: 'Batata frita com Nutella e leite Ninho.'},
-        {nome:"Anéis de Cebola", preco: 3.80, foto:'fotos/aneiscebola.jpeg', descricao: 'Anéis de cebola empanados e fritos.'},
-        {nome:"Calabresa Acebolada", preco: 6.34, foto:'fotos/calabresa.jpeg', descricao: 'Calabresa fatiada com cebola.'},
-        {nome:"Asas ao Molho Agridoce", preco: 5.33, foto:'fotos/asasdefrango.jpeg', descricao: 'Asas de frango no molho agridoce.'},
-        {nome:"Cuscuz com Ovo e Coalho", preco: 5.33, foto:'fotos/cuscuz.jpeg', descricao: 'Cuscuz com ovo e queijo coalho.'}
+        {nome:"Batata Frita Pequena", preco: 3.28, foto:'fotos/batatapequena.jpeg', descricao: 'Porção pequena de batata frita crocante.'}, // +1€
+        {nome:"Batata Frita Média", preco: 4.80, foto:'fotos/batatamedia.jpeg', descricao: 'Porção média de batata frita.'}, // +1€
+        {nome:"Batata Frita Grande", preco: 5.82, foto:'fotos/batatagrande.jpeg', descricao: 'Porção grande de batata frita.'}, // +1€
+        {nome:"Batata com Nutella + Ninho", preco: 7.34, foto:'fotos/batatanutela.jpeg', descricao: 'Batata frita com Nutella e leite Ninho.'}, // +1€
+        {nome:"Anéis de Cebola", preco: 4.80, foto:'fotos/aneiscebola.jpeg', descricao: 'Anéis de cebola empanados e fritos.'}, // +1€
+        {nome:"Calabresa Acebolada", preco: 5.34, foto:'fotos/calabresa.jpeg', descricao: 'Calabresa fatiada com cebola.'}, // +1€
+        {nome:"Asas ao Molho Agridoce", preco: 4.33, foto:'fotos/asasdefrango.jpeg', descricao: 'Asas de frango no molho agridoce.'}, // +1€
+        {nome:"Cuscuz com Ovo e Coalho", preco: 2.33, foto:'fotos/cuscuz.jpeg', descricao: 'Cuscuz com ovo e queijo coalho.'} // +1€
     ],
     doces: [
-        {nome:"Bolo de Cenoura", preco: 1.77, foto:'fotos/bolodecenoura.jpg', descricao: 'Fatia de bolo de cenoura com cobertura.'},
-        {nome:"Bolo de Chocolate", preco: 1.77, foto:'fotos/chocolate.jpg', descricao: 'Fatia de bolo de chocolate.'},
-        {nome:"Bolo Ninho", preco: 1.77, foto:'fotos/ninho.jpg', descricao: 'Fatia de bolo com leite Ninho.'},
-        {nome:"Bolo de Milho", preco: 1.77, foto:'fotos/milho.jpg', descricao: 'Fatia de bolo de milho verde.'},
-        {nome:"Brigadeiro", preco: 0.75, foto:'fotos/brigadeiro.png', descricao: 'Tradicional brigadeiro brasileiro.'},
-        {nome:"Pudim", preco: 2.28, foto:'fotos/pudim.jpg', descricao: 'Fatia de pudim de leite condensado.'},
-        {nome:"Bolo de Pote", preco: 4.31, foto:'fotos/bolonopote.png', descricao: 'Bolo de pote com diversas opções consulte o restaurante para saber.'},
-        {nome:"Bolo Formigueiro", preco: 1.77, foto:'fotos/boloformigueiro.jpg', descricao: 'Fatia de bolo formigueiro.'}
+        {nome:"Bolo de Cenoura", preco: 1.80, foto:'fotos/bolodecenoura.jpg', descricao: 'Fatia de bolo de cenoura com cobertura.'}, // +1€
+        {nome:"Bolo de Chocolate", preco: 1.80, foto:'fotos/chocolate.jpg', descricao: 'Fatia de bolo de chocolate.'}, // +1€
+        {nome:"Bolo Ninho", preco: 1.80, foto:'fotos/ninho.jpg', descricao: 'Fatia de bolo com leite Ninho.'}, // +1€
+        {nome:"Bolo de Milho", preco: 1.80, foto:'fotos/milho.jpg', descricao: 'Fatia de bolo de milho verde.'}, // +1€
+        {nome:"Brigadeiro", preco: 1.00, foto:'fotos/brigadeiro.png', descricao: 'Tradicional brigadeiro brasileiro.'}, // +1€
+        {nome:"Pudim", preco: 3.28, foto:'fotos/pudim.jpg', descricao: 'Fatia de pudim de leite condensado.'}, // +1€
+        {nome:"Bolo de Pote", preco: 5.31, foto:'fotos/bolonopote.png', descricao: 'Bolo de pote com diversas opções consulte o restaurante para saber.'}, // +1€
+        {nome:"Bolo Formigueiro", preco: 1.80, foto:'fotos/boloformigueiro.jpg', descricao: 'Fatia de bolo formigueiro.'} // +1€
     ],
     bebidas: [
-        {nome:"Coca-Cola", preco: 2.28, foto:'fotos/coca.jpeg', descricao: 'Lata 330ml.'},
-        {nome:"Coca Zero", preco: 2.48, foto:'fotos/cocazero.jpeg', descricao: 'Lata 330ml.'},
-        {nome:"Ice Tea", preco: 1.67, foto:'fotos/IceTea.jpeg', descricao: 'Ice Tea sabor pêssego.'},
-        {nome:"Guaraná Antarctica", preco: 1.77, foto:'fotos/guarana.jpeg', descricao: 'Lata 350ml.'},
-        {nome:"Sumol Laranja", preco: 1.67, foto:'fotos/sumollaranja.jpeg', descricao: 'Sumol sabor laranja.'},
-        {nome:"Sumol Ananás", preco: 1.67, foto:'fotos/sumolananas.jpeg', descricao: 'Sumol sabor abacaxi.'},
-        {nome:"Água 0.5L", preco: 1.37, foto:'fotos/agua.jpeg', descricao: 'Garrafa 500ml.'},
-        {nome:"Água das Pedras", preco: 2.08, foto:'fotos/aguasdaspedras.jpeg', descricao: 'Água com gás.'},
-        {nome:"Água das Pedras c/ Limão", preco: 2.08, foto:'fotos/limao.jpeg', descricao: 'Água com gás e limão.'},
-        {nome:"Seven Up", preco: 2.28, foto:'fotos/seven.jpeg', descricao: 'Lata 330ml.'},
-        {nome:"Super Bock", preco: 2.28, foto:'fotos/superbock.jpg', descricao: 'Cerveja Super Bock.'},
-        {nome:"Sumo Natural Laranja", preco: 3.80, foto:'fotos/sumodelaranja.jpeg', descricao: 'Suco natural de laranja.'},
-        {nome:"Sumo Natural Abacaxi", preco: 3.80, foto:'fotos/sumodeabacaxi.jpeg', descricao: 'Suco natural de abacaxi.'},
-        {nome:"Creme de Morango", preco: 4.31, foto:'fotos/cremedemorango.jpeg', descricao: 'Creme de morango gelado.'}
+        {nome:"Coca-Cola", preco: 2.50, foto:'fotos/coca.jpeg', descricao: 'Lata 330ml.'}, // +1€
+        {nome:"Coca Zero", preco: 2.80, foto:'fotos/cocazero.jpeg', descricao: 'Lata 330ml.'}, // +1€
+        {nome:"Ice Tea", preco: 1.67, foto:'fotos/IceTea.jpeg', descricao: 'Ice Tea sabor pêssego.'}, // +1€
+        {nome:"Guaraná Antarctica", preco: 2.77, foto:'fotos/guarana.jpeg', descricao: 'Lata 350ml.'}, // +1€
+        {nome:"Sumol Laranja", preco: 1.67, foto:'fotos/sumollaranja.jpeg', descricao: 'Sumol sabor laranja.'}, // +1€
+        {nome:"Sumol Ananás", preco: 1.67, foto:'fotos/sumolananas.jpeg', descricao: 'Sumol sabor abacaxi.'}, // +1€
+        {nome:"Água 0.5L", preco: 1.37, foto:'fotos/agua.jpeg', descricao: 'Garrafa 500ml.'}, // +1€
+        {nome:"Água das Pedras", preco: 2.20, foto:'fotos/aguasdaspedras.jpeg', descricao: 'Água com gás.'}, // +1€
+        {nome:"Água das Pedras c/ Limão", preco: 2.50, foto:'fotos/limao.jpeg', descricao: 'Água com gás e limão.'}, // +1€
+        {nome:"Seven Up", preco: 2.10, foto:'fotos/seven.jpeg', descricao: 'Lata 330ml.'}, // +1€
+        {nome:"Super Bock", preco: 2.80, foto:'fotos/superbock.jpg', descricao: 'Cerveja Super Bock.'}, // +1€
+        {nome:"Sumo Natural Laranja", preco: 2.80, foto:'fotos/sumodelaranja.jpeg', descricao: 'Suco natural de laranja.'}, // +1€
+        {nome:"Sumo Natural Abacaxi", preco: 2.80, foto:'fotos/sumodeabacaxi.jpeg', descricao: 'Suco natural de abacaxi.'}, // +1€
+        {nome:"Creme de Morango", preco: 3.31, foto:'fotos/cremedemorango.jpeg', descricao: 'Creme de morango gelado.'} // +1€
     ]
 };
 
@@ -272,7 +272,7 @@ function criarCardProduto(item, categoria) {
         botoesHTML = `
             <div class="card-preco">
                 <span class="preco">€${item.preco.toFixed(2)}</span>
-                <button class="btn-adicionar" onclick="mostrarPersonalizacaoNaTela('${item.nome.replace(/'/g, "\\'")}', ${item.preco}, '${categoria}'${carneDia ? `, '${carneDia}'` : ''})">
+                <button class="btn-adicionar" onclick="abrirTelaPersonalizacao('${item.nome.replace(/'/g, "\\'")}', ${item.preco}, '${categoria}'${carneDia ? `, '${carneDia}'` : ''})">
                     <i class="fas fa-edit"></i> PERSONALIZAR
                 </button>
             </div>
@@ -584,73 +584,42 @@ function addItemNaPaginaDetalhes(nome, preco) {
 
 function adicionarPersonalizadoNaPaginaDetalhes(nome, preco, categoria, carneDia = null) {
     fecharDetalhes();
-    
-    // Encontrar o botão do produto no card para passar como referência
     setTimeout(() => {
-        const cards = document.querySelectorAll('.card');
-        for (let card of cards) {
-            const titulo = card.querySelector('.card-titulo');
-            if (titulo && titulo.textContent.includes(nome)) {
-                const botaoPersonalizar = card.querySelector('.btn-adicionar');
-                if (botaoPersonalizar) {
-                    mostrarPersonalizacaoNaTela(nome, preco, categoria, botaoPersonalizar, carneDia);
-                    break;
-                }
-            }
-        }
+        abrirTelaPersonalizacao(nome, preco, categoria, carneDia);
     }, 300);
 }
 
-// ==================== NAVEGAÇÃO ENTRE SEÇÕES ====================
-function abrirSecao(cat) {
-    const sections = document.querySelectorAll(".section");
-    const buttons = document.querySelectorAll(".menu-centralizado button");
-    
-    if (sections.length === 0 || buttons.length === 0) return;
-    
-    sections.forEach(s => s.classList.remove("active"));
-    buttons.forEach(btn => btn.classList.remove("active"));
-    
-    const targetSection = document.getElementById(cat);
-    if (targetSection) {
-        targetSection.classList.add("active");
-    }
-    
-    const botao = Array.from(buttons)
-        .find(btn => btn.onclick && btn.onclick.toString().includes(cat));
-    if(botao) botao.classList.add("active");
-    
-    window.location.hash = cat;
-}
-
-// ==================== NOVA FUNÇÃO: PERSONALIZAÇÃO DIRETO NA TELA ====================
-function mostrarPersonalizacaoNaTela(nome, preco, categoria, botao, carneDia = null) {
+// ==================== NOVA FUNÇÃO: ABRIR TELA DE PERSONALIZAÇÃO ====================
+function abrirTelaPersonalizacao(nome, preco, categoria, carneDia = null) {
     itemSelecionadoParaPersonalizar = { nome, preco };
     categoriaSelecionadaParaPersonalizar = categoria;
     carneDiaSelecionada = carneDia;
     
-    // Encontrar a imagem do produto
-    const card = botao.closest('.card');
-    const imagemProduto = card ? card.querySelector('img').src : '';
+    // Encontrar o produto nos dados para obter a foto e descrição
+    let produtoEncontrado = null;
+    if (categorias[categoria]) {
+        produtoEncontrado = categorias[categoria].find(produto => produto.nome === nome);
+    }
+    
+    if (!produtoEncontrado) {
+        console.error('Produto não encontrado:', nome);
+        return;
+    }
     
     // Determinar quais adicionais mostrar
     const adicionaisFiltrados = filtrarAdicionaisPorCategoria(categoria, carneDia);
     
-    // Esconder o menu principal
-    const menuTabs = document.getElementById("menuTabs");
-    const areas = document.getElementById("areas");
-    const carrinhoTopoBtn = document.getElementById("carrinhoTopoBtn");
-    
-    if (menuTabs) menuTabs.style.display = 'none';
-    if (areas) areas.style.display = 'none';
-    if (carrinhoTopoBtn) carrinhoTopoBtn.style.display = 'none';
-    
-    // Criar interface de personalização na tela
-    const personalizacaoHTML = `
+    // Criar tela de personalização
+    const telaPersonalizacaoHTML = `
         <div id="telaPersonalizacao" style="
-            padding: 20px;
-            max-width: 800px;
-            margin: 0 auto;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: white;
+            z-index: 9999;
+            overflow-y: auto;
             font-family: Arial, sans-serif;
         ">
             <!-- Header -->
@@ -658,14 +627,15 @@ function mostrarPersonalizacaoNaTela(nome, preco, categoria, botao, carneDia = n
                 background: linear-gradient(135deg, #E66A11 0%, #D35400 100%);
                 color: white;
                 padding: 15px;
-                border-radius: 10px;
-                margin-bottom: 20px;
+                position: sticky;
+                top: 0;
+                z-index: 10;
                 display: flex;
                 align-items: center;
-                gap: 15px;
-                box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+                justify-content: space-between;
+                box-shadow: 0 2px 10px rgba(0,0,0,0.1);
             ">
-                <button onclick="voltarParaMenu()" style="
+                <button onclick="fecharTelaPersonalizacao()" style="
                     background: rgba(255,255,255,0.2);
                     border: none;
                     color: white;
@@ -680,181 +650,234 @@ function mostrarPersonalizacaoNaTela(nome, preco, categoria, botao, carneDia = n
                 ">
                     <i class="fas fa-arrow-left"></i>
                 </button>
-                <div style="flex: 1;">
-                    <h2 style="margin: 0; font-size: 18px;">PERSONALIZAR: ${nome}</h2>
-                    <p style="margin: 5px 0 0 0; font-size: 14px; opacity: 0.9;">Preço base: €${preco.toFixed(2)}</p>
-                </div>
+                <h2 style="margin: 0; font-size: 18px; text-align: center;">PERSONALIZAR PRODUTO</h2>
+                <div style="width: 40px;"></div>
             </div>
             
-            <!-- Imagem do Produto -->
-            ${imagemProduto ? `
-            <div style="
-                width: 100%;
-                height: 200px;
-                border-radius: 15px;
-                overflow: hidden;
-                margin-bottom: 20px;
-                box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            ">
-                <img src="${imagemProduto}" 
-                     alt="${nome}" 
-                     style="width: 100%; height: 100%; object-fit: cover;">
-            </div>
-            ` : ''}
-            
-            <!-- Seção de Remover Ingredientes -->
-            ${criarSecaoRemoverIngredientesTela(categoria)}
-            
-            <!-- Seção de Ponto da Carne -->
-            ${criarSecaoPontoCarneTela(categoria)}
-            
-            <!-- Seção de Adicionais -->
-            <div style="margin: 25px 0;">
+            <!-- Conteúdo -->
+            <div style="padding: 20px; max-width: 800px; margin: 0 auto;">
+                <!-- Imagem Grande do Produto -->
                 <div style="
-                    display: flex;
-                    align-items: center;
-                    margin-bottom: 15px;
-                    color: #333;
-                    padding-bottom: 10px;
-                    border-bottom: 2px solid #E66A11;
+                    width: 100%;
+                    height: 250px;
+                    border-radius: 15px;
+                    overflow: hidden;
+                    margin-bottom: 20px;
+                    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
                 ">
-                    <i class="fas fa-plus-circle" style="margin-right: 10px; color: #E66A11; font-size: 20px;"></i>
-                    <h3 style="margin: 0; font-size: 18px;">Adicionar Ingredientes Extras</h3>
+                    <img src="${produtoEncontrado.foto}" 
+                         alt="${nome}" 
+                         style="width: 100%; height: 100%; object-fit: cover;"
+                         onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjhmOGY4Ii8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgZmlsbD0iIzk5OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPkRvbSBCaXN0csO0IEdyaWxsPC90ZXh0Pjwvc3ZnPg=='">
                 </div>
-                <div id="gridAdicionaisTela" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 12px;">
-                    ${criarCardsAdicionaisTela(adicionaisFiltrados)}
+                
+                <!-- Informações do Produto -->
+                <div style="margin-bottom: 25px;">
+                    <h1 style="
+                        color: #333;
+                        margin: 0 0 10px 0;
+                        font-size: 24px;
+                    ">${nome} ${produtoEncontrado.dia ? `<span style="color: #E66A11; font-size: 16px;">(${produtoEncontrado.dia})</span>` : ''}</h1>
+                    
+                    <div style="
+                        background: #F8F9FA;
+                        padding: 15px;
+                        border-radius: 10px;
+                        margin: 15px 0;
+                        border-left: 4px solid #E66A11;
+                    ">
+                        <div style="
+                            font-size: 28px;
+                            color: #E66A11;
+                            font-weight: bold;
+                            margin-bottom: 5px;
+                        ">€${preco.toFixed(2)}</div>
+                        <div style="color: #666; font-size: 14px;">Preço base</div>
+                    </div>
                 </div>
-            </div>
-            
-            <!-- Observações -->
-            <div style="margin: 25px 0;">
-                <div style="
-                    display: flex;
-                    align-items: center;
-                    margin-bottom: 15px;
-                    color: #333;
-                    padding-bottom: 10px;
-                    border-bottom: 2px solid #E66A11;
-                ">
-                    <i class="fas fa-edit" style="margin-right: 10px; color: #E66A11; font-size: 20px;"></i>
-                    <h3 style="margin: 0; font-size: 18px;">Observações Especiais</h3>
+                
+                <!-- Descrição do Produto -->
+                <div style="margin-bottom: 30px;">
+                    <h3 style="
+                        color: #333;
+                        margin: 0 0 15px 0;
+                        padding-bottom: 10px;
+                        border-bottom: 2px solid #E66A11;
+                        display: flex;
+                        align-items: center;
+                        gap: 10px;
+                    ">
+                        <i class="fas fa-info-circle" style="color: #E66A11;"></i>
+                        DESCRIÇÃO DO PRODUTO
+                    </h3>
+                    <p style="
+                        color: #555;
+                        line-height: 1.6;
+                        font-size: 16px;
+                        margin: 0;
+                    ">${produtoEncontrado.descricao}</p>
                 </div>
-                <textarea id="observacoesTela" 
-                    placeholder="Alguma observação importante? (ex: menos sal, sem pimenta, mais molho, etc.)"
-                    style="width: 100%; padding: 15px; border: 2px solid #E66A11; border-radius: 10px; resize: vertical; min-height: 100px; font-size: 14px;"></textarea>
-            </div>
-            
-            <!-- Resumo dos Adicionais Selecionados -->
-            <div id="resumoAdicionaisTela" style="display: none; margin: 25px 0;">
-                <div style="
-                    background: #F8F9FA;
-                    padding: 20px;
-                    border-radius: 10px;
-                    border: 2px solid #E66A11;
-                ">
+                
+                <!-- Seção de Remover Ingredientes -->
+                ${criarSecaoRemoverIngredientesTela(categoria)}
+                
+                <!-- Seção de Ponto da Carne -->
+                ${criarSecaoPontoCarneTela(categoria)}
+                
+                <!-- Seção de Adicionais -->
+                <div style="margin: 25px 0;">
                     <div style="
                         display: flex;
                         align-items: center;
                         margin-bottom: 15px;
                         color: #333;
+                        padding-bottom: 10px;
+                        border-bottom: 2px solid #E66A11;
                     ">
-                        <i class="fas fa-receipt" style="margin-right: 10px; color: #E66A11; font-size: 20px;"></i>
-                        <h4 style="margin: 0; font-size: 16px;">Resumo dos Adicionais</h4>
+                        <i class="fas fa-plus-circle" style="margin-right: 10px; color: #E66A11; font-size: 20px;"></i>
+                        <h3 style="margin: 0; font-size: 18px;">Adicionar Ingredientes Extras</h3>
                     </div>
-                    <div id="listaAdicionaisTela" style="margin-bottom: 15px;">
-                        <!-- Itens serão inseridos aqui -->
+                    <div id="gridAdicionaisTela" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 12px;">
+                        ${criarCardsAdicionaisTela(adicionaisFiltrados)}
                     </div>
+                </div>
+                
+                <!-- Observações -->
+                <div style="margin: 25px 0;">
+                    <div style="
+                        display: flex;
+                        align-items: center;
+                        margin-bottom: 15px;
+                        color: #333;
+                        padding-bottom: 10px;
+                        border-bottom: 2px solid #E66A11;
+                    ">
+                        <i class="fas fa-edit" style="margin-right: 10px; color: #E66A11; font-size: 20px;"></i>
+                        <h3 style="margin: 0; font-size: 18px;">Observações Especiais</h3>
+                    </div>
+                    <textarea id="observacoesTela" 
+                        placeholder="Alguma observação importante? (ex: menos sal, sem pimenta, mais molho, etc.)"
+                        style="width: 100%; padding: 15px; border: 2px solid #E66A11; border-radius: 10px; resize: vertical; min-height: 100px; font-size: 14px;"></textarea>
+                </div>
+                
+                <!-- Resumo dos Adicionais Selecionados -->
+                <div id="resumoAdicionaisTela" style="display: none; margin: 25px 0;">
+                    <div style="
+                        background: #F8F9FA;
+                        padding: 20px;
+                        border-radius: 10px;
+                        border: 2px solid #E66A11;
+                    ">
+                        <div style="
+                            display: flex;
+                            align-items: center;
+                            margin-bottom: 15px;
+                            color: #333;
+                        ">
+                            <i class="fas fa-receipt" style="margin-right: 10px; color: #E66A11; font-size: 20px;"></i>
+                            <h4 style="margin: 0; font-size: 16px;">Resumo dos Adicionais</h4>
+                        </div>
+                        <div id="listaAdicionaisTela" style="margin-bottom: 15px;">
+                            <!-- Itens serão inseridos aqui -->
+                        </div>
+                        <div style="
+                            display: flex;
+                            justify-content: space-between;
+                            align-items: center;
+                            padding-top: 15px;
+                            border-top: 1px solid #ddd;
+                        ">
+                            <span style="font-weight: bold;">Total de Adicionais:</span>
+                            <span id="totalAdicionaisTela" style="color: #E66A11; font-weight: bold; font-size: 18px;">€0.00</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Informação sobre Taxa -->
+                <div style="margin: 25px 0; padding: 15px; background: #FFF8F0; border-radius: 10px; border-left: 4px solid #E66A11;">
+                    <div style="display: flex; align-items: center; margin-bottom: 10px;">
+                        <i class="fas fa-exclamation-circle" style="color: #E66A11; font-size: 20px; margin-right: 10px;"></i>
+                        <h4 style="margin: 0; color: #E66A11;">Taxa de Manutenção dos Serviços</h4>
+                    </div>
+                    <p style="margin: 0; color: #666; font-size: 14px; line-height: 1.5;">
+                        Será aplicada uma taxa de <strong>€0.90</strong> para manutenção dos serviços de entrega e plataforma digital.
+                    </p>
+                </div>
+                
+                <!-- Resumo Final e Botões -->
+                <div style="
+                    position: sticky;
+                    bottom: 0;
+                    background: white;
+                    padding: 20px;
+                    margin: 20px -20px -20px -20px;
+                    border-top: 1px solid #eee;
+                    box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+                ">
                     <div style="
                         display: flex;
                         justify-content: space-between;
                         align-items: center;
-                        padding-top: 15px;
-                        border-top: 1px solid #ddd;
-                    ">
-                        <span style="font-weight: bold;">Total de Adicionais:</span>
-                        <span id="totalAdicionaisTela" style="color: #E66A11; font-weight: bold; font-size: 18px;">€0.00</span>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Resumo Final e Botões -->
-            <div style="
-                position: sticky;
-                bottom: 0;
-                background: white;
-                padding: 20px;
-                margin: 20px -20px -20px -20px;
-                border-top: 1px solid #eee;
-                box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
-            ">
-                <div style="
-                    display: flex;
-                    justify-content: space-between;
-                    align-items: center;
-                    margin-bottom: 20px;
-                    padding: 15px;
-                    background: #F8F9FA;
-                    border-radius: 10px;
-                    border-left: 4px solid #E66A11;
-                ">
-                    <div>
-                        <div style="font-size: 14px; color: #666;">Preço base:</div>
-                        <div style="font-size: 24px; color: #E66A11; font-weight: bold;" id="totalPedidoTela">€${preco.toFixed(2)}</div>
-                    </div>
-                    <div style="text-align: right;">
-                        <div style="font-size: 14px; color: #666;">Total do Pedido:</div>
-                        <div style="font-size: 28px; color: #E66A11; font-weight: bold;" id="totalFinalTela">€${preco.toFixed(2)}</div>
-                    </div>
-                </div>
-                
-                <div style="display: flex; gap: 15px;">
-                    <button onclick="voltarParaMenu()" style="
-                        flex: 1;
-                        padding: 16px 20px;
-                        background: #6c757d;
-                        color: white;
-                        border: none;
+                        margin-bottom: 20px;
+                        padding: 15px;
+                        background: #F8F9FA;
                         border-radius: 10px;
-                        font-size: 16px;
-                        font-weight: bold;
-                        cursor: pointer;
-                        display: flex;
-                        align-items: center;
-                        justify-content: center;
-                        gap: 10px;
+                        border-left: 4px solid #E66A11;
                     ">
-                        <i class="fas fa-times"></i> Cancelar
-                    </button>
-                    <button onclick="confirmarPersonalizacaoNaTela()" style="
-                        flex: 1;
-                        padding: 16px 20px;
-                        background: linear-gradient(135deg, #E66A11 0%, #D35400 100%);
-                        color: white;
-                        border: none;
-                        border-radius: 10px;
-                        font-size: 16px;
-                        font-weight: bold;
-                        cursor: pointer;
-                        display: flex;
-                        align-items: center;
-                        justify-content: center;
-                        gap: 10px;
-                        box-shadow: 0 4px 15px rgba(230, 106, 17, 0.3);
-                    ">
-                        <i class="fas fa-check"></i> Adicionar ao Carrinho
-                    </button>
+                        <div>
+                            <div style="font-size: 14px; color: #666;">Preço base:</div>
+                            <div style="font-size: 24px; color: #E66A11; font-weight: bold;">€${preco.toFixed(2)}</div>
+                        </div>
+                        <div style="text-align: right;">
+                            <div style="font-size: 14px; color: #666;">Total do Pedido:</div>
+                            <div style="font-size: 28px; color: #E66A11; font-weight: bold;" id="totalFinalTela">€${preco.toFixed(2)}</div>
+                        </div>
+                    </div>
+                    
+                    <div style="display: flex; gap: 15px;">
+                        <button onclick="fecharTelaPersonalizacao()" style="
+                            flex: 1;
+                            padding: 16px 20px;
+                            background: #6c757d;
+                            color: white;
+                            border: none;
+                            border-radius: 10px;
+                            font-size: 16px;
+                            font-weight: bold;
+                            cursor: pointer;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            gap: 10px;
+                        ">
+                            <i class="fas fa-times"></i> Cancelar
+                        </button>
+                        <button onclick="confirmarPersonalizacaoNaTela()" style="
+                            flex: 1;
+                            padding: 16px 20px;
+                            background: linear-gradient(135deg, #E66A11 0%, #D35400 100%);
+                            color: white;
+                            border: none;
+                            border-radius: 10px;
+                            font-size: 16px;
+                            font-weight: bold;
+                            cursor: pointer;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            gap: 10px;
+                            box-shadow: 0 4px 15px rgba(230, 106, 17, 0.3);
+                        ">
+                            <i class="fas fa-check"></i> Adicionar ao Carrinho
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
     `;
     
-    // Substituir o conteúdo da área principal
-    const mainContent = document.querySelector('main') || document.body;
-    const oldContent = areas ? areas.parentNode : document.querySelector('.container');
-    
-    if (oldContent) {
-        oldContent.innerHTML = personalizacaoHTML;
-    }
+    document.body.insertAdjacentHTML('beforeend', telaPersonalizacaoHTML);
+    document.body.style.overflow = 'hidden';
     
     // Adicionar eventos
     setTimeout(() => {
@@ -909,32 +932,14 @@ function mostrarPersonalizacaoNaTela(nome, preco, categoria, botao, carneDia = n
     }, 100);
 }
 
-function voltarParaMenu() {
-    // Restaurar o menu original
-    const menuTabs = document.getElementById("menuTabs");
-    const areas = document.getElementById("areas");
-    const carrinhoTopoBtn = document.getElementById("carrinhoTopoBtn");
-    
-    if (menuTabs) menuTabs.style.display = '';
-    if (areas) areas.style.display = '';
-    if (carrinhoTopoBtn) carrinhoTopoBtn.style.display = '';
-    
-    // Remover a tela de personalização
-    const telaPersonalizacao = document.getElementById("telaPersonalizacao");
+function fecharTelaPersonalizacao() {
+    const telaPersonalizacao = document.getElementById('telaPersonalizacao');
     if (telaPersonalizacao) {
         telaPersonalizacao.remove();
-    }
-    
-    // Recarregar o menu original
-    const mainContent = document.querySelector('main') || document.body;
-    if (areas && areas.parentNode) {
-        areas.parentNode.innerHTML = `
-            <div class="menu-centralizado" id="menuTabs"></div>
-            <div class="areas" id="areas"></div>
-        `;
-        
-        // Reinicializar o menu
-        inicializarMenu();
+        document.body.style.overflow = 'auto';
+        itemSelecionadoParaPersonalizar = null;
+        categoriaSelecionadaParaPersonalizar = null;
+        carneDiaSelecionada = null;
     }
 }
 
@@ -1197,8 +1202,30 @@ function confirmarPersonalizacaoNaTela() {
         btn.innerHTML = originalHTML;
         btn.style.background = originalBg;
         btn.disabled = false;
-        voltarParaMenu();
+        fecharTelaPersonalizacao();
     }, 1500);
+}
+
+// ==================== NAVEGAÇÃO ENTRE SEÇÕES ====================
+function abrirSecao(cat) {
+    const sections = document.querySelectorAll(".section");
+    const buttons = document.querySelectorAll(".menu-centralizado button");
+    
+    if (sections.length === 0 || buttons.length === 0) return;
+    
+    sections.forEach(s => s.classList.remove("active"));
+    buttons.forEach(btn => btn.classList.remove("active"));
+    
+    const targetSection = document.getElementById(cat);
+    if (targetSection) {
+        targetSection.classList.add("active");
+    }
+    
+    const botao = Array.from(buttons)
+        .find(btn => btn.onclick && btn.onclick.toString().includes(cat));
+    if(botao) botao.classList.add("active");
+    
+    window.location.hash = cat;
 }
 
 // ==================== FUNÇÕES AUXILIARES ====================
@@ -1765,6 +1792,7 @@ function mostrarLoadingPagamento(url) {
 
 // Verificar console para debug
 console.log("=== DOM BISTRÔ GRILL - SISTEMA CARREGADO ===");
-console.log("Personalização na mesma tela implementada!");
-console.log("Clique em PERSONALIZAR para ver as opções na mesma tela!");
+console.log("Tela de personalização implementada!");
+console.log("Taxa ajustada para €0.90 (Taxa de Manutenção dos Serviços)");
+console.log("Todos os preços aumentados em €1.00");
 console.log("IVA REMOVIDO - Preços já incluem todas as taxas");
