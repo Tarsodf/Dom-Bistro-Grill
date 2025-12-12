@@ -272,7 +272,7 @@ function criarCardProduto(item, categoria) {
         botoesHTML = `
             <div class="card-preco">
                 <span class="preco">€${item.preco.toFixed(2)}</span>
-                <button class="btn-adicionar" onclick="mostrarModalPersonalizacao('${item.nome.replace(/'/g, "\\'")}', ${item.preco}, '${categoria}', this${carneDia ? `, '${carneDia}'` : ''})">
+                <button class="btn-adicionar" onclick="mostrarPersonalizacaoNaTela('${item.nome.replace(/'/g, "\\'")}', ${item.preco}, '${categoria}'${carneDia ? `, '${carneDia}'` : ''})">
                     <i class="fas fa-edit"></i> PERSONALIZAR
                 </button>
             </div>
@@ -593,7 +593,7 @@ function adicionarPersonalizadoNaPaginaDetalhes(nome, preco, categoria, carneDia
             if (titulo && titulo.textContent.includes(nome)) {
                 const botaoPersonalizar = card.querySelector('.btn-adicionar');
                 if (botaoPersonalizar) {
-                    mostrarModalPersonalizacao(nome, preco, categoria, botaoPersonalizar, carneDia);
+                    mostrarPersonalizacaoNaTela(nome, preco, categoria, botaoPersonalizar, carneDia);
                     break;
                 }
             }
@@ -623,169 +623,585 @@ function abrirSecao(cat) {
     window.location.hash = cat;
 }
 
-// ==================== MODAL DE PERSONALIZAÇÃO MELHORADO ====================
-function mostrarModalPersonalizacao(nome, preco, categoria, botao, carneDia = null) {
+// ==================== NOVA FUNÇÃO: PERSONALIZAÇÃO DIRETO NA TELA ====================
+function mostrarPersonalizacaoNaTela(nome, preco, categoria, botao, carneDia = null) {
     itemSelecionadoParaPersonalizar = { nome, preco };
     categoriaSelecionadaParaPersonalizar = categoria;
     carneDiaSelecionada = carneDia;
     
-    // Encontrar a imagem do produto para mostrar no modal
+    // Encontrar a imagem do produto
     const card = botao.closest('.card');
     const imagemProduto = card ? card.querySelector('img').src : '';
     
     // Determinar quais adicionais mostrar
     const adicionaisFiltrados = filtrarAdicionaisPorCategoria(categoria, carneDia);
     
-    // Criar modal com estrutura nova
-    const modalHTML = `
-        <div class="modal-overlay" id="modalPersonalizacao">
-            <div class="modal-personalizacao">
-                <!-- Header -->
-                <div class="modal-header">
-                    <button class="btn-fechar-modal" onclick="fecharModalPersonalizacao()">
-                        <i class="fas fa-times"></i>
+    // Esconder o menu principal
+    const menuTabs = document.getElementById("menuTabs");
+    const areas = document.getElementById("areas");
+    const carrinhoTopoBtn = document.getElementById("carrinhoTopoBtn");
+    
+    if (menuTabs) menuTabs.style.display = 'none';
+    if (areas) areas.style.display = 'none';
+    if (carrinhoTopoBtn) carrinhoTopoBtn.style.display = 'none';
+    
+    // Criar interface de personalização na tela
+    const personalizacaoHTML = `
+        <div id="telaPersonalizacao" style="
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+            font-family: Arial, sans-serif;
+        ">
+            <!-- Header -->
+            <div style="
+                background: linear-gradient(135deg, #E66A11 0%, #D35400 100%);
+                color: white;
+                padding: 15px;
+                border-radius: 10px;
+                margin-bottom: 20px;
+                display: flex;
+                align-items: center;
+                gap: 15px;
+                box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            ">
+                <button onclick="voltarParaMenu()" style="
+                    background: rgba(255,255,255,0.2);
+                    border: none;
+                    color: white;
+                    width: 40px;
+                    height: 40px;
+                    border-radius: 50%;
+                    font-size: 18px;
+                    cursor: pointer;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                ">
+                    <i class="fas fa-arrow-left"></i>
+                </button>
+                <div style="flex: 1;">
+                    <h2 style="margin: 0; font-size: 18px;">PERSONALIZAR: ${nome}</h2>
+                    <p style="margin: 5px 0 0 0; font-size: 14px; opacity: 0.9;">Preço base: €${preco.toFixed(2)}</p>
+                </div>
+            </div>
+            
+            <!-- Imagem do Produto -->
+            ${imagemProduto ? `
+            <div style="
+                width: 100%;
+                height: 200px;
+                border-radius: 15px;
+                overflow: hidden;
+                margin-bottom: 20px;
+                box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            ">
+                <img src="${imagemProduto}" 
+                     alt="${nome}" 
+                     style="width: 100%; height: 100%; object-fit: cover;">
+            </div>
+            ` : ''}
+            
+            <!-- Seção de Remover Ingredientes -->
+            ${criarSecaoRemoverIngredientesTela(categoria)}
+            
+            <!-- Seção de Ponto da Carne -->
+            ${criarSecaoPontoCarneTela(categoria)}
+            
+            <!-- Seção de Adicionais -->
+            <div style="margin: 25px 0;">
+                <div style="
+                    display: flex;
+                    align-items: center;
+                    margin-bottom: 15px;
+                    color: #333;
+                    padding-bottom: 10px;
+                    border-bottom: 2px solid #E66A11;
+                ">
+                    <i class="fas fa-plus-circle" style="margin-right: 10px; color: #E66A11; font-size: 20px;"></i>
+                    <h3 style="margin: 0; font-size: 18px;">Adicionar Ingredientes Extras</h3>
+                </div>
+                <div id="gridAdicionaisTela" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 12px;">
+                    ${criarCardsAdicionaisTela(adicionaisFiltrados)}
+                </div>
+            </div>
+            
+            <!-- Observações -->
+            <div style="margin: 25px 0;">
+                <div style="
+                    display: flex;
+                    align-items: center;
+                    margin-bottom: 15px;
+                    color: #333;
+                    padding-bottom: 10px;
+                    border-bottom: 2px solid #E66A11;
+                ">
+                    <i class="fas fa-edit" style="margin-right: 10px; color: #E66A11; font-size: 20px;"></i>
+                    <h3 style="margin: 0; font-size: 18px;">Observações Especiais</h3>
+                </div>
+                <textarea id="observacoesTela" 
+                    placeholder="Alguma observação importante? (ex: menos sal, sem pimenta, mais molho, etc.)"
+                    style="width: 100%; padding: 15px; border: 2px solid #E66A11; border-radius: 10px; resize: vertical; min-height: 100px; font-size: 14px;"></textarea>
+            </div>
+            
+            <!-- Resumo dos Adicionais Selecionados -->
+            <div id="resumoAdicionaisTela" style="display: none; margin: 25px 0;">
+                <div style="
+                    background: #F8F9FA;
+                    padding: 20px;
+                    border-radius: 10px;
+                    border: 2px solid #E66A11;
+                ">
+                    <div style="
+                        display: flex;
+                        align-items: center;
+                        margin-bottom: 15px;
+                        color: #333;
+                    ">
+                        <i class="fas fa-receipt" style="margin-right: 10px; color: #E66A11; font-size: 20px;"></i>
+                        <h4 style="margin: 0; font-size: 16px;">Resumo dos Adicionais</h4>
+                    </div>
+                    <div id="listaAdicionaisTela" style="margin-bottom: 15px;">
+                        <!-- Itens serão inseridos aqui -->
+                    </div>
+                    <div style="
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                        padding-top: 15px;
+                        border-top: 1px solid #ddd;
+                    ">
+                        <span style="font-weight: bold;">Total de Adicionais:</span>
+                        <span id="totalAdicionaisTela" style="color: #E66A11; font-weight: bold; font-size: 18px;">€0.00</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Resumo Final e Botões -->
+            <div style="
+                position: sticky;
+                bottom: 0;
+                background: white;
+                padding: 20px;
+                margin: 20px -20px -20px -20px;
+                border-top: 1px solid #eee;
+                box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+            ">
+                <div style="
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    margin-bottom: 20px;
+                    padding: 15px;
+                    background: #F8F9FA;
+                    border-radius: 10px;
+                    border-left: 4px solid #E66A11;
+                ">
+                    <div>
+                        <div style="font-size: 14px; color: #666;">Preço base:</div>
+                        <div style="font-size: 24px; color: #E66A11; font-weight: bold;" id="totalPedidoTela">€${preco.toFixed(2)}</div>
+                    </div>
+                    <div style="text-align: right;">
+                        <div style="font-size: 14px; color: #666;">Total do Pedido:</div>
+                        <div style="font-size: 28px; color: #E66A11; font-weight: bold;" id="totalFinalTela">€${preco.toFixed(2)}</div>
+                    </div>
+                </div>
+                
+                <div style="display: flex; gap: 15px;">
+                    <button onclick="voltarParaMenu()" style="
+                        flex: 1;
+                        padding: 16px 20px;
+                        background: #6c757d;
+                        color: white;
+                        border: none;
+                        border-radius: 10px;
+                        font-size: 16px;
+                        font-weight: bold;
+                        cursor: pointer;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        gap: 10px;
+                    ">
+                        <i class="fas fa-times"></i> Cancelar
                     </button>
-                    <div class="produto-info-modal">
-                        ${imagemProduto ? `<img src="${imagemProduto}" alt="${nome}" class="produto-imagem-modal">` : ''}
-                        <div>
-                            <h3>🍽️ Personalizar: ${nome}</h3>
-                            <p class="preco-base-modal">Preço base: €${preco.toFixed(2)}</p>
-                        </div>
-                    </div>
-                    <p class="subtitulo-modal">Adicione, remova ou personalize seu pedido</p>
-                </div>
-                
-                <!-- Body -->
-                <div class="modal-body">
-                    <!-- Seção de Remover Ingredientes -->
-                    ${criarSecaoRemoverIngredientes(categoria)}
-                    
-                    <!-- Seção de Ponto da Carne (se aplicável) -->
-                    ${criarSecaoPontoCarne(categoria)}
-                    
-                    <!-- Seção de Adicionais (NOVA VERSÃO MELHORADA) -->
-                    <div class="secao-adicionais">
-                        <div class="secao-titulo">
-                            <i class="fas fa-plus-circle"></i>
-                            <span>Adicionar Ingredientes Extras</span>
-                        </div>
-                        <div class="grid-adicionais" id="gridAdicionais">
-                            ${criarCardsAdicionais(adicionaisFiltrados)}
-                        </div>
-                    </div>
-                    
-                    <!-- Observações -->
-                    <div style="margin: 25px 0;">
-                        <div class="secao-titulo">
-                            <i class="fas fa-edit"></i>
-                            <span>Observações Especiais</span>
-                        </div>
-                        <textarea id="observacoesPersonalizacao" 
-                            placeholder="Alguma observação importante? (ex: menos sal, sem pimenta, mais molho, etc.)"
-                            style="width: 100%; padding: 15px; border: 2px solid #E66A11; border-radius: 10px; resize: vertical; min-height: 100px; font-size: 14px;"></textarea>
-                    </div>
-                    
-                    <!-- Resumo dos Adicionais Selecionados -->
-                    <div class="resumo-adicionais" id="resumoAdicionais" style="display: none;">
-                        <div class="resumo-titulo">
-                            <i class="fas fa-receipt"></i>
-                            <span>Resumo dos Adicionais</span>
-                        </div>
-                        <div class="lista-adicionais" id="listaAdicionais">
-                            <!-- Itens serão inseridos aqui -->
-                        </div>
-                        <div class="total-adicionais">
-                            <span>Total de Adicionais:</span>
-                            <span id="totalAdicionais">€0.00</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Footer -->
-                <div class="modal-footer">
-                    <div class="total-pedido-modal">
-                        <span>Total do Pedido:</span>
-                        <span id="totalPedidoModal">€${preco.toFixed(2)}</span>
-                    </div>
-                    <div class="botoes-modal">
-                        <button class="btn-cancelar" onclick="fecharModalPersonalizacao()">
-                            <i class="fas fa-times"></i> Cancelar
-                        </button>
-                        <button class="btn-confirmar" onclick="confirmarPersonalizacao()">
-                            <i class="fas fa-check"></i> Adicionar ao Carrinho
-                        </button>
-                    </div>
+                    <button onclick="confirmarPersonalizacaoNaTela()" style="
+                        flex: 1;
+                        padding: 16px 20px;
+                        background: linear-gradient(135deg, #E66A11 0%, #D35400 100%);
+                        color: white;
+                        border: none;
+                        border-radius: 10px;
+                        font-size: 16px;
+                        font-weight: bold;
+                        cursor: pointer;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        gap: 10px;
+                        box-shadow: 0 4px 15px rgba(230, 106, 17, 0.3);
+                    ">
+                        <i class="fas fa-check"></i> Adicionar ao Carrinho
+                    </button>
                 </div>
             </div>
         </div>
     `;
     
-    document.body.insertAdjacentHTML('beforeend', modalHTML);
+    // Substituir o conteúdo da área principal
+    const mainContent = document.querySelector('main') || document.body;
+    const oldContent = areas ? areas.parentNode : document.querySelector('.container');
     
-    // Ajustar altura do modal body para dispositivos móveis
-    ajustarAlturaModalMobile();
+    if (oldContent) {
+        oldContent.innerHTML = personalizacaoHTML;
+    }
     
-    // Atualizar evento para atualizar total em tempo real
-    const atualizarTotalModal = () => {
-        const adicionaisSelecionados = document.querySelectorAll('.card-adicional.selecionado');
-        let totalAdicionais = 0;
-        
-        adicionaisSelecionados.forEach(card => {
-            totalAdicionais += parseFloat(card.dataset.preco);
+    // Adicionar eventos
+    setTimeout(() => {
+        // Eventos para adicionais
+        document.querySelectorAll('.card-adicional-tela').forEach(card => {
+            card.addEventListener('click', function() {
+                this.classList.toggle('selecionado');
+                atualizarTotalTela(preco);
+            });
         });
         
-        const totalFinal = preco + totalAdicionais;
-        const totalElement = document.getElementById('totalPedidoModal');
-        if (totalElement) {
-            totalElement.textContent = `€${totalFinal.toFixed(2)}`;
-        }
-    };
-    
-    // Adicionar eventos aos cards de adicionais
-    document.querySelectorAll('.card-adicional').forEach(card => {
-        card.addEventListener('click', function() {
-            this.classList.toggle('selecionado');
-            atualizarResumoAdicionais();
-            atualizarTotalModal();
+        // Eventos para remover ingredientes
+        document.querySelectorAll('.item-remover-tela').forEach(item => {
+            item.addEventListener('click', function() {
+                this.classList.toggle('selecionado');
+            });
         });
-    });
-    
-    // Adicionar eventos aos itens de remover
-    document.querySelectorAll('.item-remover').forEach(item => {
-        item.addEventListener('click', function() {
-            this.classList.toggle('selecionado');
+        
+        // Eventos para ponto da carne
+        document.querySelectorAll('.opcao-ponto-tela').forEach(opcao => {
+            opcao.addEventListener('click', function() {
+                document.querySelectorAll('.opcao-ponto-tela').forEach(o => o.classList.remove('selecionado'));
+                this.classList.add('selecionado');
+            });
         });
-    });
-    
-    // Adicionar eventos às opções de ponto
-    document.querySelectorAll('.opcao-ponto').forEach(opcao => {
-        opcao.addEventListener('click', function() {
-            document.querySelectorAll('.opcao-ponto').forEach(o => o.classList.remove('selecionado'));
-            this.classList.add('selecionado');
-        });
-    });
-    
-    // Configurar evento de redimensionamento para ajustar modal em mobile
-    window.addEventListener('resize', ajustarAlturaModalMobile);
+        
+        // Adicionar CSS para seleção
+        const style = document.createElement('style');
+        style.textContent = `
+            .card-adicional-tela.selecionado {
+                border-color: #E66A11 !important;
+                background: #FFF8F0 !important;
+            }
+            .card-adicional-tela.selecionado .selecionar-adicional-tela {
+                background: #E66A11 !important;
+                color: white !important;
+            }
+            .card-adicional-tela.selecionado .selecionar-adicional-tela i:before {
+                content: "\\f00c" !important;
+            }
+            .item-remover-tela.selecionado {
+                background: #FFE0C2 !important;
+                color: #E66A11 !important;
+                border-color: #E66A11 !important;
+            }
+            .opcao-ponto-tela.selecionado {
+                background: #FFF8F0 !important;
+                border-color: #E66A11 !important;
+            }
+        `;
+        document.head.appendChild(style);
+    }, 100);
 }
 
-function ajustarAlturaModalMobile() {
-    const modalBody = document.querySelector('.modal-body');
-    const modalPersonalizacao = document.querySelector('.modal-personalizacao');
+function voltarParaMenu() {
+    // Restaurar o menu original
+    const menuTabs = document.getElementById("menuTabs");
+    const areas = document.getElementById("areas");
+    const carrinhoTopoBtn = document.getElementById("carrinhoTopoBtn");
     
-    if (!modalBody || !modalPersonalizacao) return;
+    if (menuTabs) menuTabs.style.display = '';
+    if (areas) areas.style.display = '';
+    if (carrinhoTopoBtn) carrinhoTopoBtn.style.display = '';
     
-    if (window.innerWidth <= 768) {
-        // Para mobile, ajustar altura máxima
-        modalPersonalizacao.style.maxHeight = '85vh';
-        modalBody.style.maxHeight = 'calc(85vh - 200px)';
-    } else {
-        // Para desktop, usar valores padrão
-        modalPersonalizacao.style.maxHeight = '90vh';
-        modalBody.style.maxHeight = 'calc(90vh - 220px)';
+    // Remover a tela de personalização
+    const telaPersonalizacao = document.getElementById("telaPersonalizacao");
+    if (telaPersonalizacao) {
+        telaPersonalizacao.remove();
+    }
+    
+    // Recarregar o menu original
+    const mainContent = document.querySelector('main') || document.body;
+    if (areas && areas.parentNode) {
+        areas.parentNode.innerHTML = `
+            <div class="menu-centralizado" id="menuTabs"></div>
+            <div class="areas" id="areas"></div>
+        `;
+        
+        // Reinicializar o menu
+        inicializarMenu();
     }
 }
 
+function criarSecaoRemoverIngredientesTela(categoria) {
+    if (['executivos', 'hamburgueres'].includes(categoria)) {
+        const ingredientes = categoria === 'executivos' ? [
+            'Sem Cebola', 'Sem Azeitonas', 'Sem Vinagrete', 
+            'Sem Salada', 'Sem Torresmo', 'Sem Couve'
+        ] : [
+            'Sem Cebola', 'Sem Ervilhas', 'Sem Abacaxi', 
+            'Sem Bacon', 'Sem Queijo', 'Sem Molho',
+            'Sem Alface', 'Sem Tomate'
+        ];
+        
+        const itensHTML = ingredientes.map(ing => `
+            <div class="item-remover-tela" style="
+                padding: 12px 15px;
+                background: white;
+                border: 2px solid #ddd;
+                border-radius: 10px;
+                font-size: 14px;
+                font-weight: 500;
+                cursor: pointer;
+                text-align: center;
+                transition: all 0.3s;
+            ">
+                ${ing}
+            </div>
+        `).join('');
+        
+        return `
+            <div style="margin: 25px 0;">
+                <div style="
+                    display: flex;
+                    align-items: center;
+                    margin-bottom: 15px;
+                    color: #333;
+                    padding-bottom: 10px;
+                    border-bottom: 2px solid #E66A11;
+                ">
+                    <i class="fas fa-ban" style="margin-right: 10px; color: #E66A11; font-size: 20px;"></i>
+                    <h3 style="margin: 0; font-size: 18px;">Remover Ingredientes</h3>
+                </div>
+                <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px;">
+                    ${itensHTML}
+                </div>
+            </div>
+        `;
+    }
+    return '';
+}
+
+function criarSecaoPontoCarneTela(categoria) {
+    if (['executivos', 'espetinhos'].includes(categoria)) {
+        return `
+            <div style="margin: 25px 0;">
+                <div style="
+                    display: flex;
+                    align-items: center;
+                    margin-bottom: 15px;
+                    color: #333;
+                    padding-bottom: 10px;
+                    border-bottom: 2px solid #E66A11;
+                ">
+                    <i class="fas fa-fire" style="margin-right: 10px; color: #E66A11; font-size: 20px;"></i>
+                    <h3 style="margin: 0; font-size: 18px;">Ponto da Carne</h3>
+                </div>
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;">
+                    <div class="opcao-ponto-tela" data-ponto="Bem Passado" style="
+                        padding: 15px;
+                        background: white;
+                        border: 2px solid #ddd;
+                        border-radius: 10px;
+                        text-align: center;
+                        cursor: pointer;
+                        transition: all 0.3s;
+                    ">
+                        <div style="font-weight: bold; font-size: 16px; color: #333;">Bem Passado</div>
+                        <div style="font-size: 13px; color: #666; margin-top: 5px;">Totalmente cozida</div>
+                    </div>
+                    <div class="opcao-ponto-tela" data-ponto="Ao Ponto" style="
+                        padding: 15px;
+                        background: white;
+                        border: 2px solid #ddd;
+                        border-radius: 10px;
+                        text-align: center;
+                        cursor: pointer;
+                        transition: all 0.3s;
+                    ">
+                        <div style="font-weight: bold; font-size: 16px; color: #333;">Ao Ponto</div>
+                        <div style="font-size: 13px; color: #666; margin-top: 5px;">Perfeito equilíbrio</div>
+                    </div>
+                    <div class="opcao-ponto-tela" data-ponto="Mal Passado" style="
+                        padding: 15px;
+                        background: white;
+                        border: 2px solid #ddd;
+                        border-radius: 10px;
+                        text-align: center;
+                        cursor: pointer;
+                        transition: all 0.3s;
+                    ">
+                        <div style="font-weight: bold; font-size: 16px; color: #333;">Mal Passado</div>
+                        <div style="font-size: 13px; color: #666; margin-top: 5px;">Suculenta e macia</div>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+    return '';
+}
+
+function criarCardsAdicionaisTela(adicionais) {
+    if (Object.keys(adicionais).length === 0) {
+        return '<p style="text-align: center; color: #666; padding: 20px; grid-column: 1 / -1;">Nenhum adicional disponível para esta categoria.</p>';
+    }
+    
+    return Object.keys(adicionais).map(key => {
+        const adicional = adicionais[key];
+        return `
+            <div class="card-adicional-tela" data-nome="${key}" data-preco="${adicional.preco}" style="
+                padding: 15px;
+                background: white;
+                border: 2px solid #ddd;
+                border-radius: 10px;
+                cursor: pointer;
+                transition: all 0.3s;
+                position: relative;
+            ">
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
+                    <div style="font-weight: bold; font-size: 15px; color: #333;">${key}</div>
+                    <div style="color: #E66A11; font-weight: bold; font-size: 16px;">€${adicional.preco.toFixed(2)}</div>
+                </div>
+                <div style="font-size: 13px; color: #666; margin-bottom: 10px;">${adicional.descricao}</div>
+                <div style="
+                    background: #f0f0f0;
+                    color: #666;
+                    padding: 4px 8px;
+                    border-radius: 4px;
+                    font-size: 11px;
+                    font-weight: bold;
+                    display: inline-block;
+                    text-transform: uppercase;
+                ">
+                    ${adicional.categoria}
+                </div>
+                <div class="selecionar-adicional-tela" style="
+                    position: absolute;
+                    top: 15px;
+                    right: 15px;
+                    width: 24px;
+                    height: 24px;
+                    border-radius: 50%;
+                    background: #f0f0f0;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    font-size: 12px;
+                    color: #666;
+                ">
+                    <i class="fas fa-plus"></i>
+                </div>
+            </div>
+        `;
+    }).join('');
+}
+
+function atualizarTotalTela(precoBase) {
+    const adicionaisSelecionados = document.querySelectorAll('.card-adicional-tela.selecionado');
+    const resumoDiv = document.getElementById('resumoAdicionaisTela');
+    const listaDiv = document.getElementById('listaAdicionaisTela');
+    const totalAdicionaisSpan = document.getElementById('totalAdicionaisTela');
+    const totalFinalSpan = document.getElementById('totalFinalTela');
+    
+    if (!resumoDiv || !listaDiv || !totalAdicionaisSpan || !totalFinalSpan) return;
+    
+    let totalAdicionais = 0;
+    let listaHTML = '';
+    
+    adicionaisSelecionados.forEach(card => {
+        const nome = card.dataset.nome;
+        const preco = parseFloat(card.dataset.preco);
+        totalAdicionais += preco;
+        
+        listaHTML += `
+            <div style="display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 14px;">
+                <span>${nome}</span>
+                <span style="color: #E66A11; font-weight: bold;">€${preco.toFixed(2)}</span>
+            </div>
+        `;
+    });
+    
+    const totalFinal = precoBase + totalAdicionais;
+    
+    if (adicionaisSelecionados.length > 0) {
+        listaDiv.innerHTML = listaHTML;
+        totalAdicionaisSpan.textContent = `€${totalAdicionais.toFixed(2)}`;
+        totalFinalSpan.textContent = `€${totalFinal.toFixed(2)}`;
+        resumoDiv.style.display = 'block';
+    } else {
+        listaDiv.innerHTML = '';
+        totalAdicionaisSpan.textContent = '€0.00';
+        totalFinalSpan.textContent = `€${precoBase.toFixed(2)}`;
+        resumoDiv.style.display = 'none';
+    }
+}
+
+function confirmarPersonalizacaoNaTela() {
+    if (!itemSelecionadoParaPersonalizar) return;
+    
+    // Coletar ingredientes removidos
+    const ingredientesRemovidos = [];
+    document.querySelectorAll('.item-remover-tela.selecionado').forEach(item => {
+        ingredientesRemovidos.push(item.textContent.trim());
+    });
+    
+    // Coletar ponto da carne
+    let pontoCarne = null;
+    const pontoSelecionado = document.querySelector('.opcao-ponto-tela.selecionado');
+    if (pontoSelecionado) {
+        pontoCarne = pontoSelecionado.dataset.ponto;
+    }
+    
+    // Coletar adicionais
+    const adicionais = [];
+    let precoTotalAdicionais = 0;
+    document.querySelectorAll('.card-adicional-tela.selecionado').forEach(card => {
+        const nome = card.dataset.nome;
+        const preco = parseFloat(card.dataset.preco);
+        adicionais.push({ nome, preco });
+        precoTotalAdicionais += preco;
+    });
+    
+    // Coletar observações
+    const observacoesInput = document.getElementById('observacoesTela');
+    const observacoes = observacoesInput ? observacoesInput.value : '';
+    
+    // Criar item personalizado
+    const itemPersonalizado = {
+        ...itemSelecionadoParaPersonalizar,
+        ingredientesRemovidos,
+        pontoCarne,
+        adicionais,
+        precoTotalAdicionais,
+        observacoes: observacoes || ''
+    };
+    
+    // Adicionar ao carrinho
+    addItemPersonalizado(itemPersonalizado);
+    
+    // Feedback visual
+    const btn = event.target;
+    const originalHTML = btn.innerHTML;
+    const originalBg = btn.style.background;
+    
+    btn.innerHTML = '<i class="fas fa-check"></i> ADICIONADO!';
+    btn.style.background = '#00a650';
+    btn.disabled = true;
+    
+    setTimeout(() => {
+        btn.innerHTML = originalHTML;
+        btn.style.background = originalBg;
+        btn.disabled = false;
+        voltarParaMenu();
+    }, 1500);
+}
+
+// ==================== FUNÇÕES AUXILIARES ====================
 function filtrarAdicionaisPorCategoria(categoria, carneDia) {
     const adicionaisFiltrados = {};
     
@@ -809,180 +1225,6 @@ function filtrarAdicionaisPorCategoria(categoria, carneDia) {
     });
     
     return adicionaisFiltrados;
-}
-
-function criarSecaoRemoverIngredientes(categoria) {
-    if (['executivos', 'hamburgueres'].includes(categoria)) {
-        const ingredientes = categoria === 'executivos' ? [
-            'Sem Cebola', 'Sem Azeitonas', 'Sem Vinagrete', 
-            'Sem Salada', 'Sem Torresmo', 'Sem Couve'
-        ] : [
-            'Sem Cebola', 'Sem Ervilhas', 'Sem Abacaxi', 
-            'Sem Bacon', 'Sem Queijo', 'Sem Molho',
-            'Sem Alface', 'Sem Tomate'
-        ];
-        
-        const itensHTML = ingredientes.map(ing => `
-            <div class="item-remover">
-                ${ing}
-            </div>
-        `).join('');
-        
-        return `
-            <div class="secao-remover">
-                <div class="secao-titulo">
-                    <i class="fas fa-ban"></i>
-                    <span>Remover Ingredientes</span>
-                </div>
-                <div class="grid-remover">
-                    ${itensHTML}
-                </div>
-            </div>
-        `;
-    }
-    return '';
-}
-
-function criarSecaoPontoCarne(categoria) {
-    if (['executivos', 'espetinhos'].includes(categoria)) {
-        return `
-            <div class="secao-ponto">
-                <div class="secao-titulo">
-                    <i class="fas fa-fire"></i>
-                    <span>Ponto da Carne</span>
-                </div>
-                <div class="opcoes-ponto">
-                    <div class="opcao-ponto" data-ponto="Bem Passado">
-                        <div class="ponto-nome">Bem Passado</div>
-                        <div class="ponto-descricao">Totalmente cozida</div>
-                    </div>
-                    <div class="opcao-ponto" data-ponto="Ao Ponto">
-                        <div class="ponto-nome">Ao Ponto</div>
-                        <div class="ponto-descricao">Perfeito equilíbrio</div>
-                    </div>
-                    <div class="opcao-ponto" data-ponto="Mal Passado">
-                        <div class="ponto-nome">Mal Passado</div>
-                        <div class="ponto-descricao">Suculenta e macia</div>
-                    </div>
-                </div>
-            </div>
-        `;
-    }
-    return '';
-}
-
-function criarCardsAdicionais(adicionais) {
-    if (Object.keys(adicionais).length === 0) {
-        return '<p style="text-align: center; color: #666; padding: 20px;">Nenhum adicional disponível para esta categoria.</p>';
-    }
-    
-    return Object.keys(adicionais).map(key => {
-        const adicional = adicionais[key];
-        return `
-            <div class="card-adicional" data-nome="${key}" data-preco="${adicional.preco}">
-                <div class="adicional-titulo">
-                    <span>${key.replace('Adicional ', '')}</span>
-                    <span class="adicional-preco">€${adicional.preco.toFixed(2)}</span>
-                </div>
-                <div class="adicional-descricao">${adicional.descricao}</div>
-                <div class="tag-adicional">${adicional.categoria.toUpperCase()}</div>
-                <div class="selecionar-adicional">
-                    <i class="fas fa-plus"></i>
-                </div>
-            </div>
-        `;
-    }).join('');
-}
-
-function atualizarResumoAdicionais() {
-    const adicionaisSelecionados = document.querySelectorAll('.card-adicional.selecionado');
-    const resumoDiv = document.getElementById('resumoAdicionais');
-    const listaDiv = document.getElementById('listaAdicionais');
-    const totalSpan = document.getElementById('totalAdicionais');
-    
-    if (!resumoDiv || !listaDiv || !totalSpan) return;
-    
-    if (adicionaisSelecionados.length > 0) {
-        let total = 0;
-        let listaHTML = '';
-        
-        adicionaisSelecionados.forEach(card => {
-            const nome = card.dataset.nome;
-            const preco = parseFloat(card.dataset.preco);
-            total += preco;
-            
-            listaHTML += `
-                <div class="item-resumo">
-                    <span class="item-resumo-nome">${nome}</span>
-                    <span class="item-resumo-preco">€${preco.toFixed(2)}</span>
-                </div>
-            `;
-        });
-        
-        listaDiv.innerHTML = listaHTML;
-        totalSpan.textContent = `€${total.toFixed(2)}`;
-        resumoDiv.style.display = 'block';
-    } else {
-        resumoDiv.style.display = 'none';
-    }
-}
-
-function fecharModalPersonalizacao() {
-    const modal = document.getElementById('modalPersonalizacao');
-    if (modal) {
-        modal.remove();
-        itemSelecionadoParaPersonalizar = null;
-        categoriaSelecionadaParaPersonalizar = null;
-        carneDiaSelecionada = null;
-    }
-    
-    // Remover evento de resize
-    window.removeEventListener('resize', ajustarAlturaModalMobile);
-}
-
-function confirmarPersonalizacao() {
-    if (!itemSelecionadoParaPersonalizar) return;
-    
-    // Coletar ingredientes removidos
-    const ingredientesRemovidos = [];
-    document.querySelectorAll('.item-remover.selecionado').forEach(item => {
-        ingredientesRemovidos.push(item.textContent.trim());
-    });
-    
-    // Coletar ponto da carne
-    let pontoCarne = null;
-    const pontoSelecionado = document.querySelector('.opcao-ponto.selecionado');
-    if (pontoSelecionado) {
-        pontoCarne = pontoSelecionado.dataset.ponto;
-    }
-    
-    // Coletar adicionais
-    const adicionais = [];
-    let precoTotalAdicionais = 0;
-    document.querySelectorAll('.card-adicional.selecionado').forEach(card => {
-        const nome = card.dataset.nome;
-        const preco = parseFloat(card.dataset.preco);
-        adicionais.push({ nome, preco });
-        precoTotalAdicionais += preco;
-    });
-    
-    // Coletar observações
-    const observacoesInput = document.getElementById('observacoesPersonalizacao');
-    const observacoes = observacoesInput ? observacoesInput.value : '';
-    
-    // Criar item personalizado
-    const itemPersonalizado = {
-        ...itemSelecionadoParaPersonalizar,
-        ingredientesRemovidos,
-        pontoCarne,
-        adicionais,
-        precoTotalAdicionais,
-        observacoes: observacoes || ''
-    };
-    
-    // Adicionar ao carrinho
-    addItemPersonalizado(itemPersonalizado);
-    fecharModalPersonalizacao();
 }
 
 function addItemPersonalizado(item) {
@@ -1024,7 +1266,6 @@ function addItemPersonalizado(item) {
     }
     
     salvarPedido();
-    mostrarFeedbackAdicao();
 }
 
 // ==================== FUNÇÕES DO CARRINHO ====================
@@ -1524,7 +1765,6 @@ function mostrarLoadingPagamento(url) {
 
 // Verificar console para debug
 console.log("=== DOM BISTRÔ GRILL - SISTEMA CARREGADO ===");
-console.log("Sistema de adicionais melhorado com visualização moderna!");
-console.log("Feijoada agora tem opção de adicionar carne extra!");
-console.log("Página de detalhes do produto implementada!");
+console.log("Personalização na mesma tela implementada!");
+console.log("Clique em PERSONALIZAR para ver as opções na mesma tela!");
 console.log("IVA REMOVIDO - Preços já incluem todas as taxas");
