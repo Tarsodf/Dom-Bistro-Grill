@@ -1,7 +1,7 @@
 // ==================== CONFIGURAÇÕES ====================
 const TAXA_FIXA = 0.25;
 const TAXA_PORCENTAGEM = 0.015;
-const IVA = 0.13;
+// IVA REMOVIDO
 
 // ==================== PREÇOS DOS ADICIONAIS MELHORADOS ====================
 const PRECOS_ADICIONAIS = {
@@ -168,10 +168,9 @@ function calcularPrecoComTaxa(precoOriginal) {
 
 function calcularTotal() {
     const subtotal = pedido.reduce((sum, item) => sum + (item.preco * item.quantidade), 0);
-    const iva = subtotal * IVA;
-    const total = subtotal + iva;
+    const total = subtotal; // IVA REMOVIDO
     
-    return { subtotal, iva, total };
+    return { subtotal, total };
 }
 
 function isValidEmail(email) {
@@ -196,10 +195,6 @@ document.addEventListener('DOMContentLoaded', function() {
             carrinhoTopoBtn.classList.add("visible");
         }, 100);
     }
-    
-    setTimeout(() => {
-        iniciarLightbox();
-    }, 1000);
 });
 
 function preloadImagens() {
@@ -311,19 +306,299 @@ function criarCardProduto(item, categoria) {
     
     return `
         <div class="card" data-categoria="${categoria}">
-            <div class="card-image-container">
+            <div class="card-image-container" onclick="abrirDetalhesProduto('${item.nome.replace(/'/g, "\\'")}', '${categoria}')">
                 <img src="${item.foto}" alt="${item.nome}" 
                     onerror="this.src='${imagemFallback}'"
                     loading="lazy"
                     class="produto-imagem">
+                <div class="ver-detalhes">
+                    <i class="fas fa-search-plus"></i> VER DETALHES
+                </div>
             </div>
             <div class="card-content">
                 <h3 class="card-titulo">${item.nome} ${item.dia ? `(${item.dia})` : ''}</h3>
-                <p class="descricao-item">${item.descricao}</p>
+                <p class="descricao-item">${item.descricao.substring(0, 80)}${item.descricao.length > 80 ? '...' : ''}</p>
                 ${botoesHTML}
             </div>
         </div>
     `;
+}
+
+// ==================== FUNÇÃO PARA ABRIR PÁGINA DE DETALHES ====================
+function abrirDetalhesProduto(nomeProduto, categoria) {
+    // Encontrar o produto nos dados
+    let produtoEncontrado = null;
+    
+    // Procurar o produto na categoria correta
+    if (categorias[categoria]) {
+        produtoEncontrado = categorias[categoria].find(produto => produto.nome === nomeProduto);
+    }
+    
+    if (!produtoEncontrado) {
+        console.error('Produto não encontrado:', nomeProduto);
+        return;
+    }
+    
+    // Criar a página de detalhes
+    const detalhesHTML = `
+        <div id="paginaDetalhes" style="
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: white;
+            z-index: 9999;
+            overflow-y: auto;
+            font-family: Arial, sans-serif;
+        ">
+            <!-- Header -->
+            <div style="
+                background: linear-gradient(135deg, #E66A11 0%, #D35400 100%);
+                color: white;
+                padding: 15px;
+                position: sticky;
+                top: 0;
+                z-index: 10;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            ">
+                <button onclick="fecharDetalhes()" style="
+                    background: rgba(255,255,255,0.2);
+                    border: none;
+                    color: white;
+                    width: 40px;
+                    height: 40px;
+                    border-radius: 50%;
+                    font-size: 18px;
+                    cursor: pointer;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                ">
+                    <i class="fas fa-arrow-left"></i>
+                </button>
+                <h2 style="margin: 0; font-size: 18px; text-align: center;">DETALHES DO PRODUTO</h2>
+                <div style="width: 40px;"></div>
+            </div>
+            
+            <!-- Conteúdo -->
+            <div style="padding: 20px; max-width: 800px; margin: 0 auto;">
+                <!-- Imagem Grande -->
+                <div style="
+                    width: 100%;
+                    height: 300px;
+                    border-radius: 15px;
+                    overflow: hidden;
+                    margin-bottom: 20px;
+                    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+                ">
+                    <img src="${produtoEncontrado.foto}" 
+                         alt="${produtoEncontrado.nome}" 
+                         style="width: 100%; height: 100%; object-fit: cover;"
+                         onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjhmOGY4Ii8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgZmlsbD0iIzk5OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPkRvbSBCaXN0csO0IEdyaWxsPC90ZXh0Pjwvc3ZnPg=='">
+                </div>
+                
+                <!-- Informações do Produto -->
+                <div style="margin-bottom: 25px;">
+                    <h1 style="
+                        color: #333;
+                        margin: 0 0 10px 0;
+                        font-size: 24px;
+                    ">${produtoEncontrado.nome} ${produtoEncontrado.dia ? `<span style="color: #E66A11; font-size: 16px;">(${produtoEncontrado.dia})</span>` : ''}</h1>
+                    
+                    <div style="
+                        background: #F8F9FA;
+                        padding: 15px;
+                        border-radius: 10px;
+                        margin: 15px 0;
+                        border-left: 4px solid #E66A11;
+                    ">
+                        <div style="
+                            font-size: 28px;
+                            color: #E66A11;
+                            font-weight: bold;
+                            margin-bottom: 5px;
+                        ">€${produtoEncontrado.preco.toFixed(2)}</div>
+                        <div style="color: #666; font-size: 14px;">Preço final</div>
+                    </div>
+                </div>
+                
+                <!-- Descrição Completa -->
+                <div style="margin-bottom: 30px;">
+                    <h3 style="
+                        color: #333;
+                        margin: 0 0 15px 0;
+                        padding-bottom: 10px;
+                        border-bottom: 2px solid #E66A11;
+                        display: flex;
+                        align-items: center;
+                        gap: 10px;
+                    ">
+                        <i class="fas fa-info-circle" style="color: #E66A11;"></i>
+                        DESCRIÇÃO COMPLETA
+                    </h3>
+                    <p style="
+                        color: #555;
+                        line-height: 1.6;
+                        font-size: 16px;
+                        margin: 0;
+                    ">${produtoEncontrado.descricao}</p>
+                </div>
+                
+                ${produtoEncontrado.carneDia ? `
+                <!-- Carne do Dia -->
+                <div style="margin-bottom: 30px;">
+                    <h3 style="
+                        color: #333;
+                        margin: 0 0 15px 0;
+                        padding-bottom: 10px;
+                        border-bottom: 2px solid #E66A11;
+                        display: flex;
+                        align-items: center;
+                        gap: 10px;
+                    ">
+                        <i class="fas fa-utensils" style="color: #E66A11;"></i>
+                        CARNE DO DIA
+                    </h3>
+                    <div style="
+                        background: #FFF8F0;
+                        padding: 15px;
+                        border-radius: 10px;
+                        border: 1px solid #FFE0C2;
+                    ">
+                        <strong style="color: #E66A11;">${produtoEncontrado.carneDia}</strong>
+                        <p style="color: #666; margin: 5px 0 0 0; font-size: 14px;">
+                            Esta é a proteína principal incluída no prato executivo.
+                        </p>
+                    </div>
+                </div>
+                ` : ''}
+                
+                <!-- Botões de Ação -->
+                <div style="
+                    position: sticky;
+                    bottom: 0;
+                    background: white;
+                    padding: 20px;
+                    margin: 20px -20px -20px -20px;
+                    border-top: 1px solid #eee;
+                    box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+                    display: flex;
+                    gap: 15px;
+                    flex-wrap: wrap;
+                ">
+                    <!-- Verificar se o produto pode ser personalizado -->
+                    ${['executivos', 'hamburgueres', 'espetinhos'].includes(categoria) || 
+                      (categoria === 'petiscos' && produtoEncontrado.nome === 'Calabresa Acebolada') ? `
+                    <button onclick="adicionarPersonalizadoNaPaginaDetalhes('${produtoEncontrado.nome.replace(/'/g, "\\'")}', ${produtoEncontrado.preco}, '${categoria}'${produtoEncontrado.carneDia ? `, '${produtoEncontrado.carneDia}'` : ''})" 
+                        style="
+                            flex: 1;
+                            min-width: 200px;
+                            background: linear-gradient(135deg, #E66A11 0%, #D35400 100%);
+                            color: white;
+                            border: none;
+                            padding: 16px 20px;
+                            border-radius: 10px;
+                            font-size: 16px;
+                            font-weight: bold;
+                            cursor: pointer;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            gap: 10px;
+                            box-shadow: 0 4px 15px rgba(230, 106, 17, 0.3);
+                        ">
+                        <i class="fas fa-edit"></i>
+                        PERSONALIZAR E ADICIONAR
+                    </button>
+                    ` : ''}
+                    
+                    <button onclick="addItemNaPaginaDetalhes('${produtoEncontrado.nome.replace(/'/g, "\\'")}', ${produtoEncontrado.preco})" 
+                        style="
+                            flex: 1;
+                            min-width: 200px;
+                            background: ${['executivos', 'hamburgueres', 'espetinhos'].includes(categoria) || 
+                                       (categoria === 'petiscos' && produtoEncontrado.nome === 'Calabresa Acebolada') ? 
+                                       '#28a745' : 'linear-gradient(135deg, #E66A11 0%, #D35400 100%)'};
+                            color: white;
+                            border: none;
+                            padding: 16px 20px;
+                            border-radius: 10px;
+                            font-size: 16px;
+                            font-weight: bold;
+                            cursor: pointer;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            gap: 10px;
+                            box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
+                        ">
+                        <i class="fas fa-plus"></i>
+                        ${['executivos', 'hamburgueres', 'espetinhos'].includes(categoria) || 
+                          (categoria === 'petiscos' && produtoEncontrado.nome === 'Calabresa Acebolada') ? 
+                          'ADICIONAR SEM PERSONALIZAR' : 'ADICIONAR AO CARRINHO'}
+                    </button>
+                </div>
+            </div>
+        </div>
+    `;
+    
+    document.body.insertAdjacentHTML('beforeend', detalhesHTML);
+    document.body.style.overflow = 'hidden';
+}
+
+function fecharDetalhes() {
+    const paginaDetalhes = document.getElementById('paginaDetalhes');
+    if (paginaDetalhes) {
+        paginaDetalhes.remove();
+        document.body.style.overflow = 'auto';
+    }
+}
+
+function addItemNaPaginaDetalhes(nome, preco) {
+    addItem(nome, preco);
+    
+    // Feedback visual
+    const btn = event.target;
+    const originalHTML = btn.innerHTML;
+    const originalBg = btn.style.background;
+    
+    btn.innerHTML = '<i class="fas fa-check"></i> ADICIONADO!';
+    btn.style.background = '#00a650';
+    btn.disabled = true;
+    
+    setTimeout(() => {
+        btn.innerHTML = originalHTML;
+        btn.style.background = originalBg;
+        btn.disabled = false;
+    }, 1500);
+    
+    // Fechar detalhes após um tempo
+    setTimeout(() => {
+        fecharDetalhes();
+    }, 1000);
+}
+
+function adicionarPersonalizadoNaPaginaDetalhes(nome, preco, categoria, carneDia = null) {
+    fecharDetalhes();
+    
+    // Encontrar o botão do produto no card para passar como referência
+    setTimeout(() => {
+        const cards = document.querySelectorAll('.card');
+        for (let card of cards) {
+            const titulo = card.querySelector('.card-titulo');
+            if (titulo && titulo.textContent.includes(nome)) {
+                const botaoPersonalizar = card.querySelector('.btn-adicionar');
+                if (botaoPersonalizar) {
+                    mostrarModalPersonalizacao(nome, preco, categoria, botaoPersonalizar, carneDia);
+                    break;
+                }
+            }
+        }
+    }, 300);
 }
 
 // ==================== NAVEGAÇÃO ENTRE SEÇÕES ====================
@@ -346,11 +621,6 @@ function abrirSecao(cat) {
     if(botao) botao.classList.add("active");
     
     window.location.hash = cat;
-    
-    // Re-iniciar lightbox após mudança de conteúdo
-    setTimeout(() => {
-        iniciarLightbox();
-    }, 300);
 }
 
 // ==================== MODAL DE PERSONALIZAÇÃO MELHORADO ====================
@@ -886,7 +1156,6 @@ function atualizarCarrinho() {
     if (totalElement) {
         totalElement.innerHTML = `
             Subtotal: €${totalCalculado.subtotal.toFixed(2)}<br>
-            IVA (13%): €${totalCalculado.iva.toFixed(2)}<br>
             <strong>Total a Pagar: €${totalCalculado.total.toFixed(2)}</strong>
         `;
     }
@@ -976,7 +1245,6 @@ function enviarWhatsApp() {
     const totalCalculado = calcularTotal();
     mensagem += `%0A💰 *Resumo do Pedido:*%0A`;
     mensagem += `Subtotal: €${totalCalculado.subtotal.toFixed(2)}%0A`;
-    mensagem += `IVA (13%): €${totalCalculado.iva.toFixed(2)}%0A`;
     mensagem += `*TOTAL: €${totalCalculado.total.toFixed(2)}*%0A%0A`;
     mensagem += `📝 *Observações Gerais:*%0A${observacoes || "Nenhuma observação"}`;
 
@@ -1191,7 +1459,6 @@ function finalizarPagamento() {
         email: emailCliente,
         itens: [...pedido],
         subtotal: totalCalculado.subtotal,
-        iva: totalCalculado.iva,
         total: totalCalculado.total,
         obs: (document.getElementById('obs')||{value:''}).value || '',
         data: new Date().toISOString()
@@ -1255,417 +1522,9 @@ function mostrarLoadingPagamento(url) {
     }, 1200);
 }
 
-// ==================== LIGHTBOX PARA IMAGENS - CORRIGIDO ====================
-let todasImagensLightbox = [];
-let indiceImagemAtual = 0;
-
-function iniciarLightbox() {
-    console.log("🔍 Iniciando lightbox...");
-    
-    const imagensProdutos = document.querySelectorAll('.card-image-container img');
-    todasImagensLightbox = Array.from(imagensProdutos);
-    console.log(`✅ Encontradas ${todasImagensLightbox.length} imagens`);
-    
-    todasImagensLightbox.forEach((imagem, index) => {
-        imagem.onclick = null;
-        
-        imagem.addEventListener('click', function(event) {
-            event.preventDefault();
-            event.stopPropagation();
-            
-            console.log(`🖼️ Clicou na imagem ${index + 1}: ${this.alt}`);
-            abrirLightbox(this.src, this.alt, index);
-        });
-        
-        imagem.style.cursor = 'zoom-in';
-        
-        imagem.addEventListener('mouseenter', function() {
-            this.style.opacity = '0.9';
-        });
-        
-        imagem.addEventListener('mouseleave', function() {
-            this.style.opacity = '1';
-        });
-    });
-    
-    configurarEventosLightbox();
-}
-
-function configurarEventosLightbox() {
-    const modal = document.getElementById('modalLightbox');
-    const fecharBtn = document.querySelector('.fechar-modal-lightbox');
-    const btnAnterior = document.getElementById('btnAnterior');
-    const btnProximo = document.getElementById('btnProximo');
-    const imagemAmpliada = document.getElementById('imagemAmpliada');
-    
-    console.log("⚙️ Configurando eventos do modal...");
-    
-    if (fecharBtn) {
-        fecharBtn.addEventListener('click', fecharLightbox);
-        console.log("✅ Evento de fechar configurado");
-    }
-    
-    if (modal) {
-        modal.addEventListener('click', function(event) {
-            if (event.target === modal) {
-                fecharLightbox();
-            }
-        });
-    }
-    
-    // Configurar botões de navegação apenas para desktop
-    if (btnAnterior && window.innerWidth > 768) {
-        btnAnterior.addEventListener('click', function(event) {
-            event.stopPropagation();
-            navegarImagem(-1);
-        });
-    }
-    
-    if (btnProximo && window.innerWidth > 768) {
-        btnProximo.addEventListener('click', function(event) {
-            event.stopPropagation();
-            navegarImagem(1);
-        });
-    }
-    
-    if (imagemAmpliada) {
-        imagemAmpliada.addEventListener('click', function(event) {
-            event.stopPropagation();
-            this.classList.toggle('zoom-ativo');
-            
-            if (this.classList.contains('zoom-ativo')) {
-                mostrarMensagemZoom('Zoom ativado • Toque novamente para sair do zoom');
-            }
-        });
-    }
-    
-    // Controles por toque para dispositivos móveis
-    let touchStartY = 0;
-    let touchEndY = 0;
-    
-    if (imagemAmpliada) {
-        imagemAmpliada.addEventListener('touchstart', function(event) {
-            touchStartY = event.changedTouches[0].screenY;
-        });
-        
-        imagemAmpliada.addEventListener('touchend', function(event) {
-            touchEndY = event.changedTouches[0].screenY;
-            handleVerticalSwipe();
-        });
-    }
-    
-    function handleVerticalSwipe() {
-        const swipeThreshold = 50;
-        
-        if (touchEndY < touchStartY - swipeThreshold) {
-            navegarImagem(1);
-        }
-        
-        if (touchEndY > touchStartY + swipeThreshold) {
-            navegarImagem(-1);
-        }
-    }
-    
-    document.addEventListener('keydown', function(event) {
-        const modal = document.getElementById('modalLightbox');
-        if (modal && modal.style.display === 'flex') {
-            switch(event.key) {
-                case 'Escape':
-                    fecharLightbox();
-                    break;
-                case 'ArrowLeft':
-                    navegarImagem(-1);
-                    break;
-                case 'ArrowRight':
-                    navegarImagem(1);
-                    break;
-                case 'ArrowUp':
-                    navegarImagem(-1);
-                    break;
-                case 'ArrowDown':
-                    navegarImagem(1);
-                    break;
-                case ' ':
-                case 'Enter':
-                    event.preventDefault();
-                    const img = document.getElementById('imagemAmpliada');
-                    if (img) img.classList.toggle('zoom-ativo');
-                    break;
-                case 'z':
-                case 'Z':
-                    event.preventDefault();
-                    const imgZ = document.getElementById('imagemAmpliada');
-                    if (imgZ) imgZ.classList.toggle('zoom-ativo');
-                    break;
-            }
-        }
-    });
-    
-    window.addEventListener('resize', function() {
-        ajustarTamanhoImagemResponsivo();
-        atualizarVisibilidadeBotoes();
-    });
-}
-
-function atualizarVisibilidadeBotoes() {
-    const btnAnterior = document.getElementById('btnAnterior');
-    const btnProximo = document.getElementById('btnProximo');
-    
-    if (window.innerWidth <= 768) {
-        if (btnAnterior) btnAnterior.style.display = 'none';
-        if (btnProximo) btnProximo.style.display = 'none';
-    } else {
-        if (btnAnterior) btnAnterior.style.display = 'flex';
-        if (btnProximo) btnProximo.style.display = 'flex';
-    }
-}
-
-function ajustarTamanhoImagemResponsivo() {
-    const imagemAmpliada = document.getElementById('imagemAmpliada');
-    const modal = document.getElementById('modalLightbox');
-    
-    if (!imagemAmpliada || !modal || modal.style.display !== 'flex') return;
-    
-    const larguraTela = window.innerWidth;
-    
-    if (larguraTela <= 768) {
-        imagemAmpliada.style.maxWidth = '95%';
-        imagemAmpliada.style.maxHeight = '70vh';
-    } else {
-        imagemAmpliada.style.maxWidth = '90%';
-        imagemAmpliada.style.maxHeight = '80vh';
-    }
-    
-    atualizarVisibilidadeBotoes();
-}
-
-function abrirLightbox(src, alt, index) {
-    console.log(`📂 Abrindo lightbox - índice: ${index}`);
-    
-    const modal = document.getElementById('modalLightbox');
-    const imagemAmpliada = document.getElementById('imagemAmpliada');
-    const infoDiv = document.getElementById('infoLightbox');
-    
-    if (!modal || !imagemAmpliada) {
-        console.error('❌ Elementos do modal não encontrados!');
-        alert('Erro ao carregar o visualizador de imagens.');
-        return;
-    }
-    
-    indiceImagemAtual = index;
-    
-    imagemAmpliada.classList.remove('zoom-ativo');
-    
-    imagemAmpliada.onload = function() {
-        ajustarTamanhoImagemResponsivo();
-    };
-    
-    imagemAmpliada.src = src;
-    imagemAmpliada.alt = alt;
-    
-    if (infoDiv && todasImagensLightbox[index]) {
-        const card = todasImagensLightbox[index].closest('.card');
-        if (card) {
-            const nome = card.querySelector('h3');
-            const descricao = card.querySelector('.descricao-item');
-            const preco = card.querySelector('.preco');
-            
-            if (nome && descricao && preco) {
-                infoDiv.innerHTML = `
-                    <strong>${nome.textContent}</strong><br>
-                    ${descricao.textContent}<br>
-                    <span style="color: #E66A11; font-weight: bold;">${preco.textContent}</span>
-                `;
-            } else {
-                infoDiv.innerHTML = alt || 'Dom Bistrô Grill';
-            }
-        } else {
-            infoDiv.innerHTML = alt || 'Dom Bistrô Grill';
-        }
-    }
-    
-    modal.style.display = 'flex';
-    document.body.style.overflow = 'hidden';
-    
-    void modal.offsetHeight;
-    
-    ajustarTamanhoImagemResponsivo();
-    atualizarBotoesNavegacao();
-    
-    const isMobile = window.innerWidth <= 768;
-    const mensagem = isMobile 
-        ? 'Toque na imagem para zoom • Deslize para cima/baixo para navegar • Toque fora para sair'
-        : 'Clique na imagem para zoom • Use as setas para navegar • ESC para sair';
-    
-    mostrarMensagemZoom(mensagem);
-}
-
-function mostrarMensagemZoom(texto) {
-    const mensagemAnterior = document.querySelector('.mensagem-zoom');
-    if (mensagemAnterior) {
-        mensagemAnterior.remove();
-    }
-    
-    const mensagem = document.createElement('div');
-    mensagem.className = 'mensagem-zoom';
-    mensagem.textContent = texto;
-    mensagem.style.cssText = `
-        position: absolute;
-        bottom: ${window.innerWidth <= 768 ? '60px' : '80px'};
-        left: 50%;
-        transform: translateX(-50%);
-        background: rgba(0, 0, 0, 0.8);
-        color: white;
-        padding: ${window.innerWidth <= 768 ? '8px 15px' : '10px 20px'};
-        border-radius: 20px;
-        font-size: ${window.innerWidth <= 768 ? '12px' : '14px'};
-        z-index: 10001;
-        animation: fadeInOut 3s ease;
-        text-align: center;
-        max-width: 90%;
-        word-wrap: break-word;
-    `;
-    
-    const modalConteudo = document.querySelector('.modal-conteudo');
-    if (modalConteudo) {
-        modalConteudo.appendChild(mensagem);
-    }
-    
-    setTimeout(() => {
-        if (mensagem.parentNode) {
-            mensagem.style.animation = 'fadeOut 0.5s ease';
-            setTimeout(() => {
-                if (mensagem.parentNode) mensagem.remove();
-            }, 500);
-        }
-    }, 3000);
-}
-
-function fecharLightbox() {
-    const modal = document.getElementById('modalLightbox');
-    
-    if (modal) {
-        modal.style.display = 'none';
-        document.body.style.overflow = 'auto';
-        console.log("🔒 Lightbox fechado");
-    }
-}
-
-function navegarImagem(direcao) {
-    if (todasImagensLightbox.length === 0) return;
-    
-    const imagemAmpliada = document.getElementById('imagemAmpliada');
-    if (imagemAmpliada) {
-        imagemAmpliada.classList.remove('zoom-ativo');
-    }
-    
-    indiceImagemAtual += direcao;
-    
-    if (indiceImagemAtual < 0) {
-        indiceImagemAtual = todasImagensLightbox.length - 1;
-    } else if (indiceImagemAtual >= todasImagensLightbox.length) {
-        indiceImagemAtual = 0;
-    }
-    
-    console.log(`➡️ Navegando para imagem ${indiceImagemAtual + 1} de ${todasImagensLightbox.length}`);
-    
-    const novaImagem = todasImagensLightbox[indiceImagemAtual];
-    if (novaImagem) {
-        const imagemAmpliada = document.getElementById('imagemAmpliada');
-        const infoDiv = document.getElementById('infoLightbox');
-        
-        if (imagemAmpliada) {
-            imagemAmpliada.style.opacity = '0';
-            imagemAmpliada.style.transition = 'opacity 0.3s ease';
-            
-            setTimeout(() => {
-                imagemAmpliada.classList.remove('zoom-ativo');
-                imagemAmpliada.src = novaImagem.src;
-                imagemAmpliada.alt = novaImagem.alt;
-                
-                setTimeout(() => {
-                    imagemAmpliada.style.opacity = '1';
-                    ajustarTamanhoImagemResponsivo();
-                }, 50);
-                
-                if (infoDiv) {
-                    const card = novaImagem.closest('.card');
-                    if (card) {
-                        const nome = card.querySelector('h3');
-                        const descricao = card.querySelector('.descricao-item');
-                        const preco = card.querySelector('.preco');
-                        
-                        if (nome && descricao && preco) {
-                            infoDiv.innerHTML = `
-                                <strong>${nome.textContent}</strong><br>
-                                ${descricao.textContent}<br>
-                                <span style="color: #E66A11; font-weight: bold;">${preco.textContent}</span>
-                            `;
-                        } else {
-                            infoDiv.innerHTML = novaImagem.alt || 'Dom Bistrô Grill';
-                        }
-                    } else {
-                        infoDiv.innerHTML = novaImagem.alt || 'Dom Bistrô Grill';
-                    }
-                }
-                
-                atualizarBotoesNavegacao();
-                
-                const isMobile = window.innerWidth <= 768;
-                const mensagem = isMobile 
-                    ? 'Toque na imagem para zoom • Deslize para cima/baixo para navegar • Toque fora para sair'
-                    : 'Clique na imagem para zoom • Use as setas para navegar • ESC para sair';
-                
-                mostrarMensagemZoom(mensagem);
-                
-            }, 300);
-        }
-    }
-}
-
-function atualizarBotoesNavegacao() {
-    const btnAnterior = document.getElementById('btnAnterior');
-    const btnProximo = document.getElementById('btnProximo');
-    
-    if (btnAnterior && btnProximo) {
-        if (todasImagensLightbox.length <= 1) {
-            btnAnterior.style.opacity = '0.3';
-            btnProximo.style.opacity = '0.3';
-            btnAnterior.style.cursor = 'not-allowed';
-            btnProximo.style.cursor = 'not-allowed';
-            btnAnterior.disabled = true;
-            btnProximo.disabled = true;
-        } else {
-            btnAnterior.style.opacity = '1';
-            btnProximo.style.opacity = '1';
-            btnAnterior.style.cursor = 'pointer';
-            btnProximo.style.cursor = 'pointer';
-            btnAnterior.disabled = false;
-            btnProximo.disabled = false;
-        }
-        
-        atualizarVisibilidadeBotoes();
-    }
-}
-
-// Adicionar animações CSS para mensagens
-const style = document.createElement('style');
-style.textContent = `
-    @keyframes fadeInOut {
-        0% { opacity: 0; transform: translateX(-50%) translateY(10px); }
-        20% { opacity: 1; transform: translateX(-50%) translateY(0); }
-        80% { opacity: 1; transform: translateX(-50%) translateY(0); }
-        100% { opacity: 0; transform: translateX(-50%) translateY(-10px); }
-    }
-    
-    @keyframes fadeOut {
-        from { opacity: 1; }
-        to { opacity: 0; }
-    }
-`;
-document.head.appendChild(style);
-
 // Verificar console para debug
 console.log("=== DOM BISTRÔ GRILL - SISTEMA CARREGADO ===");
 console.log("Sistema de adicionais melhorado com visualização moderna!");
 console.log("Feijoada agora tem opção de adicionar carne extra!");
+console.log("Página de detalhes do produto implementada!");
+console.log("IVA REMOVIDO - Preços já incluem todas as taxas");
