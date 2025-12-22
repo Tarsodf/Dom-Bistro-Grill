@@ -3,6 +3,26 @@ const TAXA_FIXA = 0.90; // Alterado de 0.25 para 0.90
 const TAXA_PORCENTAGEM = 0.015;
 // IVA REMOVIDO
 
+// ==================== FUNÇÃO PARA GERAR NOME DA FOTO ====================
+function gerarNomeFoto(nomeProduto) {
+    // Remover caracteres especiais e converter para formato de arquivo
+    let nomeArquivo = nomeProduto
+        .toLowerCase() // Converter para minúsculas
+        .replace(/\s+/g, '_') // Substituir espaços por underscore
+        .replace(/[^\w\s]/gi, '') // Remover caracteres especiais
+        .replace(/ç/g, 'c') // Substituir ç por c
+        .replace(/ã/g, 'a') // Substituir ã por a
+        .replace(/õ/g, 'o') // Substituir õ por o
+        .replace(/á/g, 'a') // Substituir á por a
+        .replace(/é/g, 'e') // Substituir é por e
+        .replace(/í/g, 'i') // Substituir í por i
+        .replace(/ó/g, 'o') // Substituir ó por o
+        .replace(/ú/g, 'u'); // Substituir ú por u
+    
+    // Adicionar .JPG no final
+    return `foto/${nomeArquivo}.JPG`;
+}
+
 // ==================== PREÇOS DOS ADICIONAIS MELHORADOS ====================
 const PRECOS_ADICIONAIS = {
     // Adicionais para Executivos (com descrições)
@@ -40,7 +60,7 @@ const categorias = {
         {
             nome: 'Executivo Clássico (Segunda)',
             preco: 10.00, // Aumentado de 9.39 para 10.00 (+1€)
-            foto: 'fotos/bife.png',
+            foto: gerarNomeFoto('Executivo Clássico (Segunda)'),
             descricao: 'Bife acebolado, arroz, feijão, batata frita e salada.',
             carneDia: 'Bife',
             dia: 'SEGUNDA'
@@ -48,7 +68,7 @@ const categorias = {
         {
             nome: 'Executivo Dom Bistrô (Terça)',
             preco: 10.00, // Aumentado de 9.39 para 10.39 (+1€)
-            foto: 'fotos/empanado.png',
+            foto: gerarNomeFoto('Executivo Dom Bistrô (Terça)'),
             descricao: 'Empanado de frango, arroz, feijão, batata frita e salada.',
             carneDia: 'Frango',
             dia: 'TERÇA'
@@ -56,7 +76,7 @@ const categorias = {
         {
             nome: 'Executivo do Chefe (Quinta)',
             preco: 10.00, // Aumentado de 9.39 para 10.39 (+1€)
-            foto: 'fotos/molho.png',
+            foto: gerarNomeFoto('Executivo do Chefe (Quinta)'),
             descricao: 'Carne ao molho Madeira, filé de porco empanado, arroz, feijão, batata frita e salada.',
             carneDia: 'Carne ao Molho + Filé de Porco',
             dia: 'QUINTA'
@@ -64,7 +84,7 @@ const categorias = {
         {
             nome: 'Executivo Festa Brasileira (Sexta)',
             preco: 10.39, // Aumentado de 9.39 para 10.39 (+1€)
-            foto: 'fotos/mix.png',
+            foto: gerarNomeFoto('Executivo Festa Brasileira (Sexta)'),
             descricao: 'Churrasco misto, arroz, feijão, batata frita, farofa e vinagrete.',
             carneDia: 'Churrasco Misto',
             dia: 'SEXTA'
@@ -72,7 +92,7 @@ const categorias = {
         {
             nome: 'Feijoada Completa (Sábado)',
             preco: 10.39, // Aumentado de 9.39 para 10.39 (+1€)
-            foto: 'fotos/feijoada.png',
+            foto: gerarNomeFoto('Feijoada Completa (Sábado)'),
             descricao: 'Feijoada completa, arroz, couve refogada, torresmo, farofa e laranja.',
             carneDia: 'Feijoada',
             dia: 'SÁBADO'
@@ -80,76 +100,331 @@ const categorias = {
         {
             nome: 'Jantinha',
             preco: 10.00, // Aumentado de 9.39 para 10.39 (+1€)
-            foto: 'fotos/jantinha.jpg',
+            foto: gerarNomeFoto('Jantinha'),
             descricao: 'Prato pode escolher um espetinho (Carne, Frango, Frango com Bacon, Linguiça, Queijo Coalho).',
             carneDia: 'Espetinho',
             dia: 'DOMINGO'
         }
     ],
     panelinhas: [
-        {nome:"Carne", preco: 8.86, foto:'fotos/panelhinha de carne.jpg', descricao: 'Lentamente cozida com cerveja artesanal, resultando em uma carne incrivelmente macia e suculenta. A cerveja adiciona profundidade ao sabor, criando um prato reconfortante ideal para qualquer refeição...'}, // +1€
-        {nome:"Bacon", preco: 8.86, foto:'fotos/bacon.png', descricao: 'Panelinha de bacon crocante e saborosa.'}, // +1€
-        {nome:"Legumes", preco: 8.86, foto:'fotos/legumes.png', descricao: 'Panelinha de legumes frescos e selecionados.'}, // +1€
-        {nome:"Bacon com Linguiça", preco: 8.86, foto:'fotos/Captura1.png', descricao: 'Combinação perfeita de bacon e linguiça.'} // +1€
+        {
+            nome: "Carne",
+            preco: 8.86,
+            foto: gerarNomeFoto('Panelinha de Carne'),
+            descricao: 'Lentamente cozida com cerveja artesanal, resultando em uma carne incrivelmente macia e suculenta. A cerveja adiciona profundidade ao sabor, criando um prato reconfortante ideal para qualquer refeição...'
+        },
+        {
+            nome: "Bacon",
+            preco: 8.86,
+            foto: gerarNomeFoto('Panelinha de Bacon'),
+            descricao: 'Panelinha de bacon crocante e saborosa.'
+        },
+        {
+            nome: "Legumes",
+            preco: 8.86,
+            foto: gerarNomeFoto('Panelinha de Legumes'),
+            descricao: 'Panelinha de legumes frescos e selecionados.'
+        },
+        {
+            nome: "Bacon com Linguiça",
+            preco: 8.86,
+            foto: gerarNomeFoto('Panelinha de Bacon com Linguiça'),
+            descricao: 'Combinação perfeita de bacon e linguiça.'
+        }
     ],
     caldos: [
-        {nome:"Caldo Verde", preco: 6.34, foto:'fotos/caldoverde.jpeg', descricao: 'Tradicional caldo verde português.'}, // +1€
-        {nome:"Caldo de Feijão", preco: 6.34, foto:'fotos/caldofeijao.jpeg', descricao: 'Cremoso caldo de feijão brasileiro.'}, // +1€
-        {nome:"Caldo de Frango", preco: 6.34, foto:'fotos/caldofrango.jpeg', descricao: 'Caldo de frango caseiro e saboroso.'}, // +1€
-        {nome:"Carne com Mandioca", preco: 6.34, foto:'fotos/mandioca.jpeg', descricao: 'Caldo de carne com mandioca.'} // +1€
+        {
+            nome: "Caldo Verde",
+            preco: 6.34,
+            foto: gerarNomeFoto('Caldo Verde'),
+            descricao: 'Tradicional caldo verde português.'
+        },
+        {
+            nome: "Caldo de Feijão",
+            preco: 6.34,
+            foto: gerarNomeFoto('Caldo de Feijão'),
+            descricao: 'Cremoso caldo de feijão brasileiro.'
+        },
+        {
+            nome: "Caldo de Frango",
+            preco: 6.34,
+            foto: gerarNomeFoto('Caldo de Frango'),
+            descricao: 'Caldo de frango caseiro e saboroso.'
+        },
+        {
+            nome: "Carne com Mandioca",
+            preco: 6.34,
+            foto: gerarNomeFoto('Caldo de Carne com Mandioca'),
+            descricao: 'Caldo de carne com mandioca.'
+        }
     ],
     hamburgueres: [
-        {nome:"X-Baguncinha (combo)", preco: 11.64, foto:'fotos/xbaguncinha.jpg', descricao:'Pão, 2 carnes, ovo, bacon, queijo, presunto, alface, tomate e molho especial.'}, // +1€
-        {nome:"X-Carioca (combo)", preco: 11.64, foto:'fotos/xcarioca.jpg', descricao:'Pão, carne, queijo, presunto, abacaxi grelhado, bacon e alface.'}, // +1€
-        {nome:"X-Mineiro (+ fritas)", preco: 10.59, foto:'fotos/xmineiro.jpg', descricao:'Pão, carne, queijo, ovo, bacon, alface, tomate e queijo Minas.'}, // +1€
-        {nome:"X-Gauchesco (+ fritas)", preco: 8.61, foto:'fotos/xgauchesco.jpg', descricao:'Pão, carne, queijo, presunto, linguiça defumada, alface e tomate.'}, // +1€
-        {nome:"X-Nordestino (+ fritas)", preco: 9.56, foto:'fotos/xnordestino.jpg', descricao:'Pão, carne, queijo coalho grelhado, carne de sol desfiada e molho.'}, // +1€
-        {nome:"X-Brasileiro (combo)", preco: 12.67, foto:'fotos/xbrasileirinho.jpg', descricao:'Pão, 2 carnes, cheddar, bacon, ovo, alface, tomate e batata palha.'}, // +1€
-        {nome:"X-Dom Cheddar (combo)", preco: 14.70, foto:'fotos/dom.jpg', descricao:'Pão, carne, farta porção de queijo cheddar cremoso e cebola caramelizada.'} // +1€
+        {
+            nome: "X-Baguncinha (combo)",
+            preco: 11.64,
+            foto: gerarNomeFoto('X-Baguncinha'),
+            descricao: 'Pão, 2 carnes, ovo, bacon, queijo, presunto, alface, tomate e molho especial.'
+        },
+        {
+            nome: "X-Carioca (combo)",
+            preco: 11.64,
+            foto: gerarNomeFoto('X-Carioca'),
+            descricao: 'Pão, carne, queijo, presunto, abacaxi grelhado, bacon e alface.'
+        },
+        {
+            nome: "X-Mineiro (+ fritas)",
+            preco: 10.59,
+            foto: gerarNomeFoto('X-Mineiro'),
+            descricao: 'Pão, carne, queijo, ovo, bacon, alface, tomate e queijo Minas.'
+        },
+        {
+            nome: "X-Gauchesco (+ fritas)",
+            preco: 8.61,
+            foto: gerarNomeFoto('X-Gauchesco'),
+            descricao: 'Pão, carne, queijo, presunto, linguiça defumada, alface e tomate.'
+        },
+        {
+            nome: "X-Nordestino (+ fritas)",
+            preco: 9.56,
+            foto: gerarNomeFoto('X-Nordestino'),
+            descricao: 'Pão, carne, queijo coalho grelhado, carne de sol desfiada e molho.'
+        },
+        {
+            nome: "X-Brasileiro (combo)",
+            preco: 12.67,
+            foto: gerarNomeFoto('X-Brasileiro'),
+            descricao: 'Pão, 2 carnes, cheddar, bacon, ovo, alface, tomate e batata palha.'
+        },
+        {
+            nome: "X-Dom Cheddar (combo)",
+            preco: 14.70,
+            foto: gerarNomeFoto('X-Dom Cheddar'),
+            descricao: 'Pão, carne, farta porção de queijo cheddar cremoso e cebola caramelizada.'
+        }
     ],
     espetinhos: [
-        {nome:"Carne", preco: 5.82, foto:'fotos/carne.jpeg', descricao: 'Espetinho de carne bovina suculenta.'}, // +1€
-        {nome:"Frango", preco: 4.30, foto:'fotos/frango.jpeg', descricao: 'Espetinho de frango temperado.'}, // +1€
-        {nome:"Frango c/ Bacon", preco: 5.31, foto:'fotos/frangocbacon.jpeg', descricao: 'Espetinho de frango envolto em bacon.'}, // +1€
-        {nome:"Linguiça", preco: 3.79, foto:'fotos/linguiça.jpeg', descricao: 'Espetinho de linguiça defumada.'}, // +1€
-        {nome:"Queijo Coalho", preco: 5.31, foto:'fotos/queijo.jpeg', descricao: 'Espetinho de queijo coalho grelhado.'}, // +1€
-        {nome:"Coalho c/ Melaço", preco: 5.31, foto:'fotos/queijo.png', descricao: 'Queijo coalho com melaço de cana.'} // +1€
+        {
+            nome: "Carne",
+            preco: 5.82,
+            foto: gerarNomeFoto('Espetinho de Carne'),
+            descricao: 'Espetinho de carne bovina suculenta.'
+        },
+        {
+            nome: "Frango",
+            preco: 4.30,
+            foto: gerarNomeFoto('Espetinho de Frango'),
+            descricao: 'Espetinho de frango temperado.'
+        },
+        {
+            nome: "Frango c/ Bacon",
+            preco: 5.31,
+            foto: gerarNomeFoto('Espetinho de Frango com Bacon'),
+            descricao: 'Espetinho de frango envolto em bacon.'
+        },
+        {
+            nome: "Linguiça",
+            preco: 3.79,
+            foto: gerarNomeFoto('Espetinho de Linguiça'),
+            descricao: 'Espetinho de linguiça defumada.'
+        },
+        {
+            nome: "Queijo Coalho",
+            preco: 5.31,
+            foto: gerarNomeFoto('Espetinho de Queijo Coalho'),
+            descricao: 'Espetinho de queijo coalho grelhado.'
+        },
+        {
+            nome: "Coalho c/ Melaço",
+            preco: 5.31,
+            foto: gerarNomeFoto('Queijo Coalho com Melaço'),
+            descricao: 'Queijo coalho com melaço de cana.'
+        }
     ],
     petiscos: [
-        {nome:"Batata Frita Pequena", preco: 3.28, foto:'fotos/batatapequena.jpeg', descricao: 'Porção pequena de batata frita crocante.'}, // +1€
-        {nome:"Batata Frita Média", preco: 4.80, foto:'fotos/batatamedia.jpeg', descricao: 'Porção média de batata frita.'}, // +1€
-        {nome:"Batata Frita Grande", preco: 5.82, foto:'fotos/batatagrande.jpeg', descricao: 'Porção grande de batata frita.'}, // +1€
-        {nome:"Batata com Nutella + Ninho", preco: 7.34, foto:'fotos/batatanutela.jpeg', descricao: 'Batata frita com Nutella e leite Ninho.'}, // +1€
-        {nome:"Anéis de Cebola", preco: 4.80, foto:'fotos/aneiscebola.jpeg', descricao: 'Anéis de cebola empanados e fritos.'}, // +1€
-        {nome:"Calabresa Acebolada", preco: 5.34, foto:'fotos/calabresa.jpeg', descricao: 'Calabresa fatiada com cebola.'}, // +1€
-        {nome:"Asas ao Molho Agridoce", preco: 4.33, foto:'fotos/asasdefrango.jpeg', descricao: 'Asas de frango no molho agridoce.'}, // +1€
-        {nome:"Cuscuz com Ovo e Coalho", preco: 2.33, foto:'fotos/cuscuz.jpeg', descricao: 'Cuscuz com ovo e queijo coalho.'} // +1€
+        {
+            nome: "Batata Frita Pequena",
+            preco: 3.28,
+            foto: gerarNomeFoto('Batata Frita Pequena'),
+            descricao: 'Porção pequena de batata frita crocante.'
+        },
+        {
+            nome: "Batata Frita Média",
+            preco: 4.80,
+            foto: gerarNomeFoto('Batata Frita Média'),
+            descricao: 'Porção média de batata frita.'
+        },
+        {
+            nome: "Batata Frita Grande",
+            preco: 5.82,
+            foto: gerarNomeFoto('Batata Frita Grande'),
+            descricao: 'Porção grande de batata frita.'
+        },
+        {
+            nome: "Batata com Nutella + Ninho",
+            preco: 7.34,
+            foto: gerarNomeFoto('Batata com Nutella e Ninho'),
+            descricao: 'Batata frita com Nutella e leite Ninho.'
+        },
+        {
+            nome: "Anéis de Cebola",
+            preco: 4.80,
+            foto: gerarNomeFoto('Anéis de Cebola'),
+            descricao: 'Anéis de cebola empanados e fritos.'
+        },
+        {
+            nome: "Calabresa Acebolada",
+            preco: 5.34,
+            foto: gerarNomeFoto('Calabresa Acebolada'),
+            descricao: 'Calabresa fatiada com cebola.'
+        },
+        {
+            nome: "Asas ao Molho Agridoce",
+            preco: 4.33,
+            foto: gerarNomeFoto('Asas ao Molho Agridoce'),
+            descricao: 'Asas de frango no molho agridoce.'
+        },
+        {
+            nome: "Cuscuz com Ovo e Coalho",
+            preco: 2.33,
+            foto: gerarNomeFoto('Cuscuz com Ovo e Coalho'),
+            descricao: 'Cuscuz com ovo e queijo coalho.'
+        }
     ],
     doces: [
-        {nome:"Bolo de Cenoura", preco: 1.80, foto:'fotos/bolodecenoura.jpg', descricao: 'Fatia de bolo de cenoura com cobertura.'}, // +1€
-        {nome:"Bolo de Chocolate", preco: 1.80, foto:'fotos/chocolate.jpg', descricao: 'Fatia de bolo de chocolate.'}, // +1€
-        {nome:"Bolo Ninho", preco: 1.80, foto:'fotos/ninho.jpg', descricao: 'Fatia de bolo com leite Ninho.'}, // +1€
-        {nome:"Bolo de Milho", preco: 1.80, foto:'fotos/milho.jpg', descricao: 'Fatia de bolo de milho verde.'}, // +1€
-        {nome:"Brigadeiro", preco: 1.00, foto:'fotos/brigadeiro.png', descricao: 'Tradicional brigadeiro brasileiro.'}, // +1€
-        {nome:"Pudim", preco: 3.28, foto:'fotos/pudim.jpg', descricao: 'Fatia de pudim de leite condensado.'}, // +1€
-        {nome:"Bolo de Pote", preco: 5.31, foto:'fotos/bolonopote.png', descricao: 'Bolo de pote com diversas opções consulte o restaurante para saber.'}, // +1€
-        {nome:"Bolo Formigueiro", preco: 1.80, foto:'fotos/boloformigueiro.jpg', descricao: 'Fatia de bolo formigueiro.'} // +1€
+        {
+            nome: "Bolo de Cenoura",
+            preco: 1.80,
+            foto: gerarNomeFoto('Bolo de Cenoura'),
+            descricao: 'Fatia de bolo de cenoura com cobertura.'
+        },
+        {
+            nome: "Bolo de Chocolate",
+            preco: 1.80,
+            foto: gerarNomeFoto('Bolo de Chocolate'),
+            descricao: 'Fatia de bolo de chocolate.'
+        },
+        {
+            nome: "Bolo Ninho",
+            preco: 1.80,
+            foto: gerarNomeFoto('Bolo Ninho'),
+            descricao: 'Fatia de bolo com leite Ninho.'
+        },
+        {
+            nome: "Bolo de Milho",
+            preco: 1.80,
+            foto: gerarNomeFoto('Bolo de Milho'),
+            descricao: 'Fatia de bolo de milho verde.'
+        },
+        {
+            nome: "Brigadeiro",
+            preco: 1.00,
+            foto: gerarNomeFoto('Brigadeiro'),
+            descricao: 'Tradicional brigadeiro brasileiro.'
+        },
+        {
+            nome: "Pudim",
+            preco: 3.28,
+            foto: gerarNomeFoto('Pudim'),
+            descricao: 'Fatia de pudim de leite condensado.'
+        },
+        {
+            nome: "Bolo de Pote",
+            preco: 5.31,
+            foto: gerarNomeFoto('Bolo de Pote'),
+            descricao: 'Bolo de pote com diversas opções consulte o restaurante para saber.'
+        },
+        {
+            nome: "Bolo Formigueiro",
+            preco: 1.80,
+            foto: gerarNomeFoto('Bolo Formigueiro'),
+            descricao: 'Fatia de bolo formigueiro.'
+        }
     ],
     bebidas: [
-        {nome:"Coca-Cola", preco: 2.50, foto:'fotos/coca.jpeg', descricao: 'Lata 330ml.'}, // +1€
-        {nome:"Coca Zero", preco: 2.80, foto:'fotos/cocazero.jpeg', descricao: 'Lata 330ml.'}, // +1€
-        {nome:"Ice Tea", preco: 1.67, foto:'fotos/IceTea.jpeg', descricao: 'Ice Tea sabor pêssego.'}, // +1€
-        {nome:"Guaraná Antarctica", preco: 2.77, foto:'fotos/guarana.jpeg', descricao: 'Lata 350ml.'}, // +1€
-        {nome:"Sumol Laranja", preco: 1.67, foto:'fotos/sumollaranja.jpeg', descricao: 'Sumol sabor laranja.'}, // +1€
-        {nome:"Sumol Ananás", preco: 1.67, foto:'fotos/sumolananas.jpeg', descricao: 'Sumol sabor abacaxi.'}, // +1€
-        {nome:"Água 0.5L", preco: 1.37, foto:'fotos/agua.jpeg', descricao: 'Garrafa 500ml.'}, // +1€
-        {nome:"Água das Pedras", preco: 2.20, foto:'fotos/aguasdaspedras.jpeg', descricao: 'Água com gás.'}, // +1€
-        {nome:"Água das Pedras c/ Limão", preco: 2.50, foto:'fotos/limao.jpeg', descricao: 'Água com gás e limão.'}, // +1€
-        {nome:"Seven Up", preco: 2.10, foto:'fotos/seven.jpeg', descricao: 'Lata 330ml.'}, // +1€
-        {nome:"Super Bock", preco: 2.80, foto:'fotos/superbock.jpg', descricao: 'Cerveja Super Bock.'}, // +1€
-        {nome:"Sumo Natural Laranja", preco: 2.80, foto:'fotos/sumodelaranja.jpeg', descricao: 'Suco natural de laranja.'}, // +1€
-        {nome:"Sumo Natural Abacaxi", preco: 2.80, foto:'fotos/sumodeabacaxi.jpeg', descricao: 'Suco natural de abacaxi.'}, // +1€
-        {nome:"Creme de Morango", preco: 3.31, foto:'fotos/cremedemorango.jpeg', descricao: 'Creme de morango gelado.'} // +1€
+        {
+            nome: "Coca-Cola",
+            preco: 2.50,
+            foto: gerarNomeFoto('Coca-Cola'),
+            descricao: 'Lata 330ml.'
+        },
+        {
+            nome: "Coca Zero",
+            preco: 2.80,
+            foto: gerarNomeFoto('Coca Zero'),
+            descricao: 'Lata 330ml.'
+        },
+        {
+            nome: "Ice Tea",
+            preco: 1.67,
+            foto: gerarNomeFoto('Ice Tea'),
+            descricao: 'Ice Tea sabor pêssego.'
+        },
+        {
+            nome: "Guaraná Antarctica",
+            preco: 2.77,
+            foto: gerarNomeFoto('Guaraná Antarctica'),
+            descricao: 'Lata 350ml.'
+        },
+        {
+            nome: "Sumol Laranja",
+            preco: 1.67,
+            foto: gerarNomeFoto('Sumol Laranja'),
+            descricao: 'Sumol sabor laranja.'
+        },
+        {
+            nome: "Sumol Ananás",
+            preco: 1.67,
+            foto: gerarNomeFoto('Sumol Ananás'),
+            descricao: 'Sumol sabor abacaxi.'
+        },
+        {
+            nome: "Água 0.5L",
+            preco: 1.37,
+            foto: gerarNomeFoto('Água 0.5L'),
+            descricao: 'Garrafa 500ml.'
+        },
+        {
+            nome: "Água das Pedras",
+            preco: 2.20,
+            foto: gerarNomeFoto('Água das Pedras'),
+            descricao: 'Água com gás.'
+        },
+        {
+            nome: "Água das Pedras c/ Limão",
+            preco: 2.50,
+            foto: gerarNomeFoto('Água das Pedras com Limão'),
+            descricao: 'Água com gás e limão.'
+        },
+        {
+            nome: "Seven Up",
+            preco: 2.10,
+            foto: gerarNomeFoto('Seven Up'),
+            descricao: 'Lata 330ml.'
+        },
+        {
+            nome: "Super Bock",
+            preco: 2.80,
+            foto: gerarNomeFoto('Super Bock'),
+            descricao: 'Cerveja Super Bock.'
+        },
+        {
+            nome: "Sumo Natural Laranja",
+            preco: 2.80,
+            foto: gerarNomeFoto('Sumo Natural Laranja'),
+            descricao: 'Suco natural de laranja.'
+        },
+        {
+            nome: "Sumo Natural Abacaxi",
+            preco: 2.80,
+            foto: gerarNomeFoto('Sumo Natural Abacaxi'),
+            descricao: 'Suco natural de abacaxi.'
+        },
+        {
+            nome: "Creme de Morango",
+            preco: 3.31,
+            foto: gerarNomeFoto('Creme de Morango'),
+            descricao: 'Creme de morango gelado.'
+        }
     ]
 };
 
@@ -205,6 +480,11 @@ function preloadImagens() {
     imagensUnicas.forEach(src => {
         const img = new Image();
         img.src = src;
+        // Adicionar fallback em caso de erro
+        img.onerror = function() {
+            // Se a imagem gerada automaticamente não existir, usar fallback
+            this.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjhmOGY4Ii8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgZmlsbD0iIzk5OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPkRvbSBCaXN0csO0IEdyaWxsPC90ZXh0Pjwvc3ZnPg==';
+        };
     });
 }
 
@@ -1796,3 +2076,4 @@ console.log("Tela de personalização implementada!");
 console.log("Taxa ajustada para €0.90 (Taxa de Manutenção dos Serviços)");
 console.log("Todos os preços aumentados em €1.00");
 console.log("IVA REMOVIDO - Preços já incluem todas as taxas");
+console.log("Sistema de imagens automático ativado - caminhos gerados automaticamente");
