@@ -45,7 +45,7 @@ const categorias = {
         {
             nome: 'Executivo Clássico (Segunda)',
             preco: 10.00,
-            foto: "foto/executivo_classico_segunda.jpg",
+            foto: "foto/bife.jpeg",
             descricao: 'Bife acebolado, arroz, feijão, batata frita e salada.',
             carneDia: 'Bife',
             dia: 'SEGUNDA'
@@ -61,7 +61,7 @@ const categorias = {
         {
             nome: 'Executivo Parmegiana (Quarta)',
             preco: 10.00,
-            foto: "foto/executivo_parmegiana_quarta.jpg",
+            foto: "foto/parmegiana.jpeg",
             descricao: 'Filé de frango empanado com molho de tomate e queijo derretido, acompanhado de arroz, feijão e batata frita.',
             carneDia: 'Frango à Parmegiana',
             dia: 'QUARTA'
@@ -103,7 +103,7 @@ const categorias = {
         {
             nome: "Carne",
             preco: 8.86,
-            foto: "foto/panelinha_de_carne.jpg",
+            foto: "foto/panelinha de carne.jpg",
             descricao: 'Lentamente cozida com cerveja artesanal, resultando em uma carne incrivelmente macia e suculenta.'
         },
         {
@@ -191,7 +191,7 @@ const categorias = {
         {
             nome: "X-Dom Cheddar (combo)",
             preco: 14.70,
-            foto: "foto/x_dom_cheddar.jpg",
+            foto: "foto/power.jpg",
             descricao: 'Pão, carne, farta porção de queijo cheddar cremoso e cebola caramelizada.'
         }
     ],
@@ -199,13 +199,13 @@ const categorias = {
         {
             nome: "Carne",
             preco: 5.82,
-            foto: "foto/espetinho_de_carne.jpg",
+            foto: "foto/carne.jpg",
             descricao: 'Espetinho de carne bovina suculenta.'
         },
         {
             nome: "Frango",
             preco: 4.30,
-            foto: "foto/espetinho_de_frango.jpg",
+            foto: "foto/frango.jpg",
             descricao: 'Espetinho de frango temperado.'
         },
         {
