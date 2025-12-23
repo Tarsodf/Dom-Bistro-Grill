@@ -1,31 +1,10 @@
 // ==================== CONFIGURAÇÕES ====================
-const TAXA_FIXA = 0.90; // Alterado de 0.25 para 0.90
+const TAXA_FIXA = 0.90;
 const TAXA_PORCENTAGEM = 0.015;
-// IVA REMOVIDO
-
-// ==================== FUNÇÃO PARA GERAR NOME DA FOTO ====================
-function gerarNomeFoto(nomeProduto) {
-    // Remover caracteres especiais e converter para formato de arquivo
-    let nomeArquivo = nomeProduto
-        .toLowerCase() // Converter para minúsculas
-        .replace(/\s+/g, '_') // Substituir espaços por underscore
-        .replace(/[^\w\s]/gi, '') // Remover caracteres especiais
-        .replace(/ç/g, 'c') // Substituir ç por c
-        .replace(/ã/g, 'a') // Substituir ã por a
-        .replace(/õ/g, 'o') // Substituir õ por o
-        .replace(/á/g, 'a') // Substituir á por a
-        .replace(/é/g, 'e') // Substituir é por e
-        .replace(/í/g, 'i') // Substituir í por i
-        .replace(/ó/g, 'o') // Substituir ó por o
-        .replace(/ú/g, 'u'); // Substituir ú por u
-    
-    // Adicionar .JPG no final
-    return `foto/${nomeArquivo}.JPG`;
-}
 
 // ==================== PREÇOS DOS ADICIONAIS MELHORADOS ====================
 const PRECOS_ADICIONAIS = {
-    // Adicionais para Executivos (com descrições)
+    // Adicionais para Executivos
     'Arroz Extra': { preco: 1.00, descricao: 'Porção adicional de arroz soltinho', categoria: 'executivo' },
     'Feijão com Caldo': { preco: 1.50, descricao: 'Feijão com caldo temperado', categoria: 'executivo' },
     'Feijão Tropeiro': { preco: 2.00, descricao: 'Feijão tropeiro com bacon e linguiça', categoria: 'executivo' },
@@ -51,56 +30,70 @@ const PRECOS_ADICIONAIS = {
     'Farofa': { preco: 0.50, descricao: 'Farofa crocante temperada', categoria: 'espetinho' },
     'Vinagrete': { preco: 0.50, descricao: 'Vinagrete de tomate e cebola', categoria: 'espetinho' },
     'Arroz Branco': { preco: 1.00, descricao: 'Porção de arroz', categoria: 'espetinho' },
-    'Molho à Parte': { preco: 0.50, descricao: 'Molho de alho ou pimenta', categoria: 'espetinho' }
+    'Molho à Parte': { preco: 0.50, descricao: 'Molho de alho ou pimenta', categoria: 'espetinho' },
+    
+    // Adicionais para Pastéis
+    'Catupiry': { preco: 1.25, descricao: 'Recheio extra de catupiry cremoso', categoria: 'pastel' },
+    'Queijo Cheddar': { preco: 0.80, descricao: 'Queijo cheddar derretido', categoria: 'pastel' },
+    'Queijo Coalho': { preco: 1.30, descricao: 'Queijo coalho grelhado', categoria: 'pastel' },
+    'Queijo': { preco: 0.60, descricao: 'Queijo mussarela derretido', categoria: 'pastel' }
 };
 
-// ==================== DADOS DO MENU (PREÇOS AJUSTADOS +1€) ====================
+// ==================== DADOS DO MENU ATUALIZADOS ====================
 const categorias = {
     executivos: [
         {
             nome: 'Executivo Clássico (Segunda)',
-            preco: 10.00, // Aumentado de 9.39 para 10.00 (+1€)
-            foto: gerarNomeFoto('Executivo Clássico (Segunda)'),
+            preco: 10.00,
+            foto: "foto/executivo_classico_segunda.jpg",
             descricao: 'Bife acebolado, arroz, feijão, batata frita e salada.',
             carneDia: 'Bife',
             dia: 'SEGUNDA'
         },
         {
             nome: 'Executivo Dom Bistrô (Terça)',
-            preco: 10.00, // Aumentado de 9.39 para 10.39 (+1€)
-            foto: gerarNomeFoto('Executivo Dom Bistrô (Terça)'),
+            preco: 10.00,
+            foto: "foto/executivo_dom_bistro_terca.jpg",
             descricao: 'Empanado de frango, arroz, feijão, batata frita e salada.',
             carneDia: 'Frango',
             dia: 'TERÇA'
         },
         {
+            nome: 'Executivo Parmegiana (Quarta)',
+            preco: 10.00,
+            foto: "foto/executivo_parmegiana_quarta.jpg",
+            descricao: 'Filé de frango empanado com molho de tomate e queijo derretido, acompanhado de arroz, feijão e batata frita.',
+            carneDia: 'Frango à Parmegiana',
+            dia: 'QUARTA'
+        },
+        {
             nome: 'Executivo do Chefe (Quinta)',
-            preco: 10.00, // Aumentado de 9.39 para 10.39 (+1€)
-            foto: gerarNomeFoto('Executivo do Chefe (Quinta)'),
+            preco: 10.00,
+            foto: "foto/executivo_do_chefe_quinta.jpg",
             descricao: 'Carne ao molho Madeira, filé de porco empanado, arroz, feijão, batata frita e salada.',
             carneDia: 'Carne ao Molho + Filé de Porco',
             dia: 'QUINTA'
         },
         {
             nome: 'Executivo Festa Brasileira (Sexta)',
-            preco: 10.39, // Aumentado de 9.39 para 10.39 (+1€)
-            foto: gerarNomeFoto('Executivo Festa Brasileira (Sexta)'),
+            preco: 10.39,
+            foto: "foto/executivo_festa_brasileira_sexta.jpg",
             descricao: 'Churrasco misto, arroz, feijão, batata frita, farofa e vinagrete.',
             carneDia: 'Churrasco Misto',
             dia: 'SEXTA'
         },
         {
             nome: 'Feijoada Completa (Sábado)',
-            preco: 10.39, // Aumentado de 9.39 para 10.39 (+1€)
-            foto: gerarNomeFoto('Feijoada Completa (Sábado)'),
+            preco: 10.39,
+            foto: "foto/feijoada_completa_sabado.jpg",
             descricao: 'Feijoada completa, arroz, couve refogada, torresmo, farofa e laranja.',
             carneDia: 'Feijoada',
             dia: 'SÁBADO'
         },
         {
-            nome: 'Jantinha',
-            preco: 10.00, // Aumentado de 9.39 para 10.39 (+1€)
-            foto: gerarNomeFoto('Jantinha'),
+            nome: 'Jantinha (Domingo)',
+            preco: 10.00,
+            foto: "foto/jantinha_domingo.jpg",
             descricao: 'Prato pode escolher um espetinho (Carne, Frango, Frango com Bacon, Linguiça, Queijo Coalho).',
             carneDia: 'Espetinho',
             dia: 'DOMINGO'
@@ -110,25 +103,25 @@ const categorias = {
         {
             nome: "Carne",
             preco: 8.86,
-            foto: gerarNomeFoto('Panelinha de Carne'),
-            descricao: 'Lentamente cozida com cerveja artesanal, resultando em uma carne incrivelmente macia e suculenta. A cerveja adiciona profundidade ao sabor, criando um prato reconfortante ideal para qualquer refeição...'
+            foto: "foto/panelinha_de_carne.jpg",
+            descricao: 'Lentamente cozida com cerveja artesanal, resultando em uma carne incrivelmente macia e suculenta.'
         },
         {
             nome: "Bacon",
             preco: 8.86,
-            foto: gerarNomeFoto('Panelinha de Bacon'),
+            foto: "foto/panelinha_de_bacon.jpg",
             descricao: 'Panelinha de bacon crocante e saborosa.'
         },
         {
             nome: "Legumes",
             preco: 8.86,
-            foto: gerarNomeFoto('Panelinha de Legumes'),
+            foto: "foto/panelinha_de_legumes.jpg",
             descricao: 'Panelinha de legumes frescos e selecionados.'
         },
         {
             nome: "Bacon com Linguiça",
             preco: 8.86,
-            foto: gerarNomeFoto('Panelinha de Bacon com Linguiça'),
+            foto: "foto/panelinha_de_bacon_com_linguica.jpg",
             descricao: 'Combinação perfeita de bacon e linguiça.'
         }
     ],
@@ -136,25 +129,25 @@ const categorias = {
         {
             nome: "Caldo Verde",
             preco: 6.34,
-            foto: gerarNomeFoto('Caldo Verde'),
+            foto: "foto/caldo_verde.jpg",
             descricao: 'Tradicional caldo verde português.'
         },
         {
             nome: "Caldo de Feijão",
             preco: 6.34,
-            foto: gerarNomeFoto('Caldo de Feijão'),
+            foto: "foto/caldo_de_feijao.jpg",
             descricao: 'Cremoso caldo de feijão brasileiro.'
         },
         {
             nome: "Caldo de Frango",
             preco: 6.34,
-            foto: gerarNomeFoto('Caldo de Frango'),
+            foto: "foto/caldo_de_frango.jpg",
             descricao: 'Caldo de frango caseiro e saboroso.'
         },
         {
             nome: "Carne com Mandioca",
             preco: 6.34,
-            foto: gerarNomeFoto('Caldo de Carne com Mandioca'),
+            foto: "foto/caldo_de_carne_com_mandioca.jpg",
             descricao: 'Caldo de carne com mandioca.'
         }
     ],
@@ -162,43 +155,43 @@ const categorias = {
         {
             nome: "X-Baguncinha (combo)",
             preco: 11.64,
-            foto: gerarNomeFoto('X-Baguncinha'),
+            foto: "foto/x_baguncinha.jpg",
             descricao: 'Pão, 2 carnes, ovo, bacon, queijo, presunto, alface, tomate e molho especial.'
         },
         {
             nome: "X-Carioca (combo)",
             preco: 11.64,
-            foto: gerarNomeFoto('X-Carioca'),
+            foto: "foto/x_carioca.jpg",
             descricao: 'Pão, carne, queijo, presunto, abacaxi grelhado, bacon e alface.'
         },
         {
             nome: "X-Mineiro (+ fritas)",
             preco: 10.59,
-            foto: gerarNomeFoto('X-Mineiro'),
+            foto: "foto/x_mineiro.jpg",
             descricao: 'Pão, carne, queijo, ovo, bacon, alface, tomate e queijo Minas.'
         },
         {
             nome: "X-Gauchesco (+ fritas)",
             preco: 8.61,
-            foto: gerarNomeFoto('X-Gauchesco'),
+            foto: "foto/x_gauchesco.jpg",
             descricao: 'Pão, carne, queijo, presunto, linguiça defumada, alface e tomate.'
         },
         {
             nome: "X-Nordestino (+ fritas)",
             preco: 9.56,
-            foto: gerarNomeFoto('X-Nordestino'),
+            foto: "foto/x_nordestino.jpg",
             descricao: 'Pão, carne, queijo coalho grelhado, carne de sol desfiada e molho.'
         },
         {
             nome: "X-Brasileiro (combo)",
             preco: 12.67,
-            foto: gerarNomeFoto('X-Brasileiro'),
+            foto: "foto/x_brasileiro.jpg",
             descricao: 'Pão, 2 carnes, cheddar, bacon, ovo, alface, tomate e batata palha.'
         },
         {
             nome: "X-Dom Cheddar (combo)",
             preco: 14.70,
-            foto: gerarNomeFoto('X-Dom Cheddar'),
+            foto: "foto/x_dom_cheddar.jpg",
             descricao: 'Pão, carne, farta porção de queijo cheddar cremoso e cebola caramelizada.'
         }
     ],
@@ -206,87 +199,99 @@ const categorias = {
         {
             nome: "Carne",
             preco: 5.82,
-            foto: gerarNomeFoto('Espetinho de Carne'),
+            foto: "foto/espetinho_de_carne.jpg",
             descricao: 'Espetinho de carne bovina suculenta.'
         },
         {
             nome: "Frango",
             preco: 4.30,
-            foto: gerarNomeFoto('Espetinho de Frango'),
+            foto: "foto/espetinho_de_frango.jpg",
             descricao: 'Espetinho de frango temperado.'
         },
         {
             nome: "Frango c/ Bacon",
             preco: 5.31,
-            foto: gerarNomeFoto('Espetinho de Frango com Bacon'),
+            foto: "foto/espetinho_de_frango_com_bacon.jpg",
             descricao: 'Espetinho de frango envolto em bacon.'
         },
         {
             nome: "Linguiça",
             preco: 3.79,
-            foto: gerarNomeFoto('Espetinho de Linguiça'),
+            foto: "foto/espetinho_de_linguica.jpg",
             descricao: 'Espetinho de linguiça defumada.'
         },
         {
             nome: "Queijo Coalho",
             preco: 5.31,
-            foto: gerarNomeFoto('Espetinho de Queijo Coalho'),
+            foto: "foto/espetinho_de_queijo_coalho.jpg",
             descricao: 'Espetinho de queijo coalho grelhado.'
         },
         {
             nome: "Coalho c/ Melaço",
             preco: 5.31,
-            foto: gerarNomeFoto('Queijo Coalho com Melaço'),
+            foto: "foto/queijo_coalho_com_melaco.jpg",
             descricao: 'Queijo coalho com melaço de cana.'
         }
     ],
     petiscos: [
         {
+            nome: "Pastel de Carne",
+            preco: 5.50,
+            foto: "foto/pastel_de_carne.jpg",
+            descricao: 'Pastel frito crocante recheado com carne moída temperada.'
+        },
+        {
+            nome: "Pastel de Frango",
+            preco: 5.50,
+            foto: "foto/pastel_de_frango.jpg",
+            descricao: 'Pastel frito crocante recheado com frango desfiado temperado.'
+        },
+        {
             nome: "Batata Frita Pequena",
             preco: 3.28,
-            foto: gerarNomeFoto('Batata Frita Pequena'),
+            foto: "foto/batata_frita_pequena.jpg",
             descricao: 'Porção pequena de batata frita crocante.'
         },
         {
             nome: "Batata Frita Média",
             preco: 4.80,
-            foto: gerarNomeFoto('Batata Frita Média'),
+            foto: "foto/batata_frita_media.jpg",
             descricao: 'Porção média de batata frita.'
         },
         {
             nome: "Batata Frita Grande",
             preco: 5.82,
-            foto: gerarNomeFoto('Batata Frita Grande'),
+            foto: "foto/batata_frita_grande.jpg",
             descricao: 'Porção grande de batata frita.'
         },
         {
             nome: "Batata com Nutella + Ninho",
             preco: 7.34,
-            foto: gerarNomeFoto('Batata com Nutella e Ninho'),
+            foto: "foto/batata_com_nutella_e_ninho.jpg",
             descricao: 'Batata frita com Nutella e leite Ninho.'
         },
         {
             nome: "Anéis de Cebola",
             preco: 4.80,
-            foto: gerarNomeFoto('Anéis de Cebola'),
+            foto: "foto/aneis_de_cebola.jpg",
             descricao: 'Anéis de cebola empanados e fritos.'
         },
         {
             nome: "Calabresa Acebolada",
             preco: 5.34,
-            foto: gerarNomeFoto('Calabresa Acebolada'),
+            foto: "foto/calabresa_acebolada.jpg",
             descricao: 'Calabresa fatiada com cebola.'
         },
         {
             nome: "Asas ao Molho Agridoce",
             preco: 4.33,
-            foto: gerarNomeFoto('Asas ao Molho Agridoce'),
+            foto: "foto/asas_ao_molho_agridoce.jpg",
             descricao: 'Asas de frango no molho agridoce.'
         },
         {
             nome: "Cuscuz com Ovo e Coalho",
             preco: 2.33,
-            foto: gerarNomeFoto('Cuscuz com Ovo e Coalho'),
+            foto: "foto/cuscuz_com_ovo_e_coalho.jpg",
             descricao: 'Cuscuz com ovo e queijo coalho.'
         }
     ],
@@ -294,49 +299,49 @@ const categorias = {
         {
             nome: "Bolo de Cenoura",
             preco: 1.80,
-            foto: gerarNomeFoto('Bolo de Cenoura'),
+            foto: "foto/bolo_de_cenoura.jpg",
             descricao: 'Fatia de bolo de cenoura com cobertura.'
         },
         {
             nome: "Bolo de Chocolate",
             preco: 1.80,
-            foto: gerarNomeFoto('Bolo de Chocolate'),
+            foto: "foto/bolo_de_chocolate.jpg",
             descricao: 'Fatia de bolo de chocolate.'
         },
         {
             nome: "Bolo Ninho",
             preco: 1.80,
-            foto: gerarNomeFoto('Bolo Ninho'),
+            foto: "foto/bolo_ninho.jpg",
             descricao: 'Fatia de bolo com leite Ninho.'
         },
         {
             nome: "Bolo de Milho",
             preco: 1.80,
-            foto: gerarNomeFoto('Bolo de Milho'),
+            foto: "foto/bolo_de_milho.jpg",
             descricao: 'Fatia de bolo de milho verde.'
         },
         {
             nome: "Brigadeiro",
             preco: 1.00,
-            foto: gerarNomeFoto('Brigadeiro'),
+            foto: "foto/brigadeiro.jpg",
             descricao: 'Tradicional brigadeiro brasileiro.'
         },
         {
             nome: "Pudim",
             preco: 3.28,
-            foto: gerarNomeFoto('Pudim'),
+            foto: "foto/pudim.jpg",
             descricao: 'Fatia de pudim de leite condensado.'
         },
         {
             nome: "Bolo de Pote",
             preco: 5.31,
-            foto: gerarNomeFoto('Bolo de Pote'),
-            descricao: 'Bolo de pote com diversas opções consulte o restaurante para saber.'
+            foto: "foto/bolo_de_pote.jpg",
+            descricao: 'Bolo de pote com diversas opções.'
         },
         {
             nome: "Bolo Formigueiro",
             preco: 1.80,
-            foto: gerarNomeFoto('Bolo Formigueiro'),
+            foto: "foto/bolo_formigueiro.jpg",
             descricao: 'Fatia de bolo formigueiro.'
         }
     ],
@@ -344,85 +349,85 @@ const categorias = {
         {
             nome: "Coca-Cola",
             preco: 2.50,
-            foto: gerarNomeFoto('Coca-Cola'),
+            foto: "foto/coca_cola.jpg",
             descricao: 'Lata 330ml.'
         },
         {
             nome: "Coca Zero",
             preco: 2.80,
-            foto: gerarNomeFoto('Coca Zero'),
+            foto: "foto/coca_zero.jpg",
             descricao: 'Lata 330ml.'
         },
         {
             nome: "Ice Tea",
             preco: 1.67,
-            foto: gerarNomeFoto('Ice Tea'),
+            foto: "foto/ice_tea.jpg",
             descricao: 'Ice Tea sabor pêssego.'
         },
         {
             nome: "Guaraná Antarctica",
             preco: 2.77,
-            foto: gerarNomeFoto('Guaraná Antarctica'),
+            foto: "foto/guarana_antarctica.jpg",
             descricao: 'Lata 350ml.'
         },
         {
             nome: "Sumol Laranja",
             preco: 1.67,
-            foto: gerarNomeFoto('Sumol Laranja'),
+            foto: "foto/sumol_laranja.jpg",
             descricao: 'Sumol sabor laranja.'
         },
         {
             nome: "Sumol Ananás",
             preco: 1.67,
-            foto: gerarNomeFoto('Sumol Ananás'),
+            foto: "foto/sumol_ananas.jpg",
             descricao: 'Sumol sabor abacaxi.'
         },
         {
             nome: "Água 0.5L",
             preco: 1.37,
-            foto: gerarNomeFoto('Água 0.5L'),
+            foto: "foto/agua_05l.jpg",
             descricao: 'Garrafa 500ml.'
         },
         {
             nome: "Água das Pedras",
             preco: 2.20,
-            foto: gerarNomeFoto('Água das Pedras'),
+            foto: "foto/agua_das_pedras.jpg",
             descricao: 'Água com gás.'
         },
         {
             nome: "Água das Pedras c/ Limão",
             preco: 2.50,
-            foto: gerarNomeFoto('Água das Pedras com Limão'),
+            foto: "foto/agua_das_pedras_com_limao.jpg",
             descricao: 'Água com gás e limão.'
         },
         {
             nome: "Seven Up",
             preco: 2.10,
-            foto: gerarNomeFoto('Seven Up'),
+            foto: "foto/seven_up.jpg",
             descricao: 'Lata 330ml.'
         },
         {
             nome: "Super Bock",
             preco: 2.80,
-            foto: gerarNomeFoto('Super Bock'),
+            foto: "foto/super_bock.jpg",
             descricao: 'Cerveja Super Bock.'
         },
         {
             nome: "Sumo Natural Laranja",
             preco: 2.80,
-            foto: gerarNomeFoto('Sumo Natural Laranja'),
+            foto: "foto/sumo_natural_laranja.jpg",
             descricao: 'Suco natural de laranja.'
         },
         {
             nome: "Sumo Natural Abacaxi",
             preco: 2.80,
-            foto: gerarNomeFoto('Sumo Natural Abacaxi'),
+            foto: "foto/sumo_natural_abacaxi.jpg",
             descricao: 'Suco natural de abacaxi.'
         },
         {
             nome: "Creme de Morango",
             preco: 3.31,
-            foto: gerarNomeFoto('Creme de Morango'),
+            foto: "foto/creme_de_morango.jpg",
             descricao: 'Creme de morango gelado.'
         }
     ]
@@ -443,9 +448,12 @@ function calcularPrecoComTaxa(precoOriginal) {
 
 function calcularTotal() {
     const subtotal = pedido.reduce((sum, item) => sum + (item.preco * item.quantidade), 0);
-    const total = subtotal; // IVA REMOVIDO
-    
-    return { subtotal, total };
+    const total = subtotal + TAXA_FIXA; // CORREÇÃO: ADICIONANDO A TAXA FIXA
+    return { 
+        subtotal: Math.round(subtotal * 100) / 100, 
+        total: Math.round(total * 100) / 100,
+        taxa: TAXA_FIXA
+    };
 }
 
 function isValidEmail(email) {
@@ -459,10 +467,8 @@ document.addEventListener('DOMContentLoaded', function() {
     inicializarCarrinho();
     configurarEventListeners();
     
-    // Preload de imagens para melhor performance
     preloadImagens();
     
-    // Inicializar botão do carrinho topo
     const carrinhoTopoBtn = document.getElementById("carrinhoTopoBtn");
     if (carrinhoTopoBtn && pedido.length > 0) {
         carrinhoTopoBtn.classList.remove("hidden");
@@ -473,16 +479,13 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function preloadImagens() {
-    // Pré-carregar imagens para melhor performance em dispositivos móveis
     const todasImagens = Object.values(categorias).flat().map(item => item.foto);
     const imagensUnicas = [...new Set(todasImagens)];
     
     imagensUnicas.forEach(src => {
         const img = new Image();
         img.src = src;
-        // Adicionar fallback em caso de erro
         img.onerror = function() {
-            // Se a imagem gerada automaticamente não existir, usar fallback
             this.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjhmOGY4Ii8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgZmlsbD0iIzk5OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPkRvbSBCaXN0csO0IEdyaWxsPC90ZXh0Pjwvc3ZnPg==';
         };
     });
@@ -531,27 +534,24 @@ function inicializarMenu() {
 
 // ==================== FUNÇÃO ATUALIZADA PARA CRIAR CARDS ====================
 function criarCardProduto(item, categoria) {
-    // Categorias que NÃO terão personalização
     const categoriasSemPersonalizacao = ['caldos', 'doces', 'bebidas', 'panelinhas'];
-    
-    // Verificar se é petisco e se é Calabresa Acebolada
     const isCalabresaAcebolada = categoria === 'petiscos' && item.nome === 'Calabresa Acebolada';
+    const isPastel = categoria === 'petiscos' && (item.nome === 'Pastel de Carne' || item.nome === 'Pastel de Frango');
     
-    // Verificar se deve mostrar botão de personalização
     const mostrarPersonalizacao = 
         categoria === 'hamburgueres' || 
         categoria === 'executivos' || 
         categoria === 'espetinhos' || 
-        isCalabresaAcebolada;
+        isCalabresaAcebolada ||
+        isPastel;
     
     let botoesHTML = '';
     
     if (mostrarPersonalizacao) {
-        // Passar carneDia para executivos
         const carneDia = categoria === 'executivos' ? item.carneDia : null;
         botoesHTML = `
             <div class="card-preco">
-                <span class="preco">€${item.preco.toFixed(2)}</span>
+                <span class="preco">€${calcularPrecoComTaxa(item.preco).toFixed(2)}</span>
                 <button class="btn-adicionar" onclick="abrirTelaPersonalizacao('${item.nome.replace(/'/g, "\\'")}', ${item.preco}, '${categoria}'${carneDia ? `, '${carneDia}'` : ''})">
                     <i class="fas fa-edit"></i> PERSONALIZAR
                 </button>
@@ -561,20 +561,18 @@ function criarCardProduto(item, categoria) {
             </button>
         `;
     } else if (categoriasSemPersonalizacao.includes(categoria)) {
-        // Para categorias sem personalização, apenas botão de adicionar
         botoesHTML = `
             <div class="card-preco">
-                <span class="preco">€${item.preco.toFixed(2)}</span>
+                <span class="preco">€${calcularPrecoComTaxa(item.preco).toFixed(2)}</span>
                 <button class="btn-adicionar" onclick="addItem('${item.nome.replace(/'/g, "\\'")}', ${item.preco}, this)">
                     <i class="fas fa-plus"></i> ADICIONAR
                 </button>
             </div>
         `;
     } else {
-        // Para outros petiscos (exceto Calabresa Acebolada)
         botoesHTML = `
             <div class="card-preco">
-                <span class="preco">€${item.preco.toFixed(2)}</span>
+                <span class="preco">€${calcularPrecoComTaxa(item.preco).toFixed(2)}</span>
                 <button class="btn-adicionar" onclick="addItem('${item.nome.replace(/'/g, "\\'")}', ${item.preco}, this)">
                     <i class="fas fa-plus"></i> ADICIONAR
                 </button>
@@ -606,10 +604,8 @@ function criarCardProduto(item, categoria) {
 
 // ==================== FUNÇÃO PARA ABRIR PÁGINA DE DETALHES ====================
 function abrirDetalhesProduto(nomeProduto, categoria) {
-    // Encontrar o produto nos dados
     let produtoEncontrado = null;
     
-    // Procurar o produto na categoria correta
     if (categorias[categoria]) {
         produtoEncontrado = categorias[categoria].find(produto => produto.nome === nomeProduto);
     }
@@ -619,7 +615,6 @@ function abrirDetalhesProduto(nomeProduto, categoria) {
         return;
     }
     
-    // Criar a página de detalhes
     const detalhesHTML = `
         <div id="paginaDetalhes" style="
             position: fixed;
@@ -701,8 +696,8 @@ function abrirDetalhesProduto(nomeProduto, categoria) {
                             color: #E66A11;
                             font-weight: bold;
                             margin-bottom: 5px;
-                        ">€${produtoEncontrado.preco.toFixed(2)}</div>
-                        <div style="color: #666; font-size: 14px;">Preço final</div>
+                        ">€${calcularPrecoComTaxa(produtoEncontrado.preco).toFixed(2)}</div>
+                        <div style="color: #666; font-size: 14px;">Preço final (inclui taxa de €0.90)</div>
                     </div>
                 </div>
                 
@@ -757,6 +752,17 @@ function abrirDetalhesProduto(nomeProduto, categoria) {
                 </div>
                 ` : ''}
                 
+                <!-- Informação sobre Taxa -->
+                <div style="margin: 25px 0; padding: 15px; background: #FFF8F0; border-radius: 10px; border-left: 4px solid #E66A11;">
+                    <div style="display: flex; align-items: center; margin-bottom: 10px;">
+                        <i class="fas fa-exclamation-circle" style="color: #E66A11; font-size: 20px; margin-right: 10px;"></i>
+                        <h4 style="margin: 0; color: #E66A11;">Taxa de Manutenção dos Serviços</h4>
+                    </div>
+                    <p style="margin: 0; color: #666; font-size: 14px; line-height: 1.5;">
+                        Será aplicada uma taxa de <strong>€${TAXA_FIXA.toFixed(2)}</strong> para manutenção dos serviços de entrega e plataforma digital.
+                    </p>
+                </div>
+                
                 <!-- Botões de Ação -->
                 <div style="
                     position: sticky;
@@ -772,7 +778,8 @@ function abrirDetalhesProduto(nomeProduto, categoria) {
                 ">
                     <!-- Verificar se o produto pode ser personalizado -->
                     ${['executivos', 'hamburgueres', 'espetinhos'].includes(categoria) || 
-                      (categoria === 'petiscos' && produtoEncontrado.nome === 'Calabresa Acebolada') ? `
+                      (categoria === 'petiscos' && (produtoEncontrado.nome === 'Calabresa Acebolada' || 
+                       produtoEncontrado.nome === 'Pastel de Carne' || produtoEncontrado.nome === 'Pastel de Frango')) ? `
                     <button onclick="adicionarPersonalizadoNaPaginaDetalhes('${produtoEncontrado.nome.replace(/'/g, "\\'")}', ${produtoEncontrado.preco}, '${categoria}'${produtoEncontrado.carneDia ? `, '${produtoEncontrado.carneDia}'` : ''})" 
                         style="
                             flex: 1;
@@ -801,7 +808,8 @@ function abrirDetalhesProduto(nomeProduto, categoria) {
                             flex: 1;
                             min-width: 200px;
                             background: ${['executivos', 'hamburgueres', 'espetinhos'].includes(categoria) || 
-                                       (categoria === 'petiscos' && produtoEncontrado.nome === 'Calabresa Acebolada') ? 
+                                       (categoria === 'petiscos' && (produtoEncontrado.nome === 'Calabresa Acebolada' || 
+                                        produtoEncontrado.nome === 'Pastel de Carne' || produtoEncontrado.nome === 'Pastel de Frango')) ? 
                                        '#28a745' : 'linear-gradient(135deg, #E66A11 0%, #D35400 100%)'};
                             color: white;
                             border: none;
@@ -818,7 +826,8 @@ function abrirDetalhesProduto(nomeProduto, categoria) {
                         ">
                         <i class="fas fa-plus"></i>
                         ${['executivos', 'hamburgueres', 'espetinhos'].includes(categoria) || 
-                          (categoria === 'petiscos' && produtoEncontrado.nome === 'Calabresa Acebolada') ? 
+                          (categoria === 'petiscos' && (produtoEncontrado.nome === 'Calabresa Acebolada' || 
+                           produtoEncontrado.nome === 'Pastel de Carne' || produtoEncontrado.nome === 'Pastel de Frango')) ? 
                           'ADICIONAR SEM PERSONALIZAR' : 'ADICIONAR AO CARRINHO'}
                     </button>
                 </div>
@@ -841,7 +850,6 @@ function fecharDetalhes() {
 function addItemNaPaginaDetalhes(nome, preco) {
     addItem(nome, preco);
     
-    // Feedback visual
     const btn = event.target;
     const originalHTML = btn.innerHTML;
     const originalBg = btn.style.background;
@@ -856,7 +864,6 @@ function addItemNaPaginaDetalhes(nome, preco) {
         btn.disabled = false;
     }, 1500);
     
-    // Fechar detalhes após um tempo
     setTimeout(() => {
         fecharDetalhes();
     }, 1000);
@@ -875,7 +882,6 @@ function abrirTelaPersonalizacao(nome, preco, categoria, carneDia = null) {
     categoriaSelecionadaParaPersonalizar = categoria;
     carneDiaSelecionada = carneDia;
     
-    // Encontrar o produto nos dados para obter a foto e descrição
     let produtoEncontrado = null;
     if (categorias[categoria]) {
         produtoEncontrado = categorias[categoria].find(produto => produto.nome === nome);
@@ -886,10 +892,8 @@ function abrirTelaPersonalizacao(nome, preco, categoria, carneDia = null) {
         return;
     }
     
-    // Determinar quais adicionais mostrar
-    const adicionaisFiltrados = filtrarAdicionaisPorCategoria(categoria, carneDia);
+    const adicionaisFiltrados = filtrarAdicionaisPorCategoria(categoria, carneDia, nome);
     
-    // Criar tela de personalização
     const telaPersonalizacaoHTML = `
         <div id="telaPersonalizacao" style="
             position: fixed;
@@ -972,7 +976,7 @@ function abrirTelaPersonalizacao(nome, preco, categoria, carneDia = null) {
                             font-weight: bold;
                             margin-bottom: 5px;
                         ">€${preco.toFixed(2)}</div>
-                        <div style="color: #666; font-size: 14px;">Preço base</div>
+                        <div style="color: #666; font-size: 14px;">Preço base (sem taxa)</div>
                     </div>
                 </div>
                 
@@ -999,10 +1003,10 @@ function abrirTelaPersonalizacao(nome, preco, categoria, carneDia = null) {
                 </div>
                 
                 <!-- Seção de Remover Ingredientes -->
-                ${criarSecaoRemoverIngredientesTela(categoria)}
+                ${criarSecaoRemoverIngredientesTela(categoria, nome)}
                 
                 <!-- Seção de Ponto da Carne -->
-                ${criarSecaoPontoCarneTela(categoria)}
+                ${criarSecaoPontoCarneTela(categoria, nome)}
                 
                 <!-- Seção de Adicionais -->
                 <div style="margin: 25px 0;">
@@ -1017,7 +1021,7 @@ function abrirTelaPersonalizacao(nome, preco, categoria, carneDia = null) {
                         <i class="fas fa-plus-circle" style="margin-right: 10px; color: #E66A11; font-size: 20px;"></i>
                         <h3 style="margin: 0; font-size: 18px;">Adicionar Ingredientes Extras</h3>
                     </div>
-                    <div id="gridAdicionaisTela" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 12px;">
+                    <div id="gridAdicionaisTela" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 12px;">
                         ${criarCardsAdicionaisTela(adicionaisFiltrados)}
                     </div>
                 </div>
@@ -1080,7 +1084,7 @@ function abrirTelaPersonalizacao(nome, preco, categoria, carneDia = null) {
                         <h4 style="margin: 0; color: #E66A11;">Taxa de Manutenção dos Serviços</h4>
                     </div>
                     <p style="margin: 0; color: #666; font-size: 14px; line-height: 1.5;">
-                        Será aplicada uma taxa de <strong>€0.90</strong> para manutenção dos serviços de entrega e plataforma digital.
+                        Será aplicada uma taxa de <strong>€${TAXA_FIXA.toFixed(2)}</strong> para manutenção dos serviços de entrega e plataforma digital.
                     </p>
                 </div>
                 
@@ -1107,10 +1111,11 @@ function abrirTelaPersonalizacao(nome, preco, categoria, carneDia = null) {
                         <div>
                             <div style="font-size: 14px; color: #666;">Preço base:</div>
                             <div style="font-size: 24px; color: #E66A11; font-weight: bold;">€${preco.toFixed(2)}</div>
+                            <div style="font-size: 12px; color: #888; margin-top: 5px;">+ Taxa: €${TAXA_FIXA.toFixed(2)}</div>
                         </div>
                         <div style="text-align: right;">
                             <div style="font-size: 14px; color: #666;">Total do Pedido:</div>
-                            <div style="font-size: 28px; color: #E66A11; font-weight: bold;" id="totalFinalTela">€${preco.toFixed(2)}</div>
+                            <div style="font-size: 28px; color: #E66A11; font-weight: bold;" id="totalFinalTela">€${(preco + TAXA_FIXA).toFixed(2)}</div>
                         </div>
                     </div>
                     
@@ -1159,9 +1164,7 @@ function abrirTelaPersonalizacao(nome, preco, categoria, carneDia = null) {
     document.body.insertAdjacentHTML('beforeend', telaPersonalizacaoHTML);
     document.body.style.overflow = 'hidden';
     
-    // Adicionar eventos
     setTimeout(() => {
-        // Eventos para adicionais
         document.querySelectorAll('.card-adicional-tela').forEach(card => {
             card.addEventListener('click', function() {
                 this.classList.toggle('selecionado');
@@ -1169,14 +1172,12 @@ function abrirTelaPersonalizacao(nome, preco, categoria, carneDia = null) {
             });
         });
         
-        // Eventos para remover ingredientes
         document.querySelectorAll('.item-remover-tela').forEach(item => {
             item.addEventListener('click', function() {
                 this.classList.toggle('selecionado');
             });
         });
         
-        // Eventos para ponto da carne
         document.querySelectorAll('.opcao-ponto-tela').forEach(opcao => {
             opcao.addEventListener('click', function() {
                 document.querySelectorAll('.opcao-ponto-tela').forEach(o => o.classList.remove('selecionado'));
@@ -1184,7 +1185,6 @@ function abrirTelaPersonalizacao(nome, preco, categoria, carneDia = null) {
             });
         });
         
-        // Adicionar CSS para seleção
         const style = document.createElement('style');
         style.textContent = `
             .card-adicional-tela.selecionado {
@@ -1223,7 +1223,7 @@ function fecharTelaPersonalizacao() {
     }
 }
 
-function criarSecaoRemoverIngredientesTela(categoria) {
+function criarSecaoRemoverIngredientesTela(categoria, nomeProduto) {
     if (['executivos', 'hamburgueres'].includes(categoria)) {
         const ingredientes = categoria === 'executivos' ? [
             'Sem Cebola', 'Sem Azeitonas', 'Sem Vinagrete', 
@@ -1268,11 +1268,51 @@ function criarSecaoRemoverIngredientesTela(categoria) {
                 </div>
             </div>
         `;
+    } else if (categoria === 'petiscos' && (nomeProduto === 'Pastel de Carne' || nomeProduto === 'Pastel de Frango')) {
+        const ingredientes = [
+            'Sem Cebola', 'Sem Pimentão', 'Sem Alho', 
+            'Sem Molho', 'Sem Tempero Extra'
+        ];
+        
+        const itensHTML = ingredientes.map(ing => `
+            <div class="item-remover-tela" style="
+                padding: 12px 15px;
+                background: white;
+                border: 2px solid #ddd;
+                border-radius: 10px;
+                font-size: 14px;
+                font-weight: 500;
+                cursor: pointer;
+                text-align: center;
+                transition: all 0.3s;
+            ">
+                ${ing}
+            </div>
+        `).join('');
+        
+        return `
+            <div style="margin: 25px 0;">
+                <div style="
+                    display: flex;
+                    align-items: center;
+                    margin-bottom: 15px;
+                    color: #333;
+                    padding-bottom: 10px;
+                    border-bottom: 2px solid #E66A11;
+                ">
+                    <i class="fas fa-ban" style="margin-right: 10px; color: #E66A11; font-size: 20px;"></i>
+                    <h3 style="margin: 0; font-size: 18px;">Remover Ingredientes</h3>
+                </div>
+                <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px;">
+                    ${itensHTML}
+                </div>
+            </div>
+        `;
     }
     return '';
 }
 
-function criarSecaoPontoCarneTela(categoria) {
+function criarSecaoPontoCarneTela(categoria, nomeProduto) {
     if (['executivos', 'espetinhos'].includes(categoria)) {
         return `
             <div style="margin: 25px 0;">
@@ -1347,12 +1387,13 @@ function criarCardsAdicionaisTela(adicionais) {
                 cursor: pointer;
                 transition: all 0.3s;
                 position: relative;
+                min-height: 140px;
             ">
-                <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
-                    <div style="font-weight: bold; font-size: 15px; color: #333;">${key}</div>
-                    <div style="color: #E66A11; font-weight: bold; font-size: 16px;">€${adicional.preco.toFixed(2)}</div>
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; flex-wrap: wrap;">
+                    <div style="font-weight: bold; font-size: 15px; color: #333; flex: 1; min-width: 120px;">${key}</div>
+                    <div style="color: #E66A11; font-weight: bold; font-size: 16px; margin-left: 10px; background: #FFF8F0; padding: 4px 8px; border-radius: 6px;">€${adicional.preco.toFixed(2)}</div>
                 </div>
-                <div style="font-size: 13px; color: #666; margin-bottom: 10px;">${adicional.descricao}</div>
+                <div style="font-size: 13px; color: #666; margin-bottom: 10px; line-height: 1.4;">${adicional.descricao}</div>
                 <div style="
                     background: #f0f0f0;
                     color: #666;
@@ -1378,6 +1419,7 @@ function criarCardsAdicionaisTela(adicionais) {
                     justify-content: center;
                     font-size: 12px;
                     color: #666;
+                    z-index: 2;
                 ">
                     <i class="fas fa-plus"></i>
                 </div>
@@ -1404,14 +1446,14 @@ function atualizarTotalTela(precoBase) {
         totalAdicionais += preco;
         
         listaHTML += `
-            <div style="display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 14px;">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 14px; padding: 4px 0;">
                 <span>${nome}</span>
                 <span style="color: #E66A11; font-weight: bold;">€${preco.toFixed(2)}</span>
             </div>
         `;
     });
     
-    const totalFinal = precoBase + totalAdicionais;
+    const totalFinal = precoBase + totalAdicionais + TAXA_FIXA; // CORREÇÃO: ADICIONANDO A TAXA FIXA
     
     if (adicionaisSelecionados.length > 0) {
         listaDiv.innerHTML = listaHTML;
@@ -1421,7 +1463,7 @@ function atualizarTotalTela(precoBase) {
     } else {
         listaDiv.innerHTML = '';
         totalAdicionaisSpan.textContent = '€0.00';
-        totalFinalSpan.textContent = `€${precoBase.toFixed(2)}`;
+        totalFinalSpan.textContent = `€${(precoBase + TAXA_FIXA).toFixed(2)}`; // CORREÇÃO: ADICIONANDO A TAXA FIXA
         resumoDiv.style.display = 'none';
     }
 }
@@ -1429,20 +1471,17 @@ function atualizarTotalTela(precoBase) {
 function confirmarPersonalizacaoNaTela() {
     if (!itemSelecionadoParaPersonalizar) return;
     
-    // Coletar ingredientes removidos
     const ingredientesRemovidos = [];
     document.querySelectorAll('.item-remover-tela.selecionado').forEach(item => {
         ingredientesRemovidos.push(item.textContent.trim());
     });
     
-    // Coletar ponto da carne
     let pontoCarne = null;
     const pontoSelecionado = document.querySelector('.opcao-ponto-tela.selecionado');
     if (pontoSelecionado) {
         pontoCarne = pontoSelecionado.dataset.ponto;
     }
     
-    // Coletar adicionais
     const adicionais = [];
     let precoTotalAdicionais = 0;
     document.querySelectorAll('.card-adicional-tela.selecionado').forEach(card => {
@@ -1452,11 +1491,9 @@ function confirmarPersonalizacaoNaTela() {
         precoTotalAdicionais += preco;
     });
     
-    // Coletar observações
     const observacoesInput = document.getElementById('observacoesTela');
     const observacoes = observacoesInput ? observacoesInput.value : '';
     
-    // Criar item personalizado
     const itemPersonalizado = {
         ...itemSelecionadoParaPersonalizar,
         ingredientesRemovidos,
@@ -1466,10 +1503,8 @@ function confirmarPersonalizacaoNaTela() {
         observacoes: observacoes || ''
     };
     
-    // Adicionar ao carrinho
     addItemPersonalizado(itemPersonalizado);
     
-    // Feedback visual
     const btn = event.target;
     const originalHTML = btn.innerHTML;
     const originalBg = btn.style.background;
@@ -1509,13 +1544,12 @@ function abrirSecao(cat) {
 }
 
 // ==================== FUNÇÕES AUXILIARES ====================
-function filtrarAdicionaisPorCategoria(categoria, carneDia) {
+function filtrarAdicionaisPorCategoria(categoria, carneDia, nomeProduto) {
     const adicionaisFiltrados = {};
     
     Object.keys(PRECOS_ADICIONAIS).forEach(key => {
         const adicional = PRECOS_ADICIONAIS[key];
         
-        // Lógica para filtrar adicionais por categoria
         if (categoria === 'executivos') {
             if (adicional.categoria === 'executivo') {
                 adicionaisFiltrados[key] = adicional;
@@ -1528,6 +1562,18 @@ function filtrarAdicionaisPorCategoria(categoria, carneDia) {
             if (adicional.categoria === 'espetinho') {
                 adicionaisFiltrados[key] = adicional;
             }
+        } else if (categoria === 'petiscos') {
+            if (nomeProduto === 'Calabresa Acebolada') {
+                // Adicionais para calabresa
+                if (['Queijo', 'Cheddar Cremoso', 'Bacon Crocante'].includes(key)) {
+                    adicionaisFiltrados[key] = adicional;
+                }
+            } else if (nomeProduto === 'Pastel de Carne' || nomeProduto === 'Pastel de Frango') {
+                // Adicionais para pastéis
+                if (adicional.categoria === 'pastel') {
+                    adicionaisFiltrados[key] = adicional;
+                }
+            }
         }
     });
     
@@ -1536,8 +1582,8 @@ function filtrarAdicionaisPorCategoria(categoria, carneDia) {
 
 function addItemPersonalizado(item) {
     const precoTotal = item.preco + item.precoTotalAdicionais;
+    const precoComTaxa = calcularPrecoComTaxa(precoTotal);
     
-    // Criar nome com personalizações
     let nomeCompleto = item.nome;
     
     if (item.ingredientesRemovidos.length > 0) {
@@ -1553,7 +1599,6 @@ function addItemPersonalizado(item) {
         nomeCompleto += ` [+ ${adicionaisNomes.join(', ')}]`;
     }
     
-    // Verificar se item já existe no carrinho
     const itemExistente = pedido.find(p => p.nome === nomeCompleto);
     
     if (itemExistente) {
@@ -1561,7 +1606,7 @@ function addItemPersonalizado(item) {
     } else {
         pedido.push({
             nome: nomeCompleto,
-            preco: precoTotal,
+            preco: precoComTaxa, // CORREÇÃO: USANDO PREÇO COM TAXA
             quantidade: 1,
             ingredientesRemovidos: item.ingredientesRemovidos,
             pontoCarne: item.pontoCarne,
@@ -1581,10 +1626,11 @@ function inicializarCarrinho() {
 }
 
 function addItem(nome, preco, botao) {
+    const precoComTaxa = calcularPrecoComTaxa(preco); // CORREÇÃO: CALCULAR COM TAXA
     const itemExistente = pedido.find(item => item.nome === nome);
     
     if(itemExistente) itemExistente.quantidade++;
-    else pedido.push({nome, preco, quantidade:1});
+    else pedido.push({nome, preco: precoComTaxa, quantidade:1});
     
     salvarPedido();
     mostrarFeedbackAdicao(botao);
@@ -1606,7 +1652,6 @@ function mostrarFeedbackAdicao(botao) {
         }, 1500);
     }
     
-    // Animação no carrinho topo
     const carrinhoTopoBtn = document.getElementById("carrinhoTopoBtn");
     if (carrinhoTopoBtn) {
         carrinhoTopoBtn.style.transform = 'scale(1.1)';
@@ -1622,11 +1667,9 @@ function salvarPedido() {
 }
 
 function atualizarCarrinho() {
-    // Botão do carrinho fixo no topo
     const carrinhoTopoBtn = document.getElementById("carrinhoTopoBtn");
     const contadorTopo = document.getElementById("contadorTopo");
     
-    // Mostrar/ocultar botão do carrinho
     if (carrinhoTopoBtn) {
         if (pedido.length > 0) {
             carrinhoTopoBtn.classList.remove("hidden");
@@ -1641,7 +1684,6 @@ function atualizarCarrinho() {
         }
     }
     
-    // Atualizar contador do botão topo
     if (contadorTopo) {
         const totalItens = pedido.reduce((sum, item) => sum + item.quantidade, 0);
         contadorTopo.textContent = totalItens;
@@ -1653,15 +1695,14 @@ function atualizarCarrinho() {
     
     if (!lista) return;
     
-    let total = 0;
+    let subtotal = 0;
     let totalItens = 0;
     
     lista.innerHTML = pedido.map((item, index) => {
-        const subtotal = item.preco * item.quantidade;
-        total += subtotal;
+        const itemSubtotal = item.preco * item.quantidade;
+        subtotal += itemSubtotal;
         totalItens += item.quantidade;
         
-        // Mostrar informações de personalização no carrinho
         let infoAdicional = '';
         if (item.ingredientesRemovidos && item.ingredientesRemovidos.length > 0) {
             infoAdicional += `<br><small style="color: #666;">${item.ingredientesRemovidos.join(', ')}</small>`;
@@ -1704,6 +1745,7 @@ function atualizarCarrinho() {
     if (totalElement) {
         totalElement.innerHTML = `
             Subtotal: €${totalCalculado.subtotal.toFixed(2)}<br>
+            Taxa de serviço: €${TAXA_FIXA.toFixed(2)}<br>
             <strong>Total a Pagar: €${totalCalculado.total.toFixed(2)}</strong>
         `;
     }
@@ -1774,7 +1816,6 @@ function enviarWhatsApp() {
         const subtotal = item.preco * item.quantidade;
         mensagem += `• ${item.nome} x${item.quantidade} - €${subtotal.toFixed(2)}%0A`;
         
-        // Adicionar informações de personalização ao WhatsApp
         if (item.ingredientesRemovidos && item.ingredientesRemovidos.length > 0) {
             mensagem += `  ${item.ingredientesRemovidos.join(', ')}%0A`;
         }
@@ -1793,6 +1834,7 @@ function enviarWhatsApp() {
     const totalCalculado = calcularTotal();
     mensagem += `%0A💰 *Resumo do Pedido:*%0A`;
     mensagem += `Subtotal: €${totalCalculado.subtotal.toFixed(2)}%0A`;
+    mensagem += `Taxa de serviço: €${TAXA_FIXA.toFixed(2)}%0A`;
     mensagem += `*TOTAL: €${totalCalculado.total.toFixed(2)}*%0A%0A`;
     mensagem += `📝 *Observações Gerais:*%0A${observacoes || "Nenhuma observação"}`;
 
@@ -1808,7 +1850,6 @@ function enviarWhatsApp() {
 
 // ==================== CONFIGURAR EVENT LISTENERS GLOBAIS ====================
 function configurarEventListeners() {
-    // Configurar evento para o botão do carrinho no topo
     const carrinhoTopoBtn = document.getElementById("carrinhoTopoBtn");
     if (carrinhoTopoBtn) {
         carrinhoTopoBtn.addEventListener("click", function(e) {
@@ -2007,6 +2048,7 @@ function finalizarPagamento() {
         email: emailCliente,
         itens: [...pedido],
         subtotal: totalCalculado.subtotal,
+        taxa: TAXA_FIXA,
         total: totalCalculado.total,
         obs: (document.getElementById('obs')||{value:''}).value || '',
         data: new Date().toISOString()
@@ -2072,8 +2114,8 @@ function mostrarLoadingPagamento(url) {
 
 // Verificar console para debug
 console.log("=== DOM BISTRÔ GRILL - SISTEMA CARREGADO ===");
-console.log("Tela de personalização implementada!");
-console.log("Taxa ajustada para €0.90 (Taxa de Manutenção dos Serviços)");
-console.log("Todos os preços aumentados em €1.00");
-console.log("IVA REMOVIDO - Preços já incluem todas as taxas");
-console.log("Sistema de imagens automático ativado - caminhos gerados automaticamente");
+console.log("Pastéis adicionados: Pastel de Carne e Pastel de Frango");
+console.log("Adicionais para pastéis: Catupiry (€1.25), Queijo Cheddar (€0.80), Queijo Coalho (€1.30), Queijo (€0.60)");
+console.log("Taxa de €0.90 aplicada corretamente em todos os pedidos");
+console.log("Preços dos adicionais visíveis e não tapados pelo (+)");
+console.log("Sistema de imagens manual ativado");
