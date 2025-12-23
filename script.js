@@ -409,7 +409,7 @@ const categorias = {
         {
             nome: "Super Bock",
             preco: 2.80,
-            foto: "foto/super_bock.jpg",
+            foto: "foto/cerveja.JPG",
             descricao: 'Cerveja Super Bock.'
         },
         {
@@ -432,6 +432,24 @@ const categorias = {
         }
     ]
 };
+
+// ==================== FUNÇÕES PARA DIA DA SEMANA ====================
+function obterDiaSemanaAtual() {
+    const dias = ['DOMINGO', 'SEGUNDA', 'TERÇA', 'QUARTA', 'QUINTA', 'SEXTA', 'SÁBADO'];
+    const hoje = new Date();
+    return dias[hoje.getDay()];
+}
+
+function verificarDiaValido(prato) {
+    const diaAtual = obterDiaSemanaAtual();
+    const diaPrato = prato.dia;
+    
+    // Para pratos executivos, verificar se é o dia correto
+    if (prato.dia && prato.dia !== diaAtual) {
+        return false;
+    }
+    return true;
+}
 
 // ==================== VARIÁVEIS GLOBAIS ====================
 let pedido = JSON.parse(localStorage.getItem("pedido")) || [];
@@ -538,6 +556,9 @@ function criarCardProduto(item, categoria) {
     const isCalabresaAcebolada = categoria === 'petiscos' && item.nome === 'Calabresa Acebolada';
     const isPastel = categoria === 'petiscos' && (item.nome === 'Pastel de Carne' || item.nome === 'Pastel de Frango');
     
+    // Verificar se é um prato executivo fora do dia
+    const isExecutivoForaDoDia = categoria === 'executivos' && item.dia && !verificarDiaValido(item);
+    
     const mostrarPersonalizacao = 
         categoria === 'hamburgueres' || 
         categoria === 'executivos' || 
@@ -547,7 +568,20 @@ function criarCardProduto(item, categoria) {
     
     let botoesHTML = '';
     
-    if (mostrarPersonalizacao) {
+    if (isExecutivoForaDoDia) {
+        // Mostrar mensagem de indisponível para pratos executivos fora do dia
+        botoesHTML = `
+            <div class="card-preco">
+                <span class="preco">€${calcularPrecoComTaxa(item.preco).toFixed(2)}</span>
+                <button class="btn-adicionar indisponivel" style="background: #dc3545; cursor: not-allowed;" onclick="mostrarMensagemDiaErrado('${item.dia}')">
+                    <i class="fas fa-ban"></i> INDISPONÍVEL HOJE
+                </button>
+            </div>
+            <div class="mensagem-dia" style="background: #fff3cd; border: 1px solid #ffeaa7; border-radius: 8px; padding: 10px; margin-top: 10px; text-align: center; color: #856404; font-size: 14px;">
+                <i class="fas fa-info-circle"></i> Disponível apenas às ${item.dia.toLowerCase()}s
+            </div>
+        `;
+    } else if (mostrarPersonalizacao) {
         const carneDia = categoria === 'executivos' ? item.carneDia : null;
         botoesHTML = `
             <div class="card-preco">
@@ -582,15 +616,19 @@ function criarCardProduto(item, categoria) {
     
     const imagemFallback = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjhmOGY4Ii8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgZmlsbD0iIzk5OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPkRvbSBCaXN0csO0IEdyaWxsPC90ZXh0Pjx0ZXh0IHg9IjUwJSIgeT0iNjAlIiBmb250LWZhbWlseT0iQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTIiIGZpbGw9IiM5OTkiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5JbWFnZW0gbsOjbyBjYXJyZWdhZGE8L3RleHQ+PC9zdmc+';
     
+    // Adicionar classe especial para card indisponível
+    const cardClass = isExecutivoForaDoDia ? 'card indisponivel-card' : 'card';
+    
     return `
-        <div class="card" data-categoria="${categoria}">
-            <div class="card-image-container" onclick="abrirDetalhesProduto('${item.nome.replace(/'/g, "\\'")}', '${categoria}')">
+        <div class="${cardClass}" data-categoria="${categoria}">
+            <div class="card-image-container" onclick="${isExecutivoForaDoDia ? 'mostrarMensagemDiaErrado(\'' + item.dia + '\')' : 'abrirDetalhesProduto(\'' + item.nome.replace(/'/g, "\\'") + '\', \'' + categoria + '\')'}">
                 <img src="${item.foto}" alt="${item.nome}" 
                     onerror="this.src='${imagemFallback}'"
                     loading="lazy"
                     class="produto-imagem">
+                ${isExecutivoForaDoDia ? '<div class="overlay-indisponivel"><i class="fas fa-ban"></i> INDISPONÍVEL HOJE</div>' : ''}
                 <div class="ver-detalhes">
-                    <i class="fas fa-search-plus"></i> VER DETALHES
+                    <i class="fas fa-search-plus"></i> ${isExecutivoForaDoDia ? 'INDISPONÍVEL' : 'VER DETALHES'}
                 </div>
             </div>
             <div class="card-content">
@@ -600,6 +638,62 @@ function criarCardProduto(item, categoria) {
             </div>
         </div>
     `;
+}
+
+// ==================== FUNÇÃO PARA MOSTRAR MENSAGEM DE DIA ERRADO ====================
+function mostrarMensagemDiaErrado(diaPrato) {
+    const diaAtual = obterDiaSemanaAtual();
+    const mensagem = `
+        <div id="mensagemDiaModal" style="
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        ">
+            <div style="
+                background: white;
+                padding: 30px;
+                border-radius: 15px;
+                max-width: 400px;
+                width: 90%;
+                text-align: center;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            ">
+                <div style="font-size: 48px; color: #E66A11; margin-bottom: 15px;">
+                    <i class="fas fa-calendar-times"></i>
+                </div>
+                <h3 style="color: #333; margin: 0 0 15px 0;">PRATO INDISPONÍVEL</h3>
+                <p style="color: #666; line-height: 1.5; margin-bottom: 20px;">
+                    Este prato está disponível apenas às <strong style="color: #E66A11;">${diaPrato.toLowerCase()}s</strong>.
+                </p>
+                <p style="color: #666; line-height: 1.5; margin-bottom: 25px;">
+                    Hoje é <strong style="color: #E66A11;">${diaAtual.toLowerCase()}</strong>.
+                    Por favor, selecione o prato executivo disponível para hoje.
+                </p>
+                <button onclick="document.getElementById('mensagemDiaModal').remove()" style="
+                    background: #E66A11;
+                    color: white;
+                    border: none;
+                    padding: 12px 25px;
+                    border-radius: 8px;
+                    font-size: 16px;
+                    font-weight: bold;
+                    cursor: pointer;
+                    width: 100%;
+                ">
+                    ENTENDI
+                </button>
+            </div>
+        </div>
+    `;
+    
+    document.body.insertAdjacentHTML('beforeend', mensagem);
 }
 
 // ==================== FUNÇÃO PARA ABRIR PÁGINA DE DETALHES ====================
@@ -612,6 +706,12 @@ function abrirDetalhesProduto(nomeProduto, categoria) {
     
     if (!produtoEncontrado) {
         console.error('Produto não encontrado:', nomeProduto);
+        return;
+    }
+    
+    // Verificar se é prato executivo fora do dia
+    if (categoria === 'executivos' && produtoEncontrado.dia && !verificarDiaValido(produtoEncontrado)) {
+        mostrarMensagemDiaErrado(produtoEncontrado.dia);
         return;
     }
     
@@ -878,6 +978,15 @@ function adicionarPersonalizadoNaPaginaDetalhes(nome, preco, categoria, carneDia
 
 // ==================== NOVA FUNÇÃO: ABRIR TELA DE PERSONALIZAÇÃO ====================
 function abrirTelaPersonalizacao(nome, preco, categoria, carneDia = null) {
+    // Verificar se é prato executivo fora do dia
+    if (categoria === 'executivos' && nome.includes('(')) {
+        const pratoEncontrado = categorias.executivos.find(p => p.nome === nome);
+        if (pratoEncontrado && pratoEncontrado.dia && !verificarDiaValido(pratoEncontrado)) {
+            mostrarMensagemDiaErrado(pratoEncontrado.dia);
+            return;
+        }
+    }
+    
     itemSelecionadoParaPersonalizar = { nome, preco };
     categoriaSelecionadaParaPersonalizar = categoria;
     carneDiaSelecionada = carneDia;
@@ -1626,6 +1735,15 @@ function inicializarCarrinho() {
 }
 
 function addItem(nome, preco, botao) {
+    // Verificar se é prato executivo fora do dia
+    if (nome.includes('Executivo') || nome.includes('Feijoada') || nome.includes('Jantinha')) {
+        const pratoEncontrado = categorias.executivos.find(p => p.nome === nome);
+        if (pratoEncontrado && pratoEncontrado.dia && !verificarDiaValido(pratoEncontrado)) {
+            mostrarMensagemDiaErrado(pratoEncontrado.dia);
+            return;
+        }
+    }
+    
     const precoComTaxa = calcularPrecoComTaxa(preco); // CORREÇÃO: CALCULAR COM TAXA
     const itemExistente = pedido.find(item => item.nome === nome);
     
@@ -2114,8 +2232,10 @@ function mostrarLoadingPagamento(url) {
 
 // Verificar console para debug
 console.log("=== DOM BISTRÔ GRILL - SISTEMA CARREGADO ===");
+console.log("Dia da semana atual:", obterDiaSemanaAtual());
 console.log("Pastéis adicionados: Pastel de Carne e Pastel de Frango");
 console.log("Adicionais para pastéis: Catupiry (€1.25), Queijo Cheddar (€0.80), Queijo Coalho (€1.30), Queijo (€0.60)");
 console.log("Taxa de €0.90 aplicada corretamente em todos os pedidos");
 console.log("Preços dos adicionais visíveis e não tapados pelo (+)");
 console.log("Sistema de imagens manual ativado");
+console.log("Controle por dia da semana ATIVADO - Pratos executivos disponíveis apenas no dia correto");
